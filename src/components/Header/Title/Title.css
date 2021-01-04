@@ -1,0 +1,10 @@
+h1 {
+    font-size:3em;
+    font-weight:900;
+    text-transform: uppercase;
+}
+
+h1 span {
+    font-weight:normal;
+    text-transform: lowercase;
+}

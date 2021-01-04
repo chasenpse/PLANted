@@ -1,0 +1,33 @@
+button {
+    margin: 6px 20px 6px 0;
+    padding:0;
+    background:none;
+    border:0;
+    width:180px;
+    height:36px;
+    font-size:1.25rem;
+    color:#000;
+    cursor:pointer;
+}
+
+button:hover {
+    border-radius:10px;
+    border:1px solid #000;
+}
+
+button:last-of-type {
+    margin-right: 0;
+}
+
+button.selected {
+    border-radius:10px;
+    background: #000;
+    color:#FFF;
+}
+
+button.selected:hover {
+    border-radius:10px;
+    background: #000;
+    color:#FFF;
+    border:0;
+}
