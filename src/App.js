@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import Header from "./components/Header/Header";
@@ -9,12 +9,12 @@ import Schedule from "./components/Pages/Schedule";
 const App = () => {
 
     return (
-        <Fragment>
+        <div className={"container"}>
             <Header />
             <Route exact path={"/"} component={Overview} />
             <Route exact path={"/library"} component={CropLibrary} />
             <Route exact path={"/schedule"} component={Schedule} />
-        </Fragment>
+        </div>
     );
 }
 

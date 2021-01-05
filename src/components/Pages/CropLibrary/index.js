@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './CropLibrary.css';
-import Sidebar from "../../Sidebar/Sidebar";
+import Sidebar from "../../Common/Sidebar/Sidebar";
+import Button from "../../Common/Button";
+import TableView from "../../Common/TableView/TableView";
 
 const CropLibrary = () => {
     return (
-        <Sidebar>
-            Crop Library
-        </Sidebar>
+        <Fragment>
+            <Button />
+            <TableView />
+            <Sidebar>
+                Crop Lib
+            </Sidebar>
+        </Fragment>
     )
 }
 

@@ -63,6 +63,22 @@ html, body, input, select, option, textarea, button {
     font-family: 'Nunito', sans-serif;
 }
 
-body {
+::selection {
+    background-color:#fff;
+    color:#000;
+    text-shadow: 0 0;
+}
+
+::-moz-selection {
+    background-color:#fff;
+    color:#000;
+    text-shadow: 0 0;
+}
+
+html body {
     background:#45B864;
+}
+
+.container {
+    padding-top:160px;
 }

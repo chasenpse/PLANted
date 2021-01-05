@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './Schedule.css';
-import Sidebar from "../../Sidebar/Sidebar";
+import Button from "../../Common/Button";
+import Sidebar from "../../Common/Sidebar/Sidebar";
+import TableView from "../../Common/TableView/TableView";
 
 const Schedule = () => {
     return (
-        <Sidebar>
-            Schedule
-        </Sidebar>
+        <Fragment>
+            <Button />
+            <TableView />
+            <Sidebar>
+                Schedule
+            </Sidebar>
+        </Fragment>
     )
 }
 
