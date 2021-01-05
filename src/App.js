@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './App.css';
+import { Route } from 'react-router-dom';
 import Header from "./components/Header/Header";
-import Sidebar from "./components/Sidebar/Sidebar";
-
+import Overview from "./components/Pages/Overview";
+import CropLibrary from "./components/Pages/CropLibrary";
+import Schedule from "./components/Pages/Schedule";
 
 const App = () => {
 
     return (
-        <div style={{
-            marginTop: '160px'
-        }}>
+        <Fragment>
             <Header />
-            <Sidebar />
-        </div>
+            <Route exact path={"/"} component={Overview} />
+            <Route exact path={"/library"} component={CropLibrary} />
+            <Route exact path={"/schedule"} component={Schedule} />
+        </Fragment>
     );
 }
 

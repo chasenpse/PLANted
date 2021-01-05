@@ -1,9 +1,10 @@
 import React from 'react';
 import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 const Logout = () => {
     return (
-        <Button name={"Logout"} />
+        <Link to={'/logout'} className={'navBtn'}><Button name={"Logout"} /></Link>
     )
 }
 

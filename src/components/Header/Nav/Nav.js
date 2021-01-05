@@ -1,12 +1,18 @@
-import React from 'react';
 import Button from "../Button/Button";
+import { NavLink } from "react-router-dom";
 
 const Nav = () => {
     return (
         <nav>
-            <Button className={'selected'} name={"Overview"} />
-            <Button name={"Crop Library"} />
-            <Button name={"Scheduler"} />
+            <NavLink exact to={'/'} className={'navBtn'} activeClassName={'selected'}>
+                <Button name={"Overview"} />
+            </NavLink>
+            <NavLink exact to={'/library'} className={'navBtn'} activeClassName={'selected'}>
+                <Button name={"Crop Library"} />
+            </NavLink>
+            <NavLink exact to={'/schedule'} className={'navBtn'} activeClassName={'selected'}>
+                <Button name={"Scheduler"} />
+            </NavLink>
         </nav>
     )
 }

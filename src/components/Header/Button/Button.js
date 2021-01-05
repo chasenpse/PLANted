@@ -1,6 +1,6 @@
 import React from 'react';
 import './Button.css';
 
-const Button = ({name, onClickHandler, className}) => <button className={className} onClick={(e)=>onClickHandler(e)}>{name}</button>
+const Button = ({name}) => <button className={'navBtn'}>{name}</button>
 
 export default Button;
