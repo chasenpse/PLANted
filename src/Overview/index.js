@@ -1,6 +1,6 @@
 import React from 'react';
 import './Overview.css';
-import Sidebar from "../../Common/Sidebar/Sidebar";
+import Sidebar from "../shared/Sidebar/Sidebar";
 
 const Overview = () => {
     return (

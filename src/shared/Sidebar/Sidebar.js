@@ -3,7 +3,7 @@ import './Sidebar.css';
 
 const Sidebar = ({children}) => {
     return (
-        <section>
+        <section className={'section'}>
             {children}
         </section>
     )

@@ -1,0 +1,24 @@
+button.btn {
+    line-height:2.625rem;
+    font-size:1.5rem;
+    padding:0 24px;
+    background:#EEE;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms;
+}
+
+button.main {
+    margin:0 0 40px 40px;
+}
+
+button.cancel {
+    background:none;
+    border: 1px solid #000;
+}
+
+button.btn:hover {
+    background:#000;
+    color:#FFF;
+}

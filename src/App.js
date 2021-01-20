@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
-import Header from "./components/Header/Header";
-import Overview from "./components/Pages/Overview";
-import CropLibrary from "./components/Pages/CropLibrary";
-import Schedule from "./components/Pages/Schedule";
+import Header from "./shared/Header/Header";
+import Overview from "./Overview";
+import CropLibrary from "./CropLibrary";
+import Schedule from "./Schedule";
 
 const App = () => {
 
