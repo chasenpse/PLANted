@@ -5,7 +5,7 @@ const Nav = () => {
     return (
         <nav>
             <NavLink exact to={'/'} className={'navBtn'} activeClassName={'selected'}>
-                <Button name={"Overview"} />
+                <Button name={"Calendar"} />
             </NavLink>
             <NavLink exact to={'/library'} className={'navBtn'} activeClassName={'selected'}>
                 <Button name={"Crop Library"} />

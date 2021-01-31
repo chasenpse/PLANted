@@ -1,0 +1,42 @@
+button.btn {
+    background:#EEE;
+    border: 1px solid #EEE;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms;
+    text-transform: capitalize;
+}
+
+button.btn:hover {
+    background:#000;
+    border: 1px solid #000;
+    color:#FFF;
+}
+
+button.main {
+    line-height:2.625rem;
+    font-size:1.5rem;
+    padding:0 24px;
+    margin:0 0 40px 40px;
+}
+
+button.save, button.cancel {
+    line-height:2rem;
+    font-size:1.125rem;
+    padding:0 24px;
+}
+
+button.save {
+    background:#EEE;
+    border: 1px solid #EEE;
+}
+
+button.cancel {
+    background:none;
+    border: 1px solid #000;
+}
+
+button.right {
+    position:absolute;
+    right:0;
+}

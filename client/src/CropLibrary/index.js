@@ -8,7 +8,7 @@ import TableView from "../shared/TableView/TableView";
 const CropLibrary = () => {
     return (
         <Fragment>
-            <Button type={'main'} />
+            <Button type={'main'} text={'add crop'} />
             <Main>
                 <TableView />
             </Main>
