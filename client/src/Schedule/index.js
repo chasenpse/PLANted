@@ -1,29 +1,36 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import './Schedule.css';
 import Button from "../shared/Button";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import TableView from "../shared/TableView/TableView";
 import Main from "../shared/Main";
-import { TiDelete } from 'react-icons/ti';
+import axios from 'axios';
 
 const Schedule = () => {
 
-    const mockItem = {
-        id: 123,
-        crop: "Butter King Lettuce",
-        quantity: 1,
-        stages: 4,
-        startDate: '2021-01-21',
-        endDate: '2021-05-01',
-        notes: ''
-    }
+    const [instanceProps, setInstanceProps] = useState();
 
-    const [instance, setInstance] = useState(mockItem);
+    const userId = 1;
+
+    // LOAD USERS INSTANCES
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/instances/${userId}/`);
+                const {data} = res;
+                console.log(data);
+                setInstanceProps(data);
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
+
     return (
         <Fragment>
             <Button type={'main'} text={'add instance'} />
             <Main>
-                <TableView />
+                <TableView Cols={['name', 'grow time', 'sprout time', 'yield']} />
             </Main>
             <Sidebar title={'Instance Properties'}>
                 <div>

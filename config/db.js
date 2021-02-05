@@ -1,4 +1,4 @@
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 const keys = require('./keys');
 
 const sequelize = new Sequelize(keys.mySqlDatabase, keys.mySqlUser, keys.mySqlPassword, {

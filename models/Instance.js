@@ -1,5 +1,7 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const {DataTypes} = require('sequelize');
+const Crop = require('./Crop');
+const User = require('./User');
 
 const Instance = sequelize.define('instance', {
     id: {
@@ -8,26 +10,38 @@ const Instance = sequelize.define('instance', {
         defaultValue: true,
     },
     userId: {
-        type: DataTypes.INTEGER.UNSIGNED
+        type: DataTypes.INTEGER.UNSIGNED,
+        required: true,
     },
     cropId: {
-        type: DataTypes.INTEGER.UNSIGNED
+        type: DataTypes.INTEGER.UNSIGNED,
+        required: true,
     },
     quantity: {
-        type: DataTypes.INTEGER.UNSIGNED
+        type: DataTypes.INTEGER.UNSIGNED,
+        required: true,
     },
     stages: {
-        type: DataTypes.INTEGER.UNSIGNED
+        type: DataTypes.INTEGER.UNSIGNED,
+        required: true,
     },
     startDate: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        required: true,
     },
     endDate: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        required: true,
     },
     notes: {
-        type: DataTypes.TEXT('long')
+        type: DataTypes.TEXT('long'),
+        allowNull: true
     }
+});
+
+Instance.hasOne(Crop, {
+    sourceKey: 'cropId',
+    foreignKey: 'id',
 });
 
 module.exports = Instance;

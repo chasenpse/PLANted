@@ -1,9 +1,14 @@
 const express = require('express');
-const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const userRoute = require('./routes/users');
 const cropRoute = require('./routes/crops');
 const instanceRoute = require('./routes/instances');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 
 app.use('/api/users', userRoute);
 app.use('/api/crops', cropRoute);
