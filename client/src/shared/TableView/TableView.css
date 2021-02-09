@@ -9,6 +9,7 @@
     vertical-align: bottom;
     padding-bottom: 1rem;
     border-bottom:1px solid rgba(0,0,0,0.25);
+    text-transform: capitalize;
 }
 
 .tableView tbody tr {
@@ -48,7 +49,6 @@
 }
 
 .tableView th:first-of-type, .tableView td:first-of-type {
-    width:46%;
     text-align: left;
     padding-left:40px;
 }

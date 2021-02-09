@@ -8,18 +8,15 @@ import axios from 'axios';
 
 const Schedule = () => {
 
-    const [instanceProps, setInstanceProps] = useState();
-
-    const userId = 1;
+    const [instances, setInstances] = useState([]);
 
     // LOAD USERS INSTANCES
     useEffect(() => {
         (async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/instances/${userId}/`);
+                const res = await axios.get(`http://localhost:5000/api/instances/`);
                 const {data} = res;
-                console.log(data);
-                setInstanceProps(data);
+                setInstances(data);
             } catch (err) {
                 console.log(err);
             }
@@ -30,7 +27,16 @@ const Schedule = () => {
         <Fragment>
             <Button type={'main'} text={'add instance'} />
             <Main>
-                <TableView Cols={['name', 'grow time', 'sprout time', 'yield']} />
+                <TableView
+                    Header={[
+                        { name: "name", prop: "crop.name" },
+                        { name: "quantity", prop: "quantity" },
+                        { name: "stages", prop: "stages" },
+                        { name: "start", prop: "startDate" },
+                        { name: "end", prop: "endDate" },
+                    ]}
+                    Data={instances}
+                />
             </Main>
             <Sidebar title={'Instance Properties'}>
                 <div>

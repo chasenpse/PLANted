@@ -10,7 +10,7 @@ const CropLibrary = () => {
         <Fragment>
             <Button type={'main'} text={'add crop'} />
             <Main>
-                <TableView />
+                <TableView Cols={['name', 'grow time', 'sprout time', 'yield']} />
             </Main>
             <Sidebar>
                 Crop Lib
