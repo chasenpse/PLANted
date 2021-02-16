@@ -12,6 +12,10 @@
     text-transform: capitalize;
 }
 
+.tableView  td {
+    text-transform: capitalize;
+}
+
 .tableView tbody tr {
     line-height:2.625rem;
     transition: all 150ms;
@@ -51,4 +55,5 @@
 .tableView th:first-of-type, .tableView td:first-of-type {
     text-align: left;
     padding-left:40px;
+    white-space: nowrap;
 }

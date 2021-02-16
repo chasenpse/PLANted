@@ -6,10 +6,10 @@ router.get("/:id", (req,res) => {
         where: {
             id: req.params.id
         },
-        include: [{
+        include: {
             model: db.crops,
             attributes: ['name']
-        }],
+        },
         raw: true
     })
         .then(instances => res.json(instances))
@@ -18,10 +18,10 @@ router.get("/:id", (req,res) => {
 
 router.get("/", (req,res) => {
     db.instances.findAll({
-        include: [{
+        include: {
             model: db.crops,
             attributes: ['name']
-        }],
+        },
         where: {
             userId: 1
         },
