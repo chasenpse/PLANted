@@ -5,6 +5,7 @@ import Header from "./shared/Header/Header";
 import Overview from "./Calendar";
 import CropLibrary from "./CropLibrary";
 import Schedule from "./Schedule";
+import { ScheduleProvider } from "./Schedule/ScheduleContext";
 
 const App = () => {
 
@@ -13,7 +14,9 @@ const App = () => {
             <Header />
             <Route exact path={"/"} component={Overview} />
             <Route exact path={"/library"} component={CropLibrary} />
-            <Route exact path={"/schedule"} component={Schedule} />
+            <ScheduleProvider>
+                <Route exact path={"/schedule"} component={Schedule} />
+            </ScheduleProvider>
         </div>
     );
 }
