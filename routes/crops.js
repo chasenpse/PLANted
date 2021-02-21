@@ -3,9 +3,9 @@ const db = require('../config/db');
 
 router.get("/:id/names", (req,res) => {
     db.crops.findAll({
-        attributes: ['name'],
+        attributes: ['id', 'name'],
         where: {
-            id: req.params.id
+            userId: req.params.id
         },
     })
         .then(crops => res.json(crops))
@@ -15,7 +15,7 @@ router.get("/:id/names", (req,res) => {
 router.get("/:id", (req,res) => {
     db.crops.findAll({
         where: {
-            id: req.params.id
+            userId: req.params.id
         },
     })
         .then(crops => res.json(crops))

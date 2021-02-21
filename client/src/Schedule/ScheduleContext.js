@@ -4,30 +4,21 @@ import axios from "axios";
 export const ScheduleContext = createContext(null);
 
 export const ScheduleProvider = ({children}) => {
+
     const [instances, setInstances] = useState();
     const [crops, setCrops] = useState();
     const [selected, setSelected] = useState();
+    const [loading, setLoading] = useState(true);
 
     // Load the user's instances
     useEffect(() => {
         (async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/instances/`);
-                const {data} = res;
-                setInstances(data);
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, []);
-
-    // Load the user's crops
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await axios.get(`http://localhost:5000/api/crops/1`);
-                const {data} = res;
-                setCrops(data);
+                const instanceRes = await axios.get(`http://localhost:5000/api/instances/`);
+                const cropRes = await axios.get(`http://localhost:5000/api/crops/1/names`);
+                setInstances(instanceRes.data);
+                setCrops(cropRes.data);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -35,7 +26,7 @@ export const ScheduleProvider = ({children}) => {
     }, []);
 
     return (
-        <ScheduleContext.Provider value={[instances, setInstances, crops, setInstances, selected, setSelected]}>
+        <ScheduleContext.Provider value={{instances, setInstances, crops, setCrops, selected, setSelected, loading}}>
             {children}
         </ScheduleContext.Provider>
     )

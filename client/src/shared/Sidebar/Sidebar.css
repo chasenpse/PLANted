@@ -19,6 +19,7 @@
     right:0;
     padding:160px 40px 40px 40px;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .section .title {
@@ -55,7 +56,7 @@
 }
 
 .section .sidebar-form div {
-    height:3rem;
+    min-height:3rem;
 }
 
 .section .sidebar-form label,
@@ -87,6 +88,7 @@
 .section .sidebar-form select {
     padding-left:10px;
     padding-right:10px;
+    text-transform: capitalize;
 }
 
 .section .sidebar-form textarea {
@@ -95,7 +97,7 @@
     display: block;
     width: 100%;
     box-sizing: border-box;
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 0.8rem;
     font-size: 1.125rem;
     margin-bottom:2rem;
 }

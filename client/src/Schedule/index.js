@@ -1,14 +1,24 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import './Schedule.css';
 import Button from "../shared/Button";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import TableView from "../shared/TableView/TableView";
+import { formatDate } from "../utils/formatDate";
 import Main from "../shared/Main";
 import {ScheduleContext} from "./ScheduleContext";
 
 const Schedule = () => {
 
-    const [instances, setInstances, crops, setCrops, selected, setSelected] = useContext(ScheduleContext);
+    const {instances, crops, selected, setSelected, loading} = useContext(ScheduleContext);
+    const [tmpInstance, setTmpInstance] = useState();
+
+    if (loading) {
+        return (<div style={{
+            textAlign: "center",
+            fontSize: "3rem",
+            fontWeight: "bold",
+        }}>AYO I'M LOADIN HERE</div>);
+    }
 
     return (
         <Fragment>
@@ -27,36 +37,45 @@ const Schedule = () => {
                     SetSelected={setSelected}
                 />
             </Main>
-            <Sidebar
-                title={'Instance Properties'}>
+            <Sidebar title={'Instance Properties'}>
                 <div>
                     <label>Crop:</label>
-                    <select>
-                        <option value={'Purple Lady Bok Choy'}>Purple Lady Bok Choy</option>
+                    <select
+                        defaultValue={"none"}
+                        value={
+                            selected !== undefined ? crops.find(crop => crop.id === instances[selected].cropId).id : "none"}
+                    >
+                        <option disabled={'disabled'} value={"none"}>Select Crop</option>
+                        {
+                            crops.map(crop => (
+                                <option key={`crop-${crop.id}`} value={crop.id}>
+                                    {crop.name}
+                                </option>
+                            ))
+                        }
                     </select>
                 </div>
                 <div>
                     <label>Quantity:</label>
-                    <input type={'number'} min={1} />
+                    <input type={'number'} min={1} defaultValue={1} value={selected !== undefined ? instances[selected].quantity : null}
+                    />
                 </div>
                 <div>
                     <label>Stages:</label>
-                    <input type={'number'} min={1} />
+                    <input type={'number'} min={1} defaultValue={1} value={selected !== undefined ? instances[selected].stages : null} />
                 </div>
                 <div>
                     <label>Start Date:</label>
-                    <input type={'date'} value={'2021-01-09'} />
+                    <input type={'date'} defaultValue={formatDate(new Date())} value={selected !== undefined ? formatDate(instances[selected].startDate) : null} />
                 </div>
                 <div>
                     <label>End Date:</label>
-                    <input type={'date'} value={'2021-01-09'} />
+                    <input type={'date'} defaultValue={formatDate(new Date())} value={selected !== undefined ? formatDate(instances[selected].endDate) : null} />
                 </div>
                 <div>
                     <label>Notes:</label>
                 </div>
-                <textarea/>
-                <Button type={'cancel'} text={'cancel'} />
-                <Button type={'save right'} text={'save'} />
+                <textarea value={selected !== undefined ? instances[selected].notes : null}/>
             </Sidebar>
         </Fragment>
     )
