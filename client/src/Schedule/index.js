@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import './Schedule.css';
 import Button from "../shared/Button";
 import Sidebar from "../shared/Sidebar/Sidebar";
@@ -8,16 +8,18 @@ import Main from "../shared/Main";
 import {ScheduleContext} from "./ScheduleContext";
 
 const Schedule = () => {
-
     const {instances, crops, selected, setSelected, loading} = useContext(ScheduleContext);
-    const [tmpInstance, setTmpInstance] = useState();
+    const [tmp, setTmp] = useState(selected !== undefined ? instances[selected] : null);
+    const userId = 1;
+
+    useEffect(()=>setTmp(instances[selected]),[selected])
 
     if (loading) {
-        return (<div style={{
-            textAlign: "center",
-            fontSize: "3rem",
-            fontWeight: "bold",
-        }}>AYO I'M LOADIN HERE</div>);
+        return (<div>loading...</div>);
+    }
+
+    const updateField = (e, n) => {
+        return n ? setTmp({...tmp, [e.target.name]:+e.target.value}) : setTmp({...tmp, [e.target.name]:e.target.value})
     }
 
     return (
@@ -37,45 +39,66 @@ const Schedule = () => {
                     SetSelected={setSelected}
                 />
             </Main>
-            <Sidebar title={'Instance Properties'}>
+            <Sidebar title={'Instance Properties'} selected={selected}>
                 <div>
                     <label>Crop:</label>
                     <select
-                        defaultValue={"none"}
-                        value={
-                            selected !== undefined ? crops.find(crop => crop.id === instances[selected].cropId).id : "none"}
+                        name={"cropId"}
+                        value={selected !== undefined ? crops.find(crop => crop.id === tmp.cropId).id : "none"}
+                        onChange={e=>updateField(e,false)}
                     >
                         <option disabled={'disabled'} value={"none"}>Select Crop</option>
                         {
-                            crops.map(crop => (
-                                <option key={`crop-${crop.id}`} value={crop.id}>
-                                    {crop.name}
-                                </option>
-                            ))
+                            crops.map(crop => <option key={`crop-${crop.id}`} value={crop.id}>{crop.name}</option>)
                         }
                     </select>
                 </div>
                 <div>
                     <label>Quantity:</label>
-                    <input type={'number'} min={1} defaultValue={1} value={selected !== undefined ? instances[selected].quantity : null}
+                    <input
+                        name={"quantity"}
+                        type={'number'}
+                        min={1}
+                        value={selected !== undefined ? tmp.quantity : 1}
+                        onChange={e=>updateField(e,true)}
                     />
                 </div>
                 <div>
                     <label>Stages:</label>
-                    <input type={'number'} min={1} defaultValue={1} value={selected !== undefined ? instances[selected].stages : null} />
+                    <input
+                        name={"stages"}
+                        type={'number'}
+                        min={1}
+                        value={selected !== undefined ? tmp.stages : 1}
+                        onChange={e=>updateField(e,true)}
+                    />
                 </div>
                 <div>
                     <label>Start Date:</label>
-                    <input type={'date'} defaultValue={formatDate(new Date())} value={selected !== undefined ? formatDate(instances[selected].startDate) : null} />
+                    <input
+                        name={"startDate"}
+                        type={'date'}
+                        value={selected !== undefined ? formatDate(tmp.startDate) : formatDate(new Date())}
+                        onChange={e=>updateField(e,false)}
+                    />
                 </div>
                 <div>
                     <label>End Date:</label>
-                    <input type={'date'} defaultValue={formatDate(new Date())} value={selected !== undefined ? formatDate(instances[selected].endDate) : null} />
+                    <input
+                        name={"endDate"}
+                        type={'date'}
+                        value={selected !== undefined ? formatDate(tmp.endDate) : formatDate(new Date())}
+                        onChange={e=>updateField(e,false)}
+                    />
                 </div>
                 <div>
                     <label>Notes:</label>
                 </div>
-                <textarea value={selected !== undefined ? instances[selected].notes : null}/>
+                <textarea
+                    name={"notes"}
+                    value={selected !== undefined ? tmp.notes : ""}
+                    onChange={e=>updateField(e,false)}
+                />
             </Sidebar>
         </Fragment>
     )

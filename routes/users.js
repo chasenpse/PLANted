@@ -1,17 +1,14 @@
 const router = require('express').Router();
-const User = require('../models/User');
-const { Op } = require("sequelize");
+const db = require('../config/db');
 
 router.get('/', (req,res) => {
     res.send({get: 'hello'});
 });
 
 router.get("/:id", (req,res) => {
-    const users = User.findAll({
+    db.users.findOne({
         where: {
-            id: {
-                [Op.eq]: req.params.id
-            }
+            id: req.params.id
         }
     })
         .then(users => res.send(users))

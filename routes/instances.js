@@ -4,7 +4,7 @@ const db = require('../config/db');
 router.get("/:id", (req,res) => {
     db.instances.findAll({
         where: {
-            userId: req.params.id
+            id: req.params.id
         },
         include: {
             model: db.crops,
