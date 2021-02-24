@@ -8,11 +8,19 @@ import Main from "../shared/Main";
 import {ScheduleContext} from "./ScheduleContext";
 
 const Schedule = () => {
+    const newInstance = {
+        "cropId": 2,
+        "quantity": 1,
+        "stages": 1,
+        "startDate": new Date().toISOString(),
+        "endDate": new Date().toISOString(),
+        "notes": "",
+    }
     const {instances, crops, selected, setSelected, loading} = useContext(ScheduleContext);
-    const [tmp, setTmp] = useState(selected !== undefined ? instances[selected] : null);
+    const [tmp, setTmp] = useState(newInstance);
     const userId = 1;
 
-    useEffect(()=>setTmp(instances[selected]),[selected])
+    useEffect(()=>setTmp(selected !== undefined ? instances[selected] : newInstance),[selected])
 
     if (loading) {
         return (<div>loading...</div>);
@@ -44,7 +52,7 @@ const Schedule = () => {
                     <label>Crop:</label>
                     <select
                         name={"cropId"}
-                        value={selected !== undefined ? crops.find(crop => crop.id === tmp.cropId).id : "none"}
+                        value={crops.find(crop => crop.id === tmp.cropId)}
                         onChange={e=>updateField(e,false)}
                     >
                         <option disabled={'disabled'} value={"none"}>Select Crop</option>
@@ -59,7 +67,7 @@ const Schedule = () => {
                         name={"quantity"}
                         type={'number'}
                         min={1}
-                        value={selected !== undefined ? tmp.quantity : 1}
+                        value={tmp.quantity}
                         onChange={e=>updateField(e,true)}
                     />
                 </div>
@@ -69,7 +77,7 @@ const Schedule = () => {
                         name={"stages"}
                         type={'number'}
                         min={1}
-                        value={selected !== undefined ? tmp.stages : 1}
+                        value={tmp.stages}
                         onChange={e=>updateField(e,true)}
                     />
                 </div>
@@ -78,7 +86,7 @@ const Schedule = () => {
                     <input
                         name={"startDate"}
                         type={'date'}
-                        value={selected !== undefined ? formatDate(tmp.startDate) : formatDate(new Date())}
+                        value={formatDate(tmp.startDate)}
                         onChange={e=>updateField(e,false)}
                     />
                 </div>
@@ -87,7 +95,7 @@ const Schedule = () => {
                     <input
                         name={"endDate"}
                         type={'date'}
-                        value={selected !== undefined ? formatDate(tmp.endDate) : formatDate(new Date())}
+                        value={formatDate(tmp.endDate)}
                         onChange={e=>updateField(e,false)}
                     />
                 </div>
@@ -96,7 +104,7 @@ const Schedule = () => {
                 </div>
                 <textarea
                     name={"notes"}
-                    value={selected !== undefined ? tmp.notes : ""}
+                    value={tmp.notes}
                     onChange={e=>updateField(e,false)}
                 />
             </Sidebar>

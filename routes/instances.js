@@ -2,7 +2,7 @@ const router = require('express').Router();
 const db = require('../config/db');
 
 router.get("/:id", (req,res) => {
-    db.instances.findAll({
+    db.instances.findOne({
         where: {
             id: req.params.id
         },
@@ -12,7 +12,7 @@ router.get("/:id", (req,res) => {
         },
         raw: true
     })
-        .then(instances => res.json(instances))
+        .then(instances => res.json([instances]))
         .catch(err => console.log(err));
 });
 
