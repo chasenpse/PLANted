@@ -6,6 +6,7 @@ import Overview from "./Calendar";
 import CropLibrary from "./CropLibrary";
 import Schedule from "./Schedule";
 import { ScheduleProvider } from "./Schedule/ScheduleContext";
+import { CropProvider } from "./CropLibrary/CropContext";
 
 const App = () => {
 
@@ -13,7 +14,11 @@ const App = () => {
         <div className={"container"}>
             <Header />
             <Route exact path={"/"} component={Overview} />
-            <Route exact path={"/library"} component={CropLibrary} />
+
+            <CropProvider>
+                <Route exact path={"/library"} component={CropLibrary} />
+            </CropProvider>
+
             <ScheduleProvider>
                 <Route exact path={"/schedule"} component={Schedule} />
             </ScheduleProvider>

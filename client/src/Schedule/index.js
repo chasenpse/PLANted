@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
+import React, {Fragment, useContext, useState, useEffect, useMemo} from 'react';
 import './Schedule.css';
 import Button from "../shared/Button";
 import Sidebar from "../shared/Sidebar/Sidebar";
@@ -6,28 +6,34 @@ import TableView from "../shared/TableView/TableView";
 import { formatDate } from "../utils/formatDate";
 import Main from "../shared/Main";
 import {ScheduleContext} from "./ScheduleContext";
+import axios from 'axios';
 
 const Schedule = () => {
-    const newInstance = {
-        "cropId": 2,
-        "quantity": 1,
-        "stages": 1,
-        "startDate": new Date().toISOString(),
-        "endDate": new Date().toISOString(),
-        "notes": "",
-    }
+    const newInstance = useMemo(()=>(
+        {
+            "id": 0,
+            "growTime": 1,
+            "sproutTime": 1,
+            "yield": 1,
+            "notes": "",
+        }
+    ), [])
+
     const {instances, crops, selected, setSelected, loading} = useContext(ScheduleContext);
     const [tmp, setTmp] = useState(newInstance);
-    const userId = 1;
 
-    useEffect(()=>setTmp(selected !== undefined ? instances[selected] : newInstance),[selected])
+    useEffect(()=>setTmp(selected !== undefined ? instances[selected] : newInstance),[instances, selected, newInstance])
 
-    if (loading) {
-        return (<div>loading...</div>);
+    const save = async (tmp) => {
+        const res = await axios.post(`http://localhost:5000/api/crops`, {...tmp});
     }
 
     const updateField = (e, n) => {
         return n ? setTmp({...tmp, [e.target.name]:+e.target.value}) : setTmp({...tmp, [e.target.name]:e.target.value})
+    }
+
+    if (loading) {
+        return (<div>loading...</div>);
     }
 
     return (
@@ -52,7 +58,7 @@ const Schedule = () => {
                     <label>Crop:</label>
                     <select
                         name={"cropId"}
-                        value={crops.find(crop => crop.id === tmp.cropId)}
+                        value={tmp.cropId}
                         onChange={e=>updateField(e,false)}
                     >
                         <option disabled={'disabled'} value={"none"}>Select Crop</option>
@@ -67,6 +73,8 @@ const Schedule = () => {
                         name={"quantity"}
                         type={'number'}
                         min={1}
+                        max={99}
+                        step={1}
                         value={tmp.quantity}
                         onChange={e=>updateField(e,true)}
                     />
@@ -77,6 +85,8 @@ const Schedule = () => {
                         name={"stages"}
                         type={'number'}
                         min={1}
+                        max={99}
+                        step={1}
                         value={tmp.stages}
                         onChange={e=>updateField(e,true)}
                     />
@@ -101,12 +111,12 @@ const Schedule = () => {
                 </div>
                 <div>
                     <label>Notes:</label>
+                    <textarea
+                        name={"notes"}
+                        value={tmp.notes}
+                        onChange={e=>updateField(e,false)}
+                    />
                 </div>
-                <textarea
-                    name={"notes"}
-                    value={tmp.notes}
-                    onChange={e=>updateField(e,false)}
-                />
             </Sidebar>
         </Fragment>
     )

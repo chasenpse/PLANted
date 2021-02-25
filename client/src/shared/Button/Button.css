@@ -14,8 +14,8 @@ button.btn:hover {
 }
 
 button.main {
-    line-height:2.625rem;
-    font-size:1.5rem;
+    font-size:1.25rem;
+    height:2rem;
     padding:0 24px;
     margin:0 0 40px 40px;
 }
