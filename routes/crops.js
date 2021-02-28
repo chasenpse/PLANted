@@ -37,7 +37,7 @@ router.patch("/", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    res.send(req.body)
+    res.status(200).send(req)
 })
 
 router.delete("/", async (req, res) => {

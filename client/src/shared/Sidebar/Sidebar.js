@@ -1,21 +1,21 @@
 import './Sidebar.css';
-import {TiDelete} from "react-icons/ti";
 import Button from "../Button";
 
-const Sidebar = ({children, title, selected}) => {
+const Sidebar = ({children, title, selected, saveHandler, cancelHandler, deleteHandler}) => {
     return (
         <section className={'section'}>
             {
-                selected !== undefined ?
+                selected !== "none" ?
                     (
                         <>
                             <div className={'title'}>
-                                <h2>{title}</h2><TiDelete/>
+                                <h2>{title}</h2>
                             </div>
                             <form className={'sidebar-form'}>
                                 {children}
-                                <Button type={'cancel'} text={'cancel'} />
-                                <Button type={'save right'} text={'save'} />
+                                <Button type={'save'} text={'save'} handler={saveHandler} />
+                                <Button type={'cancel'} text={'cancel'} handler={cancelHandler} />
+                                <Button type={'delete right'} text={'delete'} handler={deleteHandler} />
                             </form>
                         </>
                     ) : null

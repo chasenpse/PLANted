@@ -22,18 +22,34 @@ button.main {
 
 button.save, button.cancel {
     line-height:2rem;
-    font-size:1.125rem;
-    padding:0 24px;
+    font-size:1rem;
+    padding:0;
+    min-width:100px;
 }
 
 button.save {
     background:#EEE;
     border: 1px solid #EEE;
+    margin-right:1rem;
 }
 
 button.cancel {
     background:none;
     border: 1px solid #000;
+}
+
+button.delete {
+    background:rgba(184,69,69,0.5);
+    color: #FFF;
+    border: 1px solid rgba(184,69,69,0.5);
+    line-height:2rem;
+    font-size:1rem;
+    padding:0 1rem;
+}
+
+button.delete:hover {
+    background:rgba(184,69,69,1);
+    border: 1px solid rgba(184,69,69,1);
 }
 
 button.right {

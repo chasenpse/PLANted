@@ -7,7 +7,7 @@ export const ScheduleProvider = ({children}) => {
 
     const [instances, setInstances] = useState();
     const [crops, setCrops] = useState();
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState("none");
     const [loading, setLoading] = useState(true);
 
     // Load the user's instances
