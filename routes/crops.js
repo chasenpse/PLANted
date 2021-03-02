@@ -32,7 +32,7 @@ router.get("/", (req,res) => {
         .catch(err => console.log(err));
 });
 
-router.patch("/", async (req, res) => {
+router.put("/", async (req, res) => {
     res.send(req.body)
 })
 

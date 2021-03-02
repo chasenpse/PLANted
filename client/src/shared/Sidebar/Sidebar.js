@@ -5,7 +5,7 @@ const Sidebar = ({children, title, selected, saveHandler, cancelHandler, deleteH
     return (
         <section className={'section'}>
             {
-                selected !== "none" ?
+                selected !== undefined ?
                     (
                         <>
                             <div className={'title'}>
