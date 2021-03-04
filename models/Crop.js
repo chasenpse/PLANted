@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('crop', {
         id: {
+            allowNull: false,
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
-            defaultValue: true,
             autoIncrement: true,
         },
         userId: {

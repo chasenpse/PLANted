@@ -3,12 +3,13 @@ const db = require('../config/db');
 
 router.get("/:id", (req,res) => {
     db.instances.findOne({
-        where: {
-            id: req.params.id
-        },
+        attributes: ['id','cropId','quantity','stages','startDate','endDate','notes','createdAt','updatedAt','crop.name'],
         include: {
             model: db.crops,
             attributes: ['name']
+        },
+        where: {
+            id: req.params.id
         },
         raw: true
     })
@@ -18,6 +19,7 @@ router.get("/:id", (req,res) => {
 
 router.get("/", (req,res) => {
     db.instances.findAll({
+        attributes: ['id','cropId','quantity','stages','startDate','endDate','notes','createdAt','updatedAt'],
         include: {
             model: db.crops,
             attributes: ['name']
@@ -25,6 +27,9 @@ router.get("/", (req,res) => {
         where: {
             userId: 1
         },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
         raw: true
     })
         .then(instances => res.json(instances))
@@ -47,7 +52,7 @@ router.put("/:id", async (req, res) => {
         instance.stages = stages || instance.stages;
         instance.startDate = startDate || instance.startDate;
         instance.endDate = endDate || instance.endDate;
-        instance.notes = notes || instance.notes;
+        instance.notes = notes;
         instance.save();
         res.status(200).send(instance)
     } catch (e) {
@@ -56,7 +61,14 @@ router.put("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    res.status(200).send(req)
+    const {cropId, quantity, stages, startDate, endDate, notes} = req.body;
+    try {
+        const instance = await db.instances.create({userId:1, cropId, quantity, stages, startDate, endDate, notes})
+        res.status(200).send(instance)
+    } catch(err) {
+        console.log(err)
+        res.status(500).send("something broke")
+    }
 })
 
 router.delete("/:id", async (req, res) => {

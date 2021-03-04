@@ -11,8 +11,7 @@ import axios from "axios";
 const Schedule = () => {
     const newInstance = useMemo(()=>(
         {
-            "id": 0,
-            "crop.name": "",
+            "cropId": "none",
             "quantity": 1,
             "stages": 1,
             "startDate": new Date().toISOString(),
@@ -24,28 +23,57 @@ const Schedule = () => {
     const {instances, setInstances, crops, selected, setSelected, loading} = useContext(ScheduleContext);
     const [tmp, setTmp] = useState(newInstance);
 
-    useEffect(()=>setTmp(selected !== undefined ? instances[selected] : newInstance),[instances, selected, newInstance])
+    // reset page on load
+    useEffect(()=>{
+        (async()=>{
+            await updateInstances();
+        })();
+    }, []);
+
+    // update tmp object when selected is changed
+    useEffect(()=>{
+        if (selected !== undefined && selected !== "new") {
+            setTmp(instances.find(i=>i.id === selected))
+        }
+        else if (selected === "new") {
+            setTmp(newInstance)
+        }
+    },[instances, selected, newInstance])
 
     const updateField = (e, n) => {
         return n ? setTmp({...tmp, [e.target.name]:+e.target.value}) : setTmp({...tmp, [e.target.name]:e.target.value})
     }
 
+    const updateInstances = async () => {
+        try {
+            const res = await axios.get(`http://localhost:5000/api/instances/`);
+            setInstances(res.data);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const addInstance = () => {
+        setSelected("new");
+    }
+
+    const addHandler = async (e) => {
+        if (tmp.cropId === "none") {
+            return false;
+        }
+        try {
+            const res = await axios.post(`http://localhost:5000/api/instances/`, tmp);
+            await updateInstances();
+            setSelected(res.data.id)
+        } catch (err) {
+            console.log(err, e)
+        }
+    }
+
     const saveHandler = async (e) => {
         try {
-            const res = await axios.put(`http://localhost:5000/api/instances/${tmp.id}`, tmp)
-            const data = instances.map(i=>{
-                if (i.id === res.data.id) {
-                    i.cropId = res.data.cropId;
-                    i['crop.name'] = crops.find(i=>i.id===tmp.cropId).name;
-                    i.quantity = res.data.quantity;
-                    i.stages = res.data.stages;
-                    i.startDate = res.data.startDate;
-                    i.endDate = res.data.endDate;
-                    i.notes = res.data.notes;
-                }
-                return i;
-            })
-            setInstances(data);
+            await axios.put(`http://localhost:5000/api/instances/${tmp.id}`, tmp)
+            await updateInstances();
         } catch(err) {
             console.log(err, e)
         }
@@ -53,7 +81,7 @@ const Schedule = () => {
 
     const cancelHandler = (e) => {
         try {
-            setTmp(instances[selected])
+            setSelected(undefined)
         } catch (err) {
             console.log(err, e);
         }
@@ -62,9 +90,8 @@ const Schedule = () => {
     const deleteHandler = async (e) => {
         try {
             const res = await axios.delete(`http://localhost:5000/api/instances/${tmp.id}`);
-            const data = instances.filter(i=>i.id !== tmp.id);
-            setSelected(undefined);
-            setInstances(data);
+            setSelected(res.data.length > 0 ? 0 : undefined);
+            await updateInstances();
         } catch(err) {
             console.log(err, e)
         }
@@ -76,22 +103,29 @@ const Schedule = () => {
 
     return (
         <>
-            <Button type={'main'} text={'add instance'} handler={saveHandler} />
             <Main>
+                <Button type={'main'} text={'add instance'} handler={addInstance} />
                 <TableView
-                    Header={[
+                    Cols={[
                         { name: "Crop", prop: "crop.name" },
                         { name: "quantity", prop: "quantity" },
                         { name: "stages", prop: "stages" },
                         { name: "start", prop: "startDate", type: "date" },
                         { name: "end", prop: "endDate", type: "date" },
                     ]}
-                    Data={instances}
+                    Rows={instances}
                     Selected={selected}
                     SetSelected={setSelected}
                 />
             </Main>
-            <Sidebar title={'Instance Properties'} selected={selected} saveHandler={saveHandler} cancelHandler={cancelHandler} deleteHandler={deleteHandler}>
+            <Sidebar
+                title={'Instance Properties'}
+                selected={selected}
+                addHandler={addHandler}
+                saveHandler={saveHandler}
+                cancelHandler={cancelHandler}
+                deleteHandler={deleteHandler}
+            >
                 <div>
                     <label>Crop:</label>
                     <select
@@ -151,7 +185,7 @@ const Schedule = () => {
                     <label>Notes:</label>
                     <textarea
                         name={"notes"}
-                        value={tmp.notes}
+                        value={tmp.notes !== null ? tmp.notes : ""}
                         onChange={e=>updateField(e,false)}
                     />
                 </div>

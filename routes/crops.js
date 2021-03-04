@@ -7,6 +7,9 @@ router.get("/:id/names", (req,res) => {
         where: {
             userId: req.params.id
         },
+        order: [
+            ['name', 'ASC']
+        ],
     })
         .then(crops => res.json(crops))
         .catch(err => console.log(err));
@@ -14,6 +17,7 @@ router.get("/:id/names", (req,res) => {
 
 router.get("/:id", (req,res) => {
     db.crops.findAll({
+        attributes: ['id','name','growTime','sproutTime','notes','createdAt','updatedAt'],
         where: {
             userId: req.params.id
         },
@@ -24,9 +28,13 @@ router.get("/:id", (req,res) => {
 
 router.get("/", (req,res) => {
     db.crops.findAll({
+        attributes: ['id','name','growTime','sproutTime','notes','createdAt','updatedAt'],
         where: {
             userId: 1
         },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
     })
         .then(crops => res.json(crops))
         .catch(err => console.log(err));

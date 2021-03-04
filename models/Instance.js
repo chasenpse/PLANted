@@ -1,9 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
+    const toJSON = () => {
+        return {...this.get(), userId: undefined}
+    }
     return sequelize.define('instance', {
         id: {
+            allowNull: false,
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
-            defaultValue: true,
+            autoIncrement: true,
         },
         userId: {
             type: DataTypes.INTEGER.UNSIGNED,
@@ -31,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notes: {
             type: DataTypes.TEXT('long'),
-            allowNull: true
+            allowNull: true,
         }
     });
 }

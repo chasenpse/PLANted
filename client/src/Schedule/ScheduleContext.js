@@ -26,9 +26,8 @@ export const ScheduleProvider = ({children}) => {
     }, []);
 
     return (
-        <ScheduleContext.Provider value={{instances, setInstances, crops, setCrops, selected, setSelected, loading}}>
+        <ScheduleContext.Provider value={{instances, setInstances, crops, setCrops, selected, setSelected, loading, setLoading}}>
             {children}
         </ScheduleContext.Provider>
     )
 }
-
