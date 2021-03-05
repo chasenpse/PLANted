@@ -18,10 +18,25 @@ const CropLibrary = () => {
         }
     ), [])
 
-    const {crops, setCrops, selected, setSelected, loading} = useContext(CropContext);
+    const {crops, setCrops, selected, setSelected, loading, setLoading} = useContext(CropContext);
     const [tmp, setTmp] = useState(newCrop);
 
-    // update tmp object when selected is changed
+    // Load the user's instances
+    useEffect(() => {
+        setLoading(true);
+        setSelected(undefined);
+        (async () => {
+            try {
+                const res = await axios.get(`http://localhost:5000/api/crops`);
+                setCrops(res.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, [setCrops, setLoading]);
+
+    // reassign tmp object on select changes
     useEffect(()=>{
         if (selected !== undefined && selected !== "new") {
             setTmp(crops.find(i=>i.id === selected))

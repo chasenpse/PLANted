@@ -44,10 +44,6 @@ router.put("/:id", async (req, res) => {
     const id = req.params.id;
     try {
         const crop = await db.crops.findOne({
-            include: {
-                model: db.crops,
-                attributes: ['name']
-            },
             where: {id},
         })
         const {name, growTime, sproutTime, notes} = req.body;

@@ -20,15 +20,25 @@ const Schedule = () => {
         }
     ), [])
 
-    const {instances, setInstances, crops, selected, setSelected, loading} = useContext(ScheduleContext);
+    const {instances, setInstances, crops, setCrops, selected, setSelected, loading, setLoading} = useContext(ScheduleContext);
     const [tmp, setTmp] = useState(newInstance);
 
-    // reset page on load
-    useEffect(()=>{
-        (async()=>{
-            await updateInstances();
+    // Load the user's instances
+    useEffect(() => {
+        setLoading(true);
+        setSelected(undefined);
+        (async () => {
+            try {
+                const instanceRes = await axios.get(`http://localhost:5000/api/instances/`);
+                const cropRes = await axios.get(`http://localhost:5000/api/crops/1/names`);
+                setInstances(instanceRes.data);
+                setCrops(cropRes.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+            }
         })();
-    }, []);
+    }, [setCrops, setInstances, setLoading, setSelected]);
 
     // update tmp object when selected is changed
     useEffect(()=>{

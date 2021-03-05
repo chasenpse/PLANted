@@ -1,5 +1,4 @@
-import {createContext, useState, useEffect } from 'react';
-import axios from "axios";
+import {createContext, useState} from 'react';
 
 export const CropContext = createContext(null);
 
@@ -9,21 +8,8 @@ export const CropProvider = ({children}) => {
     const [selected, setSelected] = useState();
     const [loading, setLoading] = useState(true);
 
-    // Load the user's instances
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await axios.get(`http://localhost:5000/api/crops`);
-                setCrops(res.data);
-                setLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, []);
-
     return (
-        <CropContext.Provider value={{crops, setCrops, selected, setSelected, loading}}>
+        <CropContext.Provider value={{crops, setCrops, selected, setSelected, loading, setLoading}}>
             {children}
         </CropContext.Provider>
     )
