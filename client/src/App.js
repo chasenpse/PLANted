@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import Header from "./shared/Header/Header";
-import Calendar from "./Calendar";
+import Overview from "./Overview";
+import { OverviewProvider } from "./Overview/OverviewContext";
 import CropLibrary from "./CropLibrary";
 import { CropProvider } from "./CropLibrary/CropContext";
 import Schedule from "./Schedule";
@@ -14,7 +15,9 @@ const App = () => {
         <>
             <Header />
             <div className={"container"}>
-                <Route exact path={"/"} component={Calendar} />
+                <OverviewProvider>
+                    <Route exact path={"/"} component={Overview} />
+                </OverviewProvider>
 
                 <CropProvider>
                     <Route exact path={"/library"} component={CropLibrary} />

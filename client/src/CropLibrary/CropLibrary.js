@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import './CropLibrary.css';
-import Button from "../shared/Button";
-import Sidebar from "../shared/Sidebar/Sidebar";
-import TableView from "../shared/TableView/TableView";
-import Main from "../shared/Main";
 import {CropContext} from "./CropContext";
+import Main from "../shared/Main";
+import Sidebar from "../shared/Sidebar/Sidebar";
+import Button from "../shared/Button";
+import TableView from "../shared/TableView/TableView";
 import axios from "axios";
 
 const CropLibrary = () => {
@@ -24,7 +24,6 @@ const CropLibrary = () => {
     // Load the user's instances
     useEffect(() => {
         setLoading(true);
-        setSelected(undefined);
         (async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/api/crops`);
@@ -123,54 +122,57 @@ const CropLibrary = () => {
                 />
             </Main>
             <Sidebar
-                title={'Crop Properties'}
-                selected={selected}
-                addHandler={addHandler}
-                saveHandler={saveHandler}
-                cancelHandler={cancelHandler}
-                deleteHandler={deleteHandler}
+                display={selected}
             >
-                <div>
-                    <label>Name:</label>
-                    <input
-                        name={"name"}
-                        type={'text'}
-                        value={tmp.name}
-                        onChange={e=>updateField(e,false)}
-                    />
+                <div className={'title'}>
+                    <h2>Crop Properties</h2>
                 </div>
-                <div>
-                    <label>Grow Time:</label>
-                    <input
-                        name={"growTime"}
-                        type={'number'}
-                        min={1}
-                        max={180}
-                        step={1}
-                        value={tmp.growTime}
-                        onChange={e=>updateField(e,true)}
-                    />
-                </div>
-                <div>
-                    <label>Sprout Time:</label>
-                    <input
-                        name={"sproutTime"}
-                        type={'number'}
-                        min={1}
-                        max={180}
-                        step={1}
-                        value={tmp.sproutTime}
-                        onChange={e=>updateField(e,true)}
-                    />
-                </div>
-                <div>
-                    <label>Notes:</label>
-                    <textarea
-                        name={"notes"}
-                        value={tmp.notes}
-                        onChange={e=>updateField(e,false)}
-                    />
-                </div>
+                <form className={'sidebar-form'}>
+                    <div>
+                        <label>Name:</label>
+                        <input
+                            name={"name"}
+                            type={'text'}
+                            value={tmp.name}
+                            onChange={e=>updateField(e,false)}
+                        />
+                    </div>
+                    <div>
+                        <label>Grow Time:</label>
+                        <input
+                            name={"growTime"}
+                            type={'number'}
+                            min={1}
+                            max={180}
+                            step={1}
+                            value={tmp.growTime}
+                            onChange={e=>updateField(e,true)}
+                        />
+                    </div>
+                    <div>
+                        <label>Sprout Time:</label>
+                        <input
+                            name={"sproutTime"}
+                            type={'number'}
+                            min={1}
+                            max={180}
+                            step={1}
+                            value={tmp.sproutTime}
+                            onChange={e=>updateField(e,true)}
+                        />
+                    </div>
+                    <div>
+                        <label>Notes:</label>
+                        <textarea
+                            name={"notes"}
+                            value={tmp.notes}
+                            onChange={e=>updateField(e,false)}
+                        />
+                    </div>
+                    <Button type={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
+                    <Button type={'cancel'} text={'cancel'} handler={cancelHandler} />
+                    <Button type={'delete right'} text={'delete'} handler={deleteHandler} />
+                </form>
             </Sidebar>
         </>
     )

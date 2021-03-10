@@ -1,0 +1,100 @@
+.calendarContainer {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap:20px;
+    box-sizing: border-box;
+    padding-left:40px;
+    width:100%;
+    justify-content: space-between;
+}
+.monthContainer {
+    width:100%;
+    text-align: center;
+    margin-bottom:3rem;
+}
+
+.month {
+    font-size:1.5rem;
+    margin-bottom:1.5rem;
+}
+
+.key {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    font-size:1rem;
+    color:#FFF;
+    margin-bottom:0.5rem;
+}
+
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    border-radius: 7px;
+    background: rgba(255,255,255,0.33);
+    box-sizing: border-box;
+    padding:1rem 0.5rem;
+}
+
+.day {
+    position: relative;
+    width:32px;
+    height:32px;
+    line-height:32px;
+    margin:4px auto;
+}
+
+.day:hover {
+    border-radius: 50%;
+    border:2px solid #000;
+    margin:2px auto;
+    cursor: pointer;
+}
+
+.day.today {
+    width:36px;
+    height:36px;
+    line-height:36px;
+    border-radius: 50%;
+    border:0;
+    margin:2px auto;
+    background:rgba(0,0,0,1) !important;
+    color:#fff;
+}
+
+.day.selected {
+    width:36px;
+    height:36px;
+    line-height:36px;
+    border-radius: 50%;
+    border:0;
+    margin:2px auto;
+    background:rgba(0,0,0,0.5);
+    color:#fff;
+}
+
+.day.event:after {
+    content: '';
+    position: absolute;
+    bottom:2px;
+    left:14px;
+    z-index:99;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:#000;
+}
+
+.day.selected.event:after {
+    background:#FFF;
+    left:16px;
+    bottom:4px;
+}
+
+@media screen and (max-width: 1920px) {
+}
+
+@media screen and (max-width: 1279px) {
+}

@@ -1,11 +1,11 @@
 import React, {useContext, useState, useEffect, useMemo} from 'react';
 import './Schedule.css';
-import Button from "../shared/Button";
-import Sidebar from "../shared/Sidebar/Sidebar";
-import TableView from "../shared/TableView/TableView";
-import { formatDate } from "../utils/formatDate";
-import Main from "../shared/Main";
 import {ScheduleContext} from "./ScheduleContext";
+import Main from "../shared/Main";
+import Sidebar from "../shared/Sidebar/Sidebar";
+import Button from "../shared/Button";
+import TableView from "../shared/TableView/TableView";
+import { dateToYYYYMMDD } from "../utils/formatDate";
 import axios from "axios";
 
 const Schedule = () => {
@@ -26,7 +26,6 @@ const Schedule = () => {
     // Load the user's instances
     useEffect(() => {
         setLoading(true);
-        setSelected(undefined);
         (async () => {
             try {
                 const instanceRes = await axios.get(`http://localhost:5000/api/instances/`);
@@ -38,7 +37,7 @@ const Schedule = () => {
                 console.log(err);
             }
         })();
-    }, [setCrops, setInstances, setLoading, setSelected]);
+    }, [setCrops, setInstances, setLoading]);
 
     // update tmp object when selected is changed
     useEffect(()=>{
@@ -129,76 +128,79 @@ const Schedule = () => {
                 />
             </Main>
             <Sidebar
-                title={'Instance Properties'}
-                selected={selected}
-                addHandler={addHandler}
-                saveHandler={saveHandler}
-                cancelHandler={cancelHandler}
-                deleteHandler={deleteHandler}
+                display={selected}
             >
-                <div>
-                    <label>Crop:</label>
-                    <select
-                        name={"cropId"}
-                        value={tmp.cropId}
-                        onChange={e=>updateField(e,true)}
-                    >
-                        <option disabled={'disabled'} value={"none"}>Select Crop</option>
-                        {
-                            crops.map(crop => <option key={`crop-${crop.id}`} value={crop.id}>{crop.name}</option>)
-                        }
-                    </select>
+                <div className={'title'}>
+                    <h2>Instance Properties</h2>
                 </div>
-                <div>
-                    <label>Quantity:</label>
-                    <input
-                        name={"quantity"}
-                        type={'number'}
-                        min={1}
-                        max={99}
-                        step={1}
-                        value={tmp.quantity}
-                        onChange={e=>updateField(e,true)}
-                    />
-                </div>
-                <div>
-                    <label>Stages:</label>
-                    <input
-                        name={"stages"}
-                        type={'number'}
-                        min={1}
-                        max={99}
-                        step={1}
-                        value={tmp.stages}
-                        onChange={e=>updateField(e,true)}
-                    />
-                </div>
-                <div>
-                    <label>Start Date:</label>
-                    <input
-                        name={"startDate"}
-                        type={'date'}
-                        value={formatDate(tmp.startDate)}
-                        onChange={e=>updateField(e,false)}
-                    />
-                </div>
-                <div>
-                    <label>End Date:</label>
-                    <input
-                        name={"endDate"}
-                        type={'date'}
-                        value={formatDate(tmp.endDate)}
-                        onChange={e=>updateField(e,false)}
-                    />
-                </div>
-                <div>
-                    <label>Notes:</label>
-                    <textarea
-                        name={"notes"}
-                        value={tmp.notes !== null ? tmp.notes : ""}
-                        onChange={e=>updateField(e,false)}
-                    />
-                </div>
+                <form className={'sidebar-form'}>
+                    <div>
+                        <label>Crop:</label>
+                        <select
+                            name={"cropId"}
+                            value={tmp.cropId}
+                            onChange={e=>updateField(e,true)}
+                        >
+                            <option disabled={'disabled'} value={"none"}>Select Crop</option>
+                            {
+                                crops.map(crop => <option key={`crop-${crop.id}`} value={crop.id}>{crop.name}</option>)
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label>Quantity:</label>
+                        <input
+                            name={"quantity"}
+                            type={'number'}
+                            min={1}
+                            max={99}
+                            step={1}
+                            value={tmp.quantity}
+                            onChange={e=>updateField(e,true)}
+                        />
+                    </div>
+                    <div>
+                        <label>Stages:</label>
+                        <input
+                            name={"stages"}
+                            type={'number'}
+                            min={1}
+                            max={99}
+                            step={1}
+                            value={tmp.stages}
+                            onChange={e=>updateField(e,true)}
+                        />
+                    </div>
+                    <div>
+                        <label>Start Date:</label>
+                        <input
+                            name={"startDate"}
+                            type={'date'}
+                            value={dateToYYYYMMDD(tmp.startDate)}
+                            onChange={e=>updateField(e,false)}
+                        />
+                    </div>
+                    <div>
+                        <label>End Date:</label>
+                        <input
+                            name={"endDate"}
+                            type={'date'}
+                            value={dateToYYYYMMDD(tmp.endDate)}
+                            onChange={e=>updateField(e,false)}
+                        />
+                    </div>
+                    <div>
+                        <label>Notes:</label>
+                        <textarea
+                            name={"notes"}
+                            value={tmp.notes !== null ? tmp.notes : ""}
+                            onChange={e=>updateField(e,false)}
+                        />
+                    </div>
+                    <Button type={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
+                    <Button type={'cancel'} text={'cancel'} handler={cancelHandler} />
+                    <Button type={'delete right'} text={'delete'} handler={deleteHandler} />
+                </form>
             </Sidebar>
         </>
     )

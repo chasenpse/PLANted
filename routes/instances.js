@@ -19,10 +19,24 @@ router.get("/:id", (req,res) => {
 
 router.get("/", (req,res) => {
     db.instances.findAll({
-        attributes: ['id','cropId','quantity','stages','startDate','endDate','notes','createdAt','updatedAt'],
+        attributes: [
+            'id',
+            'cropId',
+            'quantity',
+            'stages',
+            'startDate',
+            'endDate',
+            'notes',
+            'createdAt',
+            'updatedAt'
+        ],
         include: {
             model: db.crops,
-            attributes: ['name']
+            attributes: [
+                'name',
+                'growTime',
+                'sproutTime',
+            ]
         },
         where: {
             userId: 1
