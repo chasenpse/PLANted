@@ -36,18 +36,10 @@
     text-transform: capitalize;
 }
 
-.section .title svg {
-    position: absolute;
-    right:0;
-    color:rgba(0,0,0,0.5);
-    transition: all 150ms;
-    width:1.5rem;
-    height:1.5rem;
-}
-
-.section .title svg:hover {
-    color:rgba(0,0,0,1);
-    cursor: pointer;
+.section .title span {
+    display:block;
+    font-weight:700;
+    margin-bottom:0.5rem;
 }
 
 .section .sidebar-form {

@@ -6,7 +6,7 @@ export const OverviewProvider = ({children}) => {
 
     const [cal, setCal] = useState();
     const [instances, setInstances] = useState();
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState(new Date());
     const [loading, setLoading] = useState(true);
 
     return (

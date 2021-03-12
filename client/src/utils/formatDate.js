@@ -11,11 +11,11 @@ export const fullDateToYYYYMM = (date) => {
 
 export const YYYYMMtoFullDate = (date) => {
     const arr = date.split('-')
-    console.log(arr[0], arr[1], 0);
     return new Date(arr[0], arr[1], 0)
 }
 
-export const formatHeader = (date) => {
-    const v = date ? new Date(date) : new Date()
-    return `${v.toLocaleString("default", {weekday: "long"})}`
+export const ordinal = (n) => {
+    const s = ["th", "st", "nd", "rd"];
+    const v = n%100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
 }
