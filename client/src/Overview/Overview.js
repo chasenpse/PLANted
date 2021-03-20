@@ -91,7 +91,16 @@ const Overview = () => {
                                 <span className={"cropDetailsName"}>
                                     {data.events.find(i=>i.id === c.id).name}
                                 </span>
-                            {c.actions.map(e=><div className={"cropEvent"}>{e}</div>)}
+                            {c.actions.map(e=>
+                                <div
+                                    className={"cropEvent"}
+                                    style={{ fontWeight: e==='harvest' ?
+                                        700
+                                        : 'normal' }}
+                                    >
+                                    {e}
+                                </div>
+                            )}
                             </div>
                         </div>
                     )
@@ -125,15 +134,13 @@ const Overview = () => {
                         onChange={(e)=>setEndDate(e.target.value)}
                     />
                 </div>
-                <div>
-                    <Calendar
-                        startDate={dateUtils.YYYYMMtoFullDate(startDate)}
-                        endDate={dateUtils.YYYYMMtoFullDate(endDate)}
-                        selected={selected}
-                        setSelected={setSelected}
-                        markers={calData.markers}
-                    />
-                </div>
+                <Calendar
+                    startDate={dateUtils.YYYYMMtoFullDate(startDate)}
+                    endDate={dateUtils.YYYYMMtoFullDate(endDate)}
+                    selected={selected}
+                    setSelected={setSelected}
+                    markers={calData.markers}
+                />
             </Main>
             <Sidebar display={selected}>
                 {generateHeader(selected)}
