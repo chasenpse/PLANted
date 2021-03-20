@@ -92,6 +92,7 @@ input[type='month']:first-of-type {
     margin:2px auto;
     background:rgba(255,255,255,0.5);
     color:#000;
+    transition: background-color 300ms;
 }
 
 .day.event:after {
