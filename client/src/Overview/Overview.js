@@ -62,7 +62,7 @@ const Overview = () => {
                     } else {
                         let tmp = sel.events.find(o=>o.id===id)
                         if (tmp===undefined) {
-                            sel.events.push({id: i.id, actions: [x === 0 ? "sow" : x === stages+1 ? "harvest" : "rotate"]})
+                            sel.events.push({id: i.id, name, actions: [x === 0 ? "sow" : x === stages+1 ? "harvest" : "rotate"]})
                         } else {
                             tmp.actions = [...tmp.actions, x === 0 ? "sow" : x === stages+1 ? "harvest" : "rotate"]
                         }
@@ -77,19 +77,22 @@ const Overview = () => {
                 curr.setDate(curr.getDate() + interval)
             }
         })
-        console.log(markers)
         return { markers, data }
     }
 
-    const genDayData = () => {
+    const dayDetails = () => {
         const data = calData.data.find(i=>i.date===dateUtils.dateToYYYYMMDD(selected))
         if (data !== undefined) {
             return (
                 data.events.map(c=>{
                     return (
-                        <div className={"dayContainer"}>
-                            <div className={"cropSection"}>{data.events.find(i=>i.id === c.id).name}</div>
+                        <div className={"detailsContainer"}>
+                            <div className={"cropDetailsContainer"}>
+                                <span className={"cropDetailsName"}>
+                                    {data.events.find(i=>i.id === c.id).name}
+                                </span>
                             {c.actions.map(e=><div className={"cropEvent"}>{e}</div>)}
+                            </div>
                         </div>
                     )
                 })
@@ -134,7 +137,7 @@ const Overview = () => {
             </Main>
             <Sidebar display={selected}>
                 {generateHeader(selected)}
-                {genDayData()}
+                {dayDetails()}
             </Sidebar>
         </>
     )
