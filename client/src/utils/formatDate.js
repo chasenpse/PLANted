@@ -1,6 +1,6 @@
 export const dateToYYYYMMDD = (date) => {
     const v = date ? new Date(date) : new Date()
-    return v.toISOString().split('T', 1);
+    return v.toISOString().split('T', 1)[0];
 }
 
 export const fullDateToYYYYMM = (date) => {
@@ -17,5 +17,5 @@ export const YYYYMMtoFullDate = (date) => {
 export const ordinal = (n) => {
     const s = ["th", "st", "nd", "rd"];
     const v = n%100;
-    return n + (s[(v-20)%10] || s[v] || s[0]);
+    return (<>{n}<sup>{(s[(v-20)%10] || s[v] || s[0])}</sup></>);
 }

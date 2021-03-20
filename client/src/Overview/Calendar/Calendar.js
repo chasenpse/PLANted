@@ -1,6 +1,9 @@
 import './Calendar.css'
+import * as dateUtils from '../../utils/formatDate'
 
-const Calendar = ({startDate, endDate, selected, setSelected}) => {
+const Calendar = ({startDate, endDate, selected, setSelected, markers}) => {
+
+    const today = new Date();
 
     const numberOfMonths = 1 + (endDate.getFullYear() - startDate.getFullYear()) * 12 + (endDate.getMonth() - startDate.getMonth());
 
@@ -27,14 +30,29 @@ const Calendar = ({startDate, endDate, selected, setSelected}) => {
                                 <span>S</span>
                             </div>
                             <div className={"days"}>
-                                {[...Array(curr.days)].map((day,j)=>{
+                                {[...Array(curr.days)].map((d,j)=>{
+                                    const day = new Date(curr.date.getFullYear(), curr.date.getMonth(), j+1)
+                                    const classes = () => {
+                                        const tmp = ["day"];
+                                        if (markers.has(dateUtils.dateToYYYYMMDD(day))) {
+                                            tmp.push("event")
+                                        }
+                                        if (day.toISOString() === selected.toISOString()) {
+                                            tmp.push("selected")
+                                        }
+                                        if (day.toISOString() === new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString()) {
+                                            tmp.push("today")
+                                        }
+                                        return tmp.join(" ")
+                                    }
                                     return (
                                         <div
-                                            className={"day"}
+                                            className={classes()}
                                             style={{ gridColumnStart: j===0 ?
                                                     curr.date.getDay()+1
                                                     : null }}
                                             key={j}
+                                            onClick={e=>setSelected(day)}
                                         >
                                             {j+1}
                                         </div>
