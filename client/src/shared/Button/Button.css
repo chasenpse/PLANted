@@ -53,6 +53,25 @@ button.delete:hover {
 }
 
 button.right {
-    position:absolute;
-    right:0;
+    float: right;
+}
+
+@media screen and (min-width:1024px) and (max-width: 1279px) {
+    button.main {
+        margin:0 0 40px 20px;
+    }
+
+    .save, .cancel, .delete {
+        display:block;
+        width:100%;
+        margin-bottom:1rem;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .save, .cancel, .delete {
+        display:block;
+        width:100%;
+        margin-bottom:1rem;
+    }
 }

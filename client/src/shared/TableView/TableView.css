@@ -49,10 +49,22 @@
     color:rgba(0,0,0,0.5);
     font-size:1rem;
     text-align: center;
+    white-space: nowrap;
 }
 
 .tableView th:first-of-type, .tableView td:first-of-type {
     text-align: left;
     padding-left:40px;
-    white-space: nowrap;
+}
+
+@media screen and (min-width:1024px) and (max-width: 1279px) {
+    .tableView th:first-of-type, .tableView td:first-of-type {
+        padding-left:20px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .tableView th:first-of-type, .tableView td:first-of-type {
+        padding-left:20px;
+    }
 }

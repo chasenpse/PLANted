@@ -18,14 +18,15 @@ input[type='month']:first-of-type {
 }
 
 .calendarContainer {
+    box-sizing: border-box;
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap:20px;
-    box-sizing: border-box;
     padding-left:40px;
     width:100%;
     justify-content: space-between;
 }
+
 .monthContainer {
     width:100%;
     text-align: center;
@@ -100,7 +101,7 @@ input[type='month']:first-of-type {
     position: absolute;
     bottom:2px;
     left:14px;
-    z-index:99;
+    z-index:10;
     width:4px;
     height:4px;
     border-radius:50%;
@@ -117,9 +118,42 @@ input[type='month']:first-of-type {
     left:16px;
     bottom:4px;
 }
-
-@media screen and (max-width: 1920px) {
+.calRange label {
+    display: none;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (min-width:1280px) and (max-width: 1659px) {
+    .calendarContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width:1024px) and (max-width: 1279px) {
+    .calendarContainer {
+        grid-template-columns: repeat(2, 1fr);
+        padding-left:20px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .calendarContainer {
+        grid-template-columns: 1fr;
+        padding-left:0;
+    }
+    input[type='month'] {
+        display: block;
+        margin: 0 auto;
+    }
+    input[type='month']:first-of-type {
+        margin: 0 auto 1rem auto;
+    }
+    .calRange {
+        box-sizing: border-box;
+        padding-left:0;
+        margin-bottom:30px;
+        text-align: center;
+    }
+    .calRange label {
+        display: initial;
+    }
 }

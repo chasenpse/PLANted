@@ -34,3 +34,25 @@ nav .navBtn:last-of-type {
     color:#FFF;
     border:0;
 }
+
+@media screen and (min-width:1024px) and (max-width: 1279px) {
+    .navBtn button {
+        width:160px;
+    }
+
+    nav .navBtn {
+        margin-right:10px;
+    }
+}
+
+@media screen and (min-width:1280px) and (max-width: 1659px) {
+    .navBtn {
+
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .navBtn {
+        display:none;
+    }
+}

@@ -26,7 +26,7 @@ const CropLibrary = () => {
         setLoading(true);
         (async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/crops`);
+                const res = await axios.get(`http://172.30.1.15:5000/api/crops`);
                 setCrops(res.data);
                 setLoading(false);
             } catch (err) {
@@ -55,7 +55,7 @@ const CropLibrary = () => {
 
     const updateCrops = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/crops/`);
+            const res = await axios.get(`http://172.30.1.15:5000/api/crops/`);
             setCrops(res.data);
         } catch (e) {
             console.log(e)
@@ -71,7 +71,7 @@ const CropLibrary = () => {
             return false;
         }
         try {
-            const res = await axios.post(`http://localhost:5000/api/crops/`, tmp);
+            const res = await axios.post(`http://172.30.1.15:5000/api/crops/`, tmp);
             await updateCrops();
             setSelected(res.data.id)
         } catch (err) {
@@ -81,7 +81,7 @@ const CropLibrary = () => {
 
     const saveHandler = async (e) => {
         try {
-            await axios.put(`http://localhost:5000/api/crops/${tmp.id}`, tmp)
+            await axios.put(`http://172.30.1.15:5000/api/crops/${tmp.id}`, tmp)
             await updateCrops();
         } catch(err) {
             console.log(err, e)
@@ -98,7 +98,7 @@ const CropLibrary = () => {
 
     const deleteHandler = async (e) => {
         try {
-            const res = await axios.delete(`http://localhost:5000/api/crops/${tmp.id}`);
+            const res = await axios.delete(`http://172.30.1.15:5000/api/crops/${tmp.id}`);
             setSelected(res.data.length > 0 ? 0 : undefined);
             await updateCrops();
         } catch(err) {

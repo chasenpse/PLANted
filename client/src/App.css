@@ -82,3 +82,9 @@ html body {
 .container {
     padding-top:120px;
 }
+
+@media screen and (max-width: 1023px) {
+    .container {
+        padding:0 0 0 64px;
+    }
+}
