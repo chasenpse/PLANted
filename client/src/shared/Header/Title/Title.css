@@ -16,8 +16,4 @@
 }
 
 @media screen and (max-width: 1023px) {
-    .title h1 {
-        display: none;
-        font-size:1.5rem;
-    }
 }

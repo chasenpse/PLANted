@@ -140,20 +140,4 @@ input[type='month']:first-of-type {
         grid-template-columns: 1fr;
         padding-left:0;
     }
-    input[type='month'] {
-        display: block;
-        margin: 0 auto;
-    }
-    input[type='month']:first-of-type {
-        margin: 0 auto 1rem auto;
-    }
-    .calRange {
-        box-sizing: border-box;
-        padding-left:0;
-        margin-bottom:30px;
-        text-align: center;
-    }
-    .calRange label {
-        display: initial;
-    }
 }

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {OverviewContext} from "./OverviewContext";
 import Main from "../shared/Main";
 import Sidebar from "../shared/Sidebar/Sidebar";
@@ -7,7 +7,7 @@ import * as dateUtils from "../utils/formatDate";
 import axios from "axios";
 
 const Overview = () => {
-    const {calData, setCalData, instances, setInstances, selected, setSelected, loading, setLoading, startDate, setStartDate, endDate, setEndDate} = useContext(OverviewContext);
+    const {calData, setCalData, setInstances, selected, setSelected, loading, setLoading, startDate, setStartDate, endDate, setEndDate} = useContext(OverviewContext);
 
     // Load the user's instances
     useEffect(() => {
@@ -22,7 +22,7 @@ const Overview = () => {
                 console.log(err);
             }
         })();
-    }, [setInstances, setLoading]);
+    }, [setInstances, setLoading, setCalData]);
 
     const generateHeader = (date) => (
         <div className={'title'}>
@@ -32,7 +32,7 @@ const Overview = () => {
     )
 
     const genCalData = (instances) => {
-        const markers = new Set;
+        const markers = new Set();
         const data = [];
 
         instances.map((i)=>{
@@ -40,9 +40,9 @@ const Overview = () => {
                id,
                quantity,
                stages,
-               ['crop.growTime']:growTime,
-               ['crop.sproutTime']:sproutTime,
-               ['crop.name']:name,
+                'crop.growTime':growTime,
+                'crop.sproutTime':sproutTime,
+                'crop.name':name,
             } = i;
             const interval = Math.floor((growTime - sproutTime)/stages);
 
@@ -84,15 +84,16 @@ const Overview = () => {
         const data = calData.data.find(i=>i.date===dateUtils.dateToYYYYMMDD(selected))
         if (data !== undefined) {
             return (
-                data.events.map(c=>{
+                data.events.map((c,index)=>{
                     return (
-                        <div className={"detailsContainer"}>
+                        <div key={index} className={"detailsContainer"}>
                             <div className={"cropDetailsContainer"}>
                                 <span className={"cropDetailsName"}>
                                     {data.events.find(i=>i.id === c.id).name}
                                 </span>
-                            {c.actions.map(e=>
+                            {c.actions.map((e,index)=>
                                 <div
+                                    key={index}
                                     className={"cropEvent"}
                                     style={{ fontWeight: e==='harvest' ?
                                         700

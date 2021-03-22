@@ -13,9 +13,6 @@ header {
 
 @media screen and (max-width: 1023px) {
     header {
-        padding:0;
-        flex-direction: column;
-        width:64px;
-        height:100vh;
+        display: none;
     }
 }

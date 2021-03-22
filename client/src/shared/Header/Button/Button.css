@@ -52,7 +52,5 @@ nav .navBtn:last-of-type {
 }
 
 @media screen and (max-width: 1023px) {
-    .navBtn {
-        display:none;
-    }
+
 }
