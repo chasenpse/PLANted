@@ -66,5 +66,9 @@
 @media screen and (max-width: 1023px) {
     .tableView th:first-of-type, .tableView td:first-of-type {
         padding-left:20px;
+        display:table-cell;
+    }
+    .tableView th, .tableView td {
+        display:none;
     }
 }

@@ -92,11 +92,22 @@ html body {
         padding:0;
     }
     .drawerToggle {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         z-index: 50;
         color:#000;
         position: fixed;
-        top: 10px;
-        left: 10px;
+        top: 16px;
+        left: 16px;
+        width:32px;
+        height:32px;
+    }
+    .drawerToggle span {
+        box-sizing: border-box;
+        width:100%;
+        height:2px;
+        background:#000;
+        display:block;
     }
 }

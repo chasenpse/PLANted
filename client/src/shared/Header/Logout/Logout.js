@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from "../Button/Button";
+import Button from "../Nav/Button/Button";
 import { Link } from "react-router-dom";
 
 const Logout = () => {

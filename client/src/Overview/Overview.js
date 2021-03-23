@@ -14,7 +14,7 @@ const Overview = () => {
         setLoading(true);
         (async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/instances`);
+                const res = await axios.get(`http://172.30.1.15:5000/api/instances`);
                 setInstances(res.data);
                 setLoading(false);
                 setCalData(genCalData(res.data));
