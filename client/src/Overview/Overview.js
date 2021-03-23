@@ -119,7 +119,6 @@ const Overview = () => {
         <>
             <Main>
                 <div className={'calRange'}>
-                    <label>From:</label>
                     <input
                         name={'startDate'}
                         type={'month'}
@@ -128,7 +127,6 @@ const Overview = () => {
                         value={startDate}
                         onChange={(e)=>setStartDate(e.target.value)}
                     />
-                    <label>To:</label>
                     <input
                         name={'endDate'}
                         type={'month'}

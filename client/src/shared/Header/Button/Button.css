@@ -52,5 +52,18 @@ nav .navBtn:last-of-type {
 }
 
 @media screen and (max-width: 1023px) {
-
+    nav .navBtn {
+        margin-right:0;
+    }
+    .navBtn {
+        display:block;
+        text-decoration: none;
+    }
+    .navBtn button {
+        margin: 16px 0;
+        width:220px;
+        height:3rem;
+        font-size:1.5rem;
+        cursor:pointer;
+    }
 }

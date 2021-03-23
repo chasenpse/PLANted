@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import Header from "./shared/Header/Header";
+import Backdrop from "./shared/Backdrop/Backdrop";
 import Overview from "./Overview";
 import { OverviewProvider } from "./Overview/OverviewContext";
 import CropLibrary from "./CropLibrary";
@@ -11,9 +12,13 @@ import { ScheduleProvider } from "./Schedule/ScheduleContext";
 
 const App = () => {
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     return (
         <>
-            <Header />
+            <button className={"drawerToggle"} onClick={()=>setMenuOpen(!menuOpen)}>*</button>
+            {menuOpen ? <Backdrop/> : null}
+            <Header open={menuOpen} />
             <div className={"container"}>
                 <OverviewProvider>
                     <Route exact path={"/"} component={Overview} />

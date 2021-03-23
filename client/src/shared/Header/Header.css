@@ -8,11 +8,28 @@ header {
     justify-content: space-between;
     align-items: center;
     background:#EEE;
-    z-index:50;
+    z-index:25;
 }
 
 @media screen and (max-width: 1023px) {
     header {
+        position:fixed;
+        top:0;
+        box-sizing: border-box;
+        width:70%;
+        max-width:400px;
+        height:100%;
+        padding:40px;
         display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background:#EEE;
+        z-index:35;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    header.open {
+        display:flex;
     }
 }

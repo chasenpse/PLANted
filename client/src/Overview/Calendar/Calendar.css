@@ -118,9 +118,6 @@ input[type='month']:first-of-type {
     left:16px;
     bottom:4px;
 }
-.calRange label {
-    display: none;
-}
 
 @media screen and (min-width:1280px) and (max-width: 1659px) {
     .calendarContainer {
@@ -139,5 +136,8 @@ input[type='month']:first-of-type {
     .calendarContainer {
         grid-template-columns: 1fr;
         padding-left:0;
+    }
+    .calRange {
+        padding: 0;
     }
 }
