@@ -16,11 +16,11 @@ const App = () => {
 
     return (
         <ModalContext.Provider value={{navOpen, setNavOpen}}>
-            <div className={"drawerToggle"} onClick={()=>setNavOpen(!navOpen)}>
+            <a className={"drawerToggle"} onClick={(e)=>{e.preventDefault();setNavOpen(!navOpen)}}>
                 <span />
                 <span />
                 <span />
-            </div>
+            </a>
             <Header menu={{navOpen, setNavOpen}} />
             <div className={"container"}>
                 <OverviewProvider>
