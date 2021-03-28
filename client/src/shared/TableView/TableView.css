@@ -12,6 +12,10 @@
     text-transform: capitalize;
 }
 
+.tableView th svg {
+    vertical-align: middle;
+}
+
 .tableView  td {
     text-transform: capitalize;
 }

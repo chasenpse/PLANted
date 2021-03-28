@@ -18,7 +18,18 @@ const CropLibrary = () => {
         }
     ), [])
 
-    const {crops, setCrops, selected, setSelected, loading, setLoading} = useContext(CropContext);
+    const {
+        crops,
+        setCrops,
+        selected,
+        setSelected,
+        loading,
+        setLoading,
+        orderBy,
+        setOrderBy,
+        order,
+        setOrder,
+    } = useContext(CropContext);
     const [tmp, setTmp] = useState(newCrop);
 
     // Load the user's instances
@@ -112,13 +123,17 @@ const CropLibrary = () => {
                 <Button type={'main'} text={'add crop'} handler={addCrop} />
                 <TableView
                     Cols={[
-                        { name: "name", prop: "name" },
-                        { name: "grow time", prop: "growTime" },
-                        { name: "sprout time", prop: "sproutTime" },
+                        { name: "name", prop: "name", type: "string" },
+                        { name: "grow time", prop: "growTime", type: "int" },
+                        { name: "sprout time", prop: "sproutTime", type: "int" },
                     ]}
-                    Rows={crops}
+                    Data={crops}
                     Selected={selected}
                     SetSelected={setSelected}
+                    orderBy={orderBy}
+                    order={order}
+                    setOrderBy={setOrderBy}
+                    setOrder={setOrder}
                 />
             </Main>
             <Sidebar

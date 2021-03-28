@@ -18,6 +18,7 @@ router.get("/:id", (req,res) => {
 });
 
 router.get("/", (req,res) => {
+    console.log(req.query)
     db.instances.findAll({
         attributes: [
             'id',

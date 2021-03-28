@@ -20,7 +20,20 @@ export const OverviewProvider = ({children}) => {
     const [endDate, setEndDate] = useState(dateUtils.fullDateToYYYYMM(tmpEndDate));
 
     return (
-        <OverviewContext.Provider value={{calData, setCalData, instances, setInstances, selected, setSelected, loading, setLoading, startDate, setStartDate, endDate, setEndDate}}>
+        <OverviewContext.Provider value={{
+            calData,
+            setCalData,
+            instances,
+            setInstances,
+            selected,
+            setSelected,
+            loading,
+            setLoading,
+            startDate,
+            setStartDate,
+            endDate,
+            setEndDate,
+        }}>
             {children}
         </OverviewContext.Provider>
     )

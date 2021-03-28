@@ -7,7 +7,19 @@ import * as dateUtils from "../utils/formatDate";
 import axios from "axios";
 
 const Overview = () => {
-    const {calData, setCalData, setInstances, selected, setSelected, loading, setLoading, startDate, setStartDate, endDate, setEndDate} = useContext(OverviewContext);
+    const {
+        calData,
+        setCalData,
+        setInstances,
+        selected,
+        setSelected,
+        loading,
+        setLoading,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate
+    } = useContext(OverviewContext);
 
     // Load the user's instances
     useEffect(() => {

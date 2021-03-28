@@ -1,7 +1,19 @@
+import React from 'react'
 import './TableView.css';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 import { dateToYYYYMMDD } from '../../utils/formatDate';
 
-const TableView = ({Cols, Rows, Selected, SetSelected}) => {
+const TableView = ({
+    Cols,
+    Data,
+    Selected,
+    SetSelected,
+    orderBy,
+    setOrderBy,
+    order,
+    setOrder,
+}) => {
+
     const generateRow = (col, row, i) => (
         <tr key={`tvr-${i}`} onClick={()=>SetSelected(row.id)} className={row.id===Selected ? 'selected' : null}>
             {col.map((c,k) => (
@@ -12,16 +24,47 @@ const TableView = ({Cols, Rows, Selected, SetSelected}) => {
         </tr>
     );
 
+    const sortBy = (col) => {
+        if (col.prop === orderBy.prop) {
+            setOrder(order==='asc'?'desc':'asc')
+        } else {
+            setOrder(col.type==='string'?'asc':'desc')
+            setOrderBy(col)
+        }
+    }
+
+    const sortTable = (data) => {
+        return data.sort(function(a, b){
+            switch (orderBy.type) {
+                case 'string':
+                    if(a[orderBy.prop].toLowerCase() < b[orderBy.prop].toLowerCase()) { return order==='asc'?-1:1; }
+                    if(a[orderBy.prop].toLowerCase() > b[orderBy.prop].toLowerCase()) { return order==='asc'?1:-1; }
+                    return 0;
+                default:
+                    if(a[orderBy.prop] < b[orderBy.prop]) { return order==='asc'?-1:1; }
+                    if(a[orderBy.prop] > b[orderBy.prop]) { return order==='asc'?1:-1; }
+                    return 0;
+            }
+        })
+    }
+
+    const genSortByMarker = (col) => {
+        if (col.prop === orderBy.prop) {
+            return order==='asc'?<TiArrowSortedUp />:<TiArrowSortedDown />
+        }
+        return null;
+    }
+
     return (
         <table className={'tableView'}>
             <thead>
                 <tr>
-                    { Rows ? Cols.map((x, i) => <th key={`tvh-${i}`}>{x.name}</th>): null }
+                    { Data ? Cols.map((x, i) => <th key={`tvh-${i}`} onClick={()=>sortBy(x)}>{x.name}{genSortByMarker(x)}</th> ): null }
                 </tr>
             </thead>
             <tbody>
             {
-                Rows ? Rows.map((row,i) => generateRow(Cols, row, i)) : null
+                Data ? sortTable(Data).map((row,i) => generateRow(Cols, row, i)) : null
             }
             </tbody>
         </table>

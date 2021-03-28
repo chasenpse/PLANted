@@ -20,7 +20,21 @@ const Schedule = () => {
         }
     ), [])
 
-    const {instances, setInstances, crops, setCrops, selected, setSelected, loading, setLoading} = useContext(ScheduleContext);
+    const {
+        instances,
+        setInstances,
+        crops,
+        setCrops,
+        selected,
+        setSelected,
+        loading,
+        setLoading,
+        orderBy,
+        setOrderBy,
+        order,
+        setOrder,
+    } = useContext(ScheduleContext);
+
     const [tmp, setTmp] = useState(newInstance);
 
     // Load the user's instances
@@ -116,15 +130,19 @@ const Schedule = () => {
                 <Button type={'main'} text={'add instance'} handler={addInstance} />
                 <TableView
                     Cols={[
-                        { name: "Crop", prop: "crop.name" },
-                        { name: "quantity", prop: "quantity" },
-                        { name: "stages", prop: "stages" },
+                        { name: "crop", prop: "crop.name", type: "string" },
+                        { name: "quantity", prop: "quantity", type: "int" },
+                        { name: "stages", prop: "stages", type: "int" },
                         { name: "start", prop: "startDate", type: "date" },
                         { name: "end", prop: "endDate", type: "date" },
                     ]}
-                    Rows={instances}
+                    Data={instances}
                     Selected={selected}
                     SetSelected={setSelected}
+                    orderBy={orderBy}
+                    order={order}
+                    setOrderBy={setOrderBy}
+                    setOrder={setOrder}
                 />
             </Main>
             <Sidebar
