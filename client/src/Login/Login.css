@@ -1,0 +1,52 @@
+.loginContainer {
+    display: flex;
+    height:100vh;
+    justify-content: center;
+    align-items: center;
+}
+.loginForm {
+    box-sizing: border-box;
+    width:400px;
+    text-align: center;
+    padding-bottom:2rem;
+    background:rgba(255,255,255,0.33);
+    border-radius:7px;
+    box-shadow: 0 0 1rem rgba(0,0,0,0.5);
+}
+
+.loginTitleContainer {
+    background: #EEE;
+    width:100%;
+    border-top-left-radius:7px;
+    border-top-right-radius:7px;
+    padding:0.5rem 0;
+}
+
+.loginForm form {
+    width:300px;
+    padding: 2rem 0;
+    margin:0 auto 1rem auto;
+    border-bottom:1px solid rgba(0,0,0,0.25);
+}
+
+.loginForm .registerText {
+    color:rgba(0,0,0,0.5);
+    display:block;
+    margin-bottom:0.25rem;
+}
+
+.loginForm .registerLink {
+    text-decoration: none;
+    color:#FFF;
+    transition: all 150ms linear;
+}
+
+.loginForm .registerLink:hover {
+    color:rgba(0,0,0,0.75);
+}
+
+.loginForm input {
+    text-align: center;
+    display:block;
+    margin:0 auto 0.5rem auto;
+}

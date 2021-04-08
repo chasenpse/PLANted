@@ -6,6 +6,11 @@ import Calendar from "./Calendar/Calendar";
 import * as dateUtils from "../utils/formatDate";
 import axios from "axios";
 
+const conn = axios.create({
+    withCredentials: true,
+    baseURL: "http://172.30.1.15:5000/api",
+})
+
 const Overview = () => {
     const {
         calData,
@@ -26,7 +31,7 @@ const Overview = () => {
         setLoading(true);
         (async () => {
             try {
-                const res = await axios.get(`http://172.30.1.15:5000/api/instances`);
+                const res = await conn.get(`instances`);
                 setInstances(res.data);
                 setLoading(false);
                 setCalData(genCalData(res.data));

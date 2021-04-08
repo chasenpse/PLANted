@@ -87,6 +87,62 @@ html body {
     display:none;
 }
 
+label, input, textarea, select {
+    font-size:1rem;
+}
+
+input, select, textarea {
+    background:rgba(255,255,255,0.5);
+    border-radius:4px;
+    border:0;
+}
+
+label {
+    display: inline-block;
+    vertical-align: middle;
+    line-height:1.5rem;
+    padding:2px 0;
+}
+
+select {
+    text-transform: capitalize;
+    padding: 2px 6px;
+}
+
+input {
+    line-height:1.5rem;
+    padding:2px 6px;
+}
+
+textarea {
+    padding: 0.5rem 0.8rem;
+}
+
+input::selection,
+textarea::selection {
+    background-color:#000;
+    color:#FFF;
+    text-shadow: 0 0;
+}
+
+input::-moz-selection,
+textarea::-moz-selection {
+    background-color:#000;
+    color:#FFF;
+    text-shadow: 0 0;
+}
+
+button {
+    padding:0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms;
+    text-transform: capitalize;
+    min-width:100px;
+    line-height:2rem;
+    font-size:1rem;
+}
+
 @media screen and (max-width: 1023px) {
     .container {
         padding:0;

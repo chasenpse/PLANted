@@ -40,7 +40,7 @@ router.get("/", (req,res) => {
             ]
         },
         where: {
-            userId: 1
+            userId: req.user.id
         },
         order: [
             ['updatedAt', 'DESC']
@@ -78,7 +78,7 @@ router.put("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     const {cropId, quantity, stages, startDate, endDate, notes} = req.body;
     try {
-        const instance = await db.instances.create({userId:1, cropId, quantity, stages, startDate, endDate, notes})
+        const instance = await db.instances.create({userId:req.user.id, cropId, quantity, stages, startDate, endDate, notes})
         res.status(200).send(instance)
     } catch(err) {
         console.log(err)

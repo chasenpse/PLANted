@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const db = require('../config/db');
 
-router.get("/:id/names", (req,res) => {
+router.get("/names", (req,res) => {
     db.crops.findAll({
         attributes: ['id', 'name'],
         where: {
-            userId: req.params.id
+            userId: req.user.id
         },
         order: [
             ['name', 'ASC']
@@ -19,7 +19,7 @@ router.get("/:id", (req,res) => {
     db.crops.findAll({
         attributes: ['id','name','growTime','sproutTime','notes','createdAt','updatedAt'],
         where: {
-            userId: req.params.id
+            id: req.params.id
         },
     })
         .then(crops => res.json(crops))
@@ -30,7 +30,7 @@ router.get("/", (req,res) => {
     db.crops.findAll({
         attributes: ['id','name','growTime','sproutTime','notes','createdAt','updatedAt'],
         where: {
-            userId: 1
+            userId: req.user.id
         },
         order: [
             ['updatedAt', 'DESC']

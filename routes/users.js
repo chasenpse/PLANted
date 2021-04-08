@@ -11,8 +11,8 @@ router.get("/:id", (req,res) => {
             id: req.params.id
         }
     })
-        .then(users => res.send(users))
-        .catch(err => console.log(err));
+        .then(users => users ? res.send(users) : res.status(400).send(null))
+        .catch(err => res.status(500).send(null));
 });
 
 router.post("/register", (req,res) => {

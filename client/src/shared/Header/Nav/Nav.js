@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Nav = ({close}) => {
     return (
         <nav>
-            <NavLink exact to={'/'} className={'navBtn'} activeClassName={'selected'}>
+            <NavLink exact to={'/calendar'} className={'navBtn'} activeClassName={'selected'}>
                 <Button name={"Calendar"} action={close} />
             </NavLink>
             <NavLink exact to={'/library'} className={'navBtn'} activeClassName={'selected'}>

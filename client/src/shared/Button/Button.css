@@ -1,10 +1,6 @@
 button.btn {
     background:#EEE;
     border: 1px solid #EEE;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 150ms;
-    text-transform: capitalize;
 }
 
 button.btn:hover {

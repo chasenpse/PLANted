@@ -8,6 +8,11 @@ import TableView from "../shared/TableView/TableView";
 import { dateToYYYYMMDD } from "../utils/formatDate";
 import axios from "axios";
 
+const conn = axios.create({
+    withCredentials: true,
+    baseURL: "http://172.30.1.15:5000/api",
+})
+
 const Schedule = () => {
     const newInstance = useMemo(()=>(
         {
@@ -42,8 +47,8 @@ const Schedule = () => {
         setLoading(true);
         (async () => {
             try {
-                const instanceRes = await axios.get(`http://172.30.1.15:5000/api/instances/`);
-                const cropRes = await axios.get(`http://172.30.1.15:5000/api/crops/1/names`);
+                const instanceRes = await conn.get(`instances`);
+                const cropRes = await conn.get(`crops/names`);
                 setInstances(instanceRes.data);
                 setCrops(cropRes.data);
                 setLoading(false);
@@ -69,7 +74,7 @@ const Schedule = () => {
 
     const updateInstances = async () => {
         try {
-            const res = await axios.get(`http://172.30.1.15:5000/api/instances/`);
+            const res = await conn.get(`instances`);
             setInstances(res.data);
         } catch (e) {
             console.log(e)
@@ -85,7 +90,7 @@ const Schedule = () => {
             return false;
         }
         try {
-            const res = await axios.post(`http://172.30.1.15:5000/api/instances/`, tmp);
+            const res = await conn.post(`instances`, tmp);
             await updateInstances();
             setSelected(res.data.id)
         } catch (err) {
@@ -95,7 +100,7 @@ const Schedule = () => {
 
     const saveHandler = async (e) => {
         try {
-            await axios.put(`http://172.30.1.15:5000/api/instances/${tmp.id}`, tmp)
+            await conn.put(`instances/${tmp.id}`, tmp)
             await updateInstances();
         } catch(err) {
             console.log(err, e)
@@ -112,7 +117,7 @@ const Schedule = () => {
 
     const deleteHandler = async (e) => {
         try {
-            const res = await axios.delete(`http://172.30.1.15:5000/api/instances/${tmp.id}`);
+            const res = await conn.delete(`instances/${tmp.id}`);
             setSelected(res.data.length > 0 ? 0 : undefined);
             await updateInstances();
         } catch(err) {
@@ -213,6 +218,7 @@ const Schedule = () => {
                             name={"notes"}
                             value={tmp.notes !== null ? tmp.notes : ""}
                             onChange={e=>updateField(e,false)}
+
                         />
                     </div>
                     <Button type={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />

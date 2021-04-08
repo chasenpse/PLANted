@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 import Backdrop from "../Backdrop/Backdrop";
-import Title from "./Title/Title";
+import Title from "../Title/Title";
 import Nav from "./Nav/Nav";
 import Logout from "./Logout/Logout";
 
