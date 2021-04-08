@@ -22,7 +22,6 @@ const Login = ({user, setUser}) => {
             url: "http://172.30.1.15:5000/api/login",
         })
             .then(res => {
-                console.log("blehhhhh",res.data)
                 setUser(res.data)
             })
             .catch(err=>console.log(err))
