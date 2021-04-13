@@ -14,5 +14,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(64),
             required: true,
         },
+        active: {
+            type: DataTypes.BOOLEAN,
+            required: true,
+        }
     });
 }

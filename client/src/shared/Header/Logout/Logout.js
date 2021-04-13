@@ -1,20 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from "../Nav/Button/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Route, Redirect } from 'react-router-dom';
+import { UserContext} from "../../../UserContext";
 
 const Logout = () => {
+    const {user, setUser} = useContext(UserContext)
 
     const logout = (e) => {
         e.preventDefault()
         axios({
             method: "get",
             withCredentials: true,
-            url: "http://172.30.1.15:5000/api/logout",
+            url: "http://localhost:5000/api/logout",
         })
-            .then(res => console.log(res.data))
+            .then(res => res.data ? setUser(false):null)
             .catch(err=>console.log(err))
+
     }
 
     return (

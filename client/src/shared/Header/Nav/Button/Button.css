@@ -1,46 +1,32 @@
-.navBtn button {
-    margin: 6px 0;
-    padding:0;
+.navBtn {
     background:none;
-    border:0;
+    border:1px solid #eee;
     width:180px;
-    height:2rem;
     font-size:1.25rem;
     color:#000;
-    cursor:pointer;
-}
-
-nav .navBtn {
     margin-right:20px;
 }
 
-nav .navBtn:last-of-type {
+.navBtn:last-of-type {
     margin-right:0;
 }
 
 .navBtn button:hover {
-    border-radius:4px;
     border:1px solid #000;
 }
 
 .navBtn.selected button {
-    border-radius:4px;
     background: #000;
     color:#FFF;
-}
-
-.navBtn.selected button:hover {
-    background: #000;
-    color:#FFF;
-    border:0;
+    border:1px solid #000;
 }
 
 @media screen and (min-width:1024px) and (max-width: 1279px) {
-    .navBtn button {
+    .navBtn {
         width:160px;
     }
 
-    nav .navBtn {
+    .navBtn {
         margin-right:10px;
     }
 }
@@ -52,7 +38,7 @@ nav .navBtn:last-of-type {
 }
 
 @media screen and (max-width: 1023px) {
-    nav .navBtn {
+    .navBtn {
         margin-right:0;
     }
     .navBtn {

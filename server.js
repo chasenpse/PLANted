@@ -4,7 +4,6 @@ const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const passportLocal = require('passport-local');
 
 const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
@@ -16,7 +15,7 @@ const instanceRoute = require('./routes/instances');
 const app = express();
 
 app.use(cors({
-    origin: "http://172.30.1.15:3000",
+    origin: "http://localhost:3000",
     credentials: true,
 }));
 
@@ -44,23 +43,17 @@ const requireLogin = (req, res, next) => {
     next();
 }
 
-app.use((req,res,next)=>{
-    console.log(req.session);
-    console.log(`middleware checking for user - ${JSON.stringify(req.user)}`);
-    next()
-})
-
 app.get("/api/user", (req, res) => {
     if (req.isAuthenticated()) {
         res.status(200).json(true)
     } else {
-        res.status(401).json(null)
+        res.status(200).json(false)
     }
 });
 
 app.use('/api/login', loginRoute);
-app.use('/api/logout', logoutRoute);
 app.use('/api/register', registerRoute);
+app.use('/api/logout', requireLogin, logoutRoute);
 app.use('/api/users', requireLogin, userRoute);
 app.use('/api/crops', requireLogin, cropRoute);
 app.use('/api/instances', requireLogin, instanceRoute);

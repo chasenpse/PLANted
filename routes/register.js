@@ -6,14 +6,25 @@ router.post("/", async (req, res) => {
     console.log(req.body)
     const {email, pass} = req.body;
     try {
-        const user = await db.users.create({
-            email,
-            password: await bcrypt.hash(pass, 10)
+        const user = await db.users.findOne({
+            where: {
+                email
+            }
         })
-        res.login.status(200).send(user)
+        if (!user) {
+            const newUser = await db.users.create({
+                email,
+                password: await bcrypt.hash(pass, 10),
+                active: 0
+            })
+            req.login(newUser, (err)=>err?console.log(err):null)
+            res.status(201).json(true)
+        } else {
+            res.status(409).json('User already exists')
+        }
     } catch(err) {
         console.log(err)
-        res.status(500).send("something broke")
+        res.status(500).json('An internal server error occurred')
     }
 })
 

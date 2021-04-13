@@ -1,12 +1,12 @@
 main.main {
-    width:70vw;
+    width:70%;
     padding:0 40px 0 0;
     box-sizing: border-box;
 }
 
 @media screen and (min-width:1024px) and (max-width: 1279px) {
     main.main {
-        width: 65vw;
+        width: 65%;
         padding:0 20px 0 0;
     }
 }

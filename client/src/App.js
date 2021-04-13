@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import { Route, Redirect } from 'react-router-dom';
 import Header from "./shared/Header/Header";
-import { ModalContext } from "./ModalContext";
+import { UserContext } from "./UserContext";
 import Login from "./Login";
 import Register from "./Register";
 import Overview from "./Overview";
@@ -15,42 +15,52 @@ import axios from "axios";
 
 const conn = axios.create({
     withCredentials: true,
-    baseURL: "http://172.30.1.15:5000/api",
+    baseURL: "http://localhost:5000/api",
 })
 
 const App = () => {
 
-    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(false);
     const [navOpen, setNavOpen] = useState(false);
 
     useEffect(()=>{
+        setLoading(true);
         (async ()=> {
             try {
                 const res = await conn.get('user')
                 setUser(res.data)
+                setLoading(false)
             } catch (err) {
                 console.log(err)
             }
         })()
         },[])
 
+    if (loading) {
+        return (<div className={"loading"}><span>loading...</span></div>);
+    }
+
     // Routes for non logged in user
-    if (!user) {
+    if (!user && !loading) {
         return (
-            <>
+            <UserContext.Provider value={{user, setUser}}>
+                <Redirect to="/" />
                 <Route exact path={"/"}>
-                    <Login user={user} setUser={setUser} />
+                    <Login setUser={setUser} />
                 </Route>
                 <Route exact path={"/login"}>
-                    <Login user={user} setUser={setUser} />
+                    <Login setUser={setUser} />
                 </Route>
-                <Route exact path={"/register"} component={Register} />
-            </>
+                <Route exact path={"/register"}>
+                    <Register setUser={setUser} />
+                </Route>
+            </UserContext.Provider>
         )
     }
 
     return (
-        <ModalContext.Provider value={{navOpen, setNavOpen}}>
+        <UserContext.Provider value={{user, setUser}}>
             <Redirect from="/" to="/calendar" />
 
             <a className={"drawerToggle"} onClick={(e)=>{e.preventDefault();setNavOpen(!navOpen)}}>
@@ -72,7 +82,7 @@ const App = () => {
                     <Route exact path={"/schedule"} component={Schedule} />
                 </ScheduleProvider>
             </div>
-        </ModalContext.Provider>
+        </UserContext.Provider>
     );
 }
 

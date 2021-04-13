@@ -8,7 +8,7 @@ import axios from "axios";
 
 const conn = axios.create({
     withCredentials: true,
-    baseURL: "http://172.30.1.15:5000/api",
+    baseURL: "http://localhost:5000/api",
 })
 
 const Overview = () => {
@@ -129,7 +129,7 @@ const Overview = () => {
     }
 
     if (loading) {
-        return (<div>loading...</div>);
+        return (<div className={"loading"}><span>loading...</span></div>);
     }
 
     return (

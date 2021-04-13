@@ -17,13 +17,10 @@ module.exports = function(passport) {
             raw: true
         })
             .then(user => {
-                console.log(`trying to auth user - ${user.id}:${user.email}`)
                 if (!user) return done(null, false)
                 bcrypt.compare(password, user.password, (err,result) => {
-                    console.log("comparing hash...")
                     if (err) console.log(err)
                     if (result===true) {
-                        console.log("authed!")
                         done(null, user)
                     }
                     done(null, false)
@@ -36,13 +33,11 @@ module.exports = function(passport) {
         new LocalStrategy(customFields, verify)
     );
 
-    passport.serializeUser((user,done)=>{
-        console.log("serializing ", user.id)
+    passport.serializeUser((user,done)=> {
         done(null, user.id)
     })
 
     passport.deserializeUser((id,done)=> {
-        console.log("deserialzing ", id)
         db.users.findOne({
             where: {
                 id: id

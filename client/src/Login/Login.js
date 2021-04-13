@@ -4,41 +4,74 @@ import axios from "axios";
 import Title from "../shared/Title/Title";
 import Button from "../shared/Button"
 import { NavLink } from "react-router-dom";
+import {validateEmail} from "../utils/validate";
 
-const Login = ({user, setUser}) => {
+const Login = ({setUser}) => {
 
-    const [email, setEmail] = useState();
-    const [pass, setPass] = useState();
+    const [email, setEmail] = useState({
+        val: null,
+        dirty: false,
+    });
+    const [pass, setPass] = useState({
+        val: null,
+        dirty: false,
+    });
+    const [error, setError] = useState();
 
     const login = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        if (!email.val || !pass.val) {
+            setError("Missing required fields")
+            return;
+        }
+        if (!validateEmail(email.val)) {
+            setError("Invalid email format")
+            return;
+        }
         axios({
             method: "post",
             data: {
-                email,
-                pass,
+                email: email.val,
+                pass: pass.val,
             },
             withCredentials: true,
-            url: "http://172.30.1.15:5000/api/login",
+            url: "http://localhost:5000/api/login",
         })
             .then(res => {
                 setUser(res.data)
             })
-            .catch(err=>console.log(err))
+            .catch(err=>{
+                switch(err.response.status) {
+                    case 401:
+                        setError("Invalid password")
+                }
+            })
     }
 
     return (
-        <div class={"loginContainer"}>
+        <div className={"loginContainer"}>
             <div className={'loginForm'}>
                 <div className={'loginTitleContainer'}>
                     <Title />
                 </div>
                 <form>
-                    <input type={"email"} placeholder={"Email Address"} onChange={(e)=>setEmail(e.target.value)} />
-                    <input type={"password"} placeholder={"Password"} onChange={(e)=>setPass(e.target.value)} />
+                    {error ? <div className={"error"}>{error}</div> : null}
+                    <input
+                        type={"email"}
+                        placeholder={"Email Address"}
+                        onChange={e=>setEmail({...email, val:e.target.value})}
+                        onBlur={()=>setEmail({...email, dirty: true})}
+                        required={true}
+                    />
+                    <input
+                        type={"password"}
+                        placeholder={"Password"}
+                        onChange={(e)=>setPass({...pass, val:e.target.value})}
+                        onBlur={()=>setPass({...pass, dirty: true})}
+                        required={true}
+                    />
                     <Button
                         text={"log in"}
-                        type={""}
                         handler={login}
                     />
                 </form>

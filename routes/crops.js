@@ -61,7 +61,7 @@ router.put("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     const {name, growTime, sproutTime, notes} = req.body;
     try {
-        const crop = await db.crops.create({userId:1, name, growTime, sproutTime, notes})
+        const crop = await db.crops.create({userId:req.user.id, name, growTime, sproutTime, notes})
         res.status(200).send(crop)
     } catch(err) {
         console.log(err)
@@ -72,9 +72,9 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        const crop = await db.crops.findOne({ where: {id} })
+        const crop = await db.crops.findOne({ where: {id, userId: req.user.id} })
         crop.destroy()
-        res.status(200).send({success: true})
+        res.status(200).json(true)
     } catch (err) {
         console.log(err);
     }

@@ -24,7 +24,7 @@
 
 .loginForm form {
     width:300px;
-    padding: 2rem 0;
+    padding: 2rem 0 1rem 0;
     margin:0 auto 1rem auto;
     border-bottom:1px solid rgba(0,0,0,0.25);
 }
@@ -49,4 +49,18 @@
     text-align: center;
     display:block;
     margin:0 auto 0.5rem auto;
+}
+
+.loginForm input:last-of-type {
+    margin:0 auto 1rem auto;
+}
+
+.error {
+    color:#FFF;
+    background-color:rgba(184,69,69,1);
+    padding:4px;
+    border-radius:4px;
+    margin-bottom:1rem;
+    display:inline-block;
+    font-weight:700;
 }

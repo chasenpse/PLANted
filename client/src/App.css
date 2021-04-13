@@ -75,7 +75,12 @@ html, body, input, select, option, textarea, button {
     text-shadow: 0 0;
 }
 
-html body {
+html {
+    height:100%;
+}
+
+body {
+    min-height:100%;
     background:#45B864;
 }
 
@@ -132,15 +137,22 @@ textarea::-moz-selection {
     text-shadow: 0 0;
 }
 
-button {
-    padding:0;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 150ms;
-    text-transform: capitalize;
-    min-width:100px;
-    line-height:2rem;
-    font-size:1rem;
+.right {
+    float: right;
+}
+
+.loading {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding-top:100px;
+    width:100%;
+}
+
+.loading span {
+    font-size:2rem;
+    font-weight:700;
+    text-align:center;
 }
 
 @media screen and (max-width: 1023px) {

@@ -10,7 +10,7 @@ import axios from "axios";
 
 const conn = axios.create({
     withCredentials: true,
-    baseURL: "http://172.30.1.15:5000/api",
+    baseURL: "http://localhost:5000/api",
 })
 
 const Schedule = () => {
@@ -126,13 +126,13 @@ const Schedule = () => {
     }
 
     if (loading) {
-        return (<div>loading...</div>);
+        return (<div className={"loading"}><span>loading...</span></div>);
     }
 
     return (
         <>
             <Main>
-                <Button type={'main'} text={'add instance'} handler={addInstance} />
+                <Button className={'main'} text={'add instance'} handler={addInstance} />
                 <TableView
                     Cols={[
                         { name: "crop", prop: "crop.name", type: "string" },
@@ -221,9 +221,9 @@ const Schedule = () => {
 
                         />
                     </div>
-                    <Button type={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
-                    <Button type={'cancel'} text={'cancel'} handler={cancelHandler} />
-                    <Button type={'delete right'} text={'delete'} handler={deleteHandler} />
+                    <Button className={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
+                    <Button className={'outline'} text={'cancel'} handler={cancelHandler} />
+                    <Button className={'red right'} text={'delete'} handler={deleteHandler} />
                 </form>
             </Sidebar>
         </>

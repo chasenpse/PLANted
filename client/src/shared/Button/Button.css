@@ -1,40 +1,41 @@
-button.btn {
+button {
+    padding:0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms;
+    text-transform: capitalize;
+    min-width:90px;
+    line-height:2rem;
+    font-size:1rem;
     background:#EEE;
     border: 1px solid #EEE;
 }
 
-button.btn:hover {
+button:hover {
     background:#000;
     border: 1px solid #000;
     color:#FFF;
 }
 
 button.main {
-    font-size:1.25rem;
-    height:2rem;
     padding:0 24px;
     margin:0 0 40px 40px;
 }
 
-button.save, button.cancel {
-    line-height:2rem;
-    font-size:1rem;
-    padding:0;
-    min-width:100px;
-}
-
 button.save {
-    background:#EEE;
-    border: 1px solid #EEE;
     margin-right:1rem;
 }
 
-button.cancel {
+button.outline {
     background:none;
     border: 1px solid #000;
 }
 
-button.delete {
+button.outline:hover {
+    background:#000;
+}
+
+button.red {
     background:rgba(184,69,69,0.5);
     color: #FFF;
     border: 1px solid rgba(184,69,69,0.5);
@@ -43,13 +44,9 @@ button.delete {
     padding:0 1rem;
 }
 
-button.delete:hover {
+button.red:hover {
     background:rgba(184,69,69,1);
     border: 1px solid rgba(184,69,69,1);
-}
-
-button.right {
-    float: right;
 }
 
 @media screen and (min-width:1024px) and (max-width: 1279px) {
@@ -57,7 +54,7 @@ button.right {
         margin:0 0 40px 20px;
     }
 
-    .save, .cancel, .delete {
+    .section button {
         display:block;
         width:100%;
         margin-bottom:1rem;
@@ -65,7 +62,7 @@ button.right {
 }
 
 @media screen and (max-width: 1023px) {
-    .save, .cancel, .delete {
+    .section button {
         display:block;
         width:100%;
         margin-bottom:1rem;

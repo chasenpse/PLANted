@@ -1,5 +1,5 @@
 .section {
-    width:30vw;
+    width:30%;
     height:100vh;
     background:rgba(255,255,255,0.33);
     position:fixed;
@@ -120,7 +120,7 @@
 
 @media screen and (min-width:1024px) and (max-width: 1279px) {
     .section {
-        width:35vw;
+        width:35%;
     }
 }
 
