@@ -52,17 +52,13 @@ const App = () => {
                 <Route exact path={"/login"}>
                     <Login setUser={setUser} />
                 </Route>
-                <Route exact path={"/register"}>
-                    <Register setUser={setUser} />
-                </Route>
+                <Route exact path={"/register"} />
             </UserContext.Provider>
         )
     }
 
     return (
         <UserContext.Provider value={{user, setUser}}>
-            <Redirect from="/" to="/calendar" />
-
             <a className={"drawerToggle"} onClick={(e)=>{e.preventDefault();setNavOpen(!navOpen)}}>
                 <span />
                 <span />
@@ -71,6 +67,7 @@ const App = () => {
             <Header menu={{navOpen, setNavOpen}} />
             <div className={"container"}>
                 <OverviewProvider>
+                    <Route exact path={"/"} component={Overview} />
                     <Route exact path={"/calendar"} component={Overview} />
                 </OverviewProvider>
 
