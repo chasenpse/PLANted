@@ -17,6 +17,13 @@ button:hover {
     color:#FFF;
 }
 
+button[disabled], button:hover[disabled] {
+    cursor: not-allowed;
+    background:#CCC;
+    border:1px solid #CCC;
+    color:#999;
+}
+
 button.main {
     padding:0 24px;
     margin:0 0 40px 40px;

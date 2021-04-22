@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
         active: {
             type: DataTypes.BOOLEAN,
             required: true,
-        }
+        },
+        emailToken: {
+            type: DataTypes.STRING(21),
+            required: true,
+        },
+        tokenExpires: {
+            type: DataTypes.DATE,
+            required: true,
+        },
     });
 }

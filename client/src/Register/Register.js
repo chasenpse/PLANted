@@ -1,58 +1,106 @@
 import React, {useState} from 'react'
-import './Register.css'
 import axios from "axios";
-import Title from "../shared/Title/Title";
+import LogInOutModal from "../shared/LogInOutModal/LogInOutModal";
 import { NavLink } from "react-router-dom";
 import Button from "../shared/Button";
+import {validateEmail} from "../utils/validate";
 
-const Register = ({setUser}) => {
-    const [email, setEmail] = useState();
-    const [pass, setPass] = useState();
-    const [confirmPass, setConfirmPass] = useState();
+const Register = () => {
+    const [email, setEmail] = useState({
+        val: null,
+        dirty: false,
+    });
+    const [pass, setPass] = useState({
+        val: null,
+        dirty: false,
+    });
+    const [confirmPass, setConfirmPass] = useState({
+        val: null,
+        dirty: false,
+    });
+
+    const [error, setError] = useState();
+    const [confirm, setConfirm] = useState(false)
 
     const register = (e) => {
         e.preventDefault()
-        if (pass===confirmPass) {
-            axios({
-                method: "post",
-                data: {
-                    email,
-                    pass,
-                },
-                withCredentials: true,
-                url: "http://localhost:5000/api/register",
-            })
-                .then(res => setUser(res.data))
-                .catch(err=>console.log(err))
-        } else if (pass.length < 8) {
-            console.log("pass not long")
-        } else if (pass!==confirmPass) {
-            console.log("passes dont match")
+        setError(false)
+        if (!email.val || !pass.val || !confirmPass.val) {
+            setError("Missing required fields")
+            return;
         }
+        if (!validateEmail(email.val)) {
+            setError("Invalid email format")
+            return;
+        }
+        if (pass.val !== confirmPass.val) {
+            setError("Passwords do not match")
+            return;
+        }
+        if (pass.val.length < 8) {
+            setError("Password must be at least 8 characters")
+            return;
+        }
+        axios({
+            method: "post",
+            data: {
+                email: email.val,
+                pass: pass.val,
+            },
+            withCredentials: true,
+            url: "http://localhost:5000/api/register",
+        })
+            .then(res => setConfirm(res.data))
+            .catch(err=>{
+                switch(err.response.status) {
+                    case 409:
+                        setError("Account already exists")
+                        break;
+                    default:
+                        setError("An error occurred, please try again")
+                        break;
+                }
+            })
     }
 
     return (
-        <div className={"loginContainer"}>
-            <div className={'loginForm'}>
-                <div className={'loginTitleContainer'}>
-                    <Title/>
-                </div>
-                <form>
-                    <input type={"email"} placeholder={"Email Address"} onChange={(e)=>setEmail(e.target.value)} />
-                    <input type={"password"} placeholder={"Password"} onChange={(e)=>setPass(e.target.value)} />
-                    <input type={"password"} placeholder={"Confirm Password"} onChange={(e)=>setConfirmPass(e.target.value)} />
-                    <Button
-                        text={"register"}
-                        type={""}
-                        handler={register}
-                    />
-                </form>
-                <span className={'registerText'}>Already registered?</span>
-                <NavLink exact to={'/login'} className={'registerLink'}>
-                    Log In
-                </NavLink>
-            </div>
-        </div>
+        <LogInOutModal>
+            <form>
+                {error ? <div className={"error"}>{error}</div> : null}
+                {confirm ? <div className={"confirm"}>Please check your email for a confirmation</div> : null}
+                <input
+                    type={"email"}
+                    placeholder={"Email Address"}
+                    onChange={(e)=>setEmail({...email, val: e.target.value})}
+                    onBlur={()=>setEmail({...email, dirty: true})}
+                    required={true}
+                />
+                <input
+                    type={"password"}
+                    placeholder={"Password"}
+                    onChange={(e)=>setPass({...pass, val: e.target.value})}
+                    onBlur={()=>setPass({...pass, dirty: true})}
+                    required={true}
+                />
+                <input
+                    type={"password"}
+                    placeholder={"Confirm Password"}
+                    onChange={(e)=>setConfirmPass({...confirmPass, val:e.target.value})}
+                    onBlur={()=>setConfirmPass({...confirmPass, dirty: true})}
+                    required={true}
+                />
+                <Button
+                    text={"register"}
+                    type={""}
+                    handler={register}
+                    disabled={confirm}
+                />
+            </form>
+            <span className={'registerText'}>Already registered?</span>
+            <NavLink exact to={'/login'} className={'registerLink'}>
+                Log In
+            </NavLink>
+        </LogInOutModal>
     )
 }
 

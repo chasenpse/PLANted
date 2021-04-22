@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Header from "./shared/Header/Header";
 import { UserContext } from "./UserContext";
 import Login from "./Login";
@@ -11,6 +11,7 @@ import CropLibrary from "./CropLibrary";
 import { CropProvider } from "./CropLibrary/CropContext";
 import Schedule from "./Schedule";
 import { ScheduleProvider } from "./Schedule/ScheduleContext";
+import ResetPassword from "./ResetPassword/ResetPassword";
 import axios from "axios";
 
 const conn = axios.create({
@@ -45,39 +46,53 @@ const App = () => {
     if (!user && !loading) {
         return (
             <UserContext.Provider value={{user, setUser}}>
-                <Redirect to="/" />
-                <Route exact path={"/"}>
-                    <Login setUser={setUser} />
-                </Route>
-                <Route exact path={"/login"}>
-                    <Login setUser={setUser} />
-                </Route>
-                <Route exact path={"/register"} />
+                <Switch>
+                    <Route exact path={"/"}>
+                        <Login setUser={setUser} />
+                    </Route>
+                    <Route exact path={"/login"}>
+                        <Login setUser={setUser} />
+                    </Route>
+                    <Route exact path={"/confirm/:token"}>
+                        <Login setUser={setUser} />
+                    </Route>
+                    <Route exact path={"/register"} component={Register} />
+                    <Route exact path={"/reset"} component={ResetPassword} />
+                    <Redirect to="/" />
+                </Switch>
             </UserContext.Provider>
         )
     }
 
     return (
         <UserContext.Provider value={{user, setUser}}>
-            <a className={"drawerToggle"} onClick={(e)=>{e.preventDefault();setNavOpen(!navOpen)}}>
+            <span className={"drawerToggle"} onClick={(e)=>{e.preventDefault();setNavOpen(!navOpen)}}>
                 <span />
                 <span />
                 <span />
-            </a>
+            </span>
             <Header menu={{navOpen, setNavOpen}} />
             <div className={"container"}>
                 <OverviewProvider>
-                    <Route exact path={"/"} component={Overview} />
-                    <Route exact path={"/calendar"} component={Overview} />
+                    <Switch>
+                        <Route exact path={"/calendar"} component={Overview} />
+                    </Switch>
                 </OverviewProvider>
 
                 <CropProvider>
-                    <Route exact path={"/library"} component={CropLibrary} />
+                    <Switch>
+                        <Route exact path={"/library"} component={CropLibrary} />
+                    </Switch>
                 </CropProvider>
 
                 <ScheduleProvider>
-                    <Route exact path={"/schedule"} component={Schedule} />
+                    <Switch>
+                        <Route exact path={"/schedule"} component={Schedule} />
+                    </Switch>
                 </ScheduleProvider>
+                <Switch>
+                    <Redirect to="/calendar" />
+                </Switch>
             </div>
         </UserContext.Provider>
     );

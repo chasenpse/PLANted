@@ -6,8 +6,10 @@ const session = require('express-session');
 const passport = require('passport');
 
 const loginRoute = require('./routes/login');
-const logoutRoute = require('./routes/logout');
 const registerRoute = require('./routes/register');
+const confirmRoute = require('./routes/confirm');
+const logoutRoute = require('./routes/logout');
+const resetRoute = require('./routes/reset');
 const userRoute = require('./routes/users');
 const cropRoute = require('./routes/crops');
 const instanceRoute = require('./routes/instances');
@@ -53,6 +55,8 @@ app.get("/api/user", (req, res) => {
 
 app.use('/api/login', loginRoute);
 app.use('/api/register', registerRoute);
+app.use('/api/confirm', confirmRoute);
+app.use('/api/reset', resetRoute);
 app.use('/api/logout', requireLogin, logoutRoute);
 app.use('/api/users', requireLogin, userRoute);
 app.use('/api/crops', requireLogin, cropRoute);

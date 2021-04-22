@@ -2,10 +2,10 @@ import React, {useContext} from 'react';
 import Button from "../Nav/Button/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { UserContext} from "../../../UserContext";
+import {UserContext} from "../../../UserContext";
 
 const Logout = () => {
-    const {user, setUser} = useContext(UserContext)
+    const {setUser} = useContext(UserContext)
 
     const logout = (e) => {
         e.preventDefault()

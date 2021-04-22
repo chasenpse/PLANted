@@ -22,8 +22,7 @@ module.exports = function(passport) {
                     if (err) console.log(err)
                     if (result===true) {
                         done(null, user)
-                    }
-                    done(null, false)
+                    } else { done(null, false) }
                 })
             })
             .catch(err => done(err))
