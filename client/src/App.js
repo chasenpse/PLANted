@@ -13,6 +13,7 @@ import Schedule from "./Schedule";
 import { ScheduleProvider } from "./Schedule/ScheduleContext";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import axios from "axios";
+import Loading from "./shared/Loading/Loading";
 
 const conn = axios.create({
     withCredentials: true,
@@ -39,7 +40,7 @@ const App = () => {
         },[])
 
     if (loading) {
-        return (<div className={"loading"}><span>loading...</span></div>);
+        return <Loading />;
     }
 
     // Routes for non logged in user

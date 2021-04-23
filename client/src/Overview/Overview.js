@@ -5,6 +5,7 @@ import Sidebar from "../shared/Sidebar/Sidebar";
 import Calendar from "./Calendar/Calendar";
 import * as dateUtils from "../utils/formatDate";
 import axios from "axios";
+import Loading from "../shared/Loading/Loading";
 
 const conn = axios.create({
     withCredentials: true,
@@ -129,7 +130,7 @@ const Overview = () => {
     }
 
     if (loading) {
-        return (<div className={"loading"}><span>loading...</span></div>);
+        return <Loading />;
     }
 
     return (

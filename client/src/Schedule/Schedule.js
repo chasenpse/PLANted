@@ -7,6 +7,7 @@ import Button from "../shared/Button";
 import TableView from "../shared/TableView/TableView";
 import { dateToYYYYMMDD } from "../utils/formatDate";
 import axios from "axios";
+import Loading from "../shared/Loading/Loading";
 
 const conn = axios.create({
     withCredentials: true,
@@ -126,7 +127,7 @@ const Schedule = () => {
     }
 
     if (loading) {
-        return (<div className={"loading"}><span>loading...</span></div>);
+        return <Loading />;
     }
 
     return (

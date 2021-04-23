@@ -6,6 +6,7 @@ import Sidebar from "../shared/Sidebar/Sidebar";
 import Button from "../shared/Button";
 import TableView from "../shared/TableView/TableView";
 import axios from "axios";
+import Loading from "../shared/Loading/Loading";
 
 const conn = axios.create({
     withCredentials: true,
@@ -62,7 +63,7 @@ const CropLibrary = () => {
     },[crops, selected, newCrop])
 
     if (loading) {
-        return (<div className={"loading"}><span>loading...</span></div>);
+        return <Loading />;
     }
 
     const updateField = (e, n) => {
