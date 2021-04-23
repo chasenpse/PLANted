@@ -58,6 +58,7 @@ const App = () => {
                     </Route>
                     <Route exact path={"/register"} component={Register} />
                     <Route exact path={"/reset"} component={ResetPassword} />
+                    <Route exact path={"/reset/:token"} component={ResetPassword} />
                     <Redirect to="/" />
                 </Switch>
             </UserContext.Provider>

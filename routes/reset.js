@@ -1,7 +1,13 @@
 const router = require('express').Router();
 const db = require('../config/db');
+const bcrypt = require('bcryptjs');
+const sgMail = require("@sendgrid/mail");
+const nanoid = require("nanoid").nanoid;
+const resetPassEmail = require("../config/resetPassEmail");
 
-router.post("/", async (req, res) => {
+
+// update user token and send email
+router.put("/", async (req, res) => {
     try {
         const user = await db.users.findOne({
             where: {
@@ -9,9 +15,42 @@ router.post("/", async (req, res) => {
             }
         })
         if (!user) {
-            return res.status(401).json(false)
+            res.status(401).json(false)
+        } else {
+            const emailToken = nanoid()
+            const tokenExpires = new Date()
+            tokenExpires.setDate(tokenExpires.getDate() + 1) //24 hours to register!
+            user.emailToken = emailToken;
+            user.tokenExpires = tokenExpires;
+            user.save()
+            const mailSuccess = sgMail.send(resetPassEmail(user.email, emailToken))
+            res.status(200).json(true)
         }
-        res.status(200).json(user)
+    }
+    catch(err) {
+        res.status(500).json(false)
+    }
+})
+
+// update user password and invalidate token
+router.post("/", async (req, res) => {
+    try {
+        const user = await db.users.findOne({
+            where: {
+                emailToken: req.body.token,
+                active: 1,
+            }
+        })
+        if (!user) {
+            res.status(401).json(false)
+        } else if (new Date(user.tokenExpires) < new Date()) {
+            res.status(403).json(false)
+        } else {
+            user.password = await bcrypt.hash(req.body.pass, 10);
+            user.tokenExpires = new Date();
+            user.save()
+            res.status(200).json(true)
+        }
     }
     catch(err) {
         res.status(500).json(false)

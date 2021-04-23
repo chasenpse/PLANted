@@ -25,6 +25,7 @@ router.post("/", (req,res) => {
             return res.status(403).json(false) // user already active
         } else {
             user.active = 1;
+            user.tokenExpires = new Date();
             user.save()
             return res.status(200).json(true) // 200 Success!
         }

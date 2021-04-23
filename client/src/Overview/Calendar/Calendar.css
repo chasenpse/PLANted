@@ -11,6 +11,7 @@ input[type='month'] {
     text-align: center;
     padding: 2px 6px;
     font-size:1rem;
+    width:200px;
 }
 
 input[type='month']:first-of-type {
@@ -130,14 +131,40 @@ input[type='month']:first-of-type {
         grid-template-columns: repeat(2, 1fr);
         padding-left:20px;
     }
+    .calRange {
+        padding-left:20px;
+    }
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (min-width:640px) and (max-width: 1023px) {
     .calendarContainer {
         grid-template-columns: 1fr;
         padding-left:0;
     }
     .calRange {
         padding: 0;
+        display:flex;
+        justify-content: space-evenly;
+    }
+    input[type='month']:first-of-type {
+        margin-right:0;
+    }
+}
+
+@media screen and (max-width: 639px) {
+    .calendarContainer {
+        grid-template-columns: 1fr;
+        padding-left:0;
+    }
+    .calRange {
+        padding: 0;
+        display: block;
+    }
+    input[type='month'] {
+        display:block;
+        margin:0 auto;
+    }
+    input[type='month']:first-of-type {
+        margin:0 auto 4px auto;
     }
 }
