@@ -60,7 +60,7 @@ textarea, select, input, button { outline: none; }
 /*------------------------------------------------------*/
 
 html, body, input, select, option, textarea, button {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito', Arial, helvetica, sans-serif;
 }
 
 ::selection {

@@ -50,7 +50,8 @@ const Login = ({setUser}) => {
         }
     },[token])
 
-    const sendValidationEmail = () => {
+    const sendValidationEmail = (e) => {
+        e.preventDefault()
         axios({
             method: "put",
             data: {
@@ -119,7 +120,7 @@ const Login = ({setUser}) => {
             <form>
                 {error ? <div className={"error"}>{error}</div> : null}
                 {confirm ? <div className={"confirm"}>{confirm}</div> : null}
-                {resend ? <div><button className={"resend"} onClick={sendValidationEmail}>Resend verification?</button></div> : null}
+                {resend ? <div><button className={"resend"} onClick={e=>sendValidationEmail(e)}>Resend verification?</button></div> : null}
                 <input
                     type={"email"}
                     placeholder={"Email Address"}
