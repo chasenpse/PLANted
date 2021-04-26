@@ -2,7 +2,7 @@ const router = require('express').Router();
 const db = require('../config/db');
 const sgMail = require("@sendgrid/mail");
 const nanoid = require("nanoid").nanoid;
-const confirmEmail = require("../config/confirmEmail");
+const confirmEmail = require("../emailTemplates/confirmEmail");
 
 router.post("/", (req,res) => {
     db.users.findOne({
@@ -14,7 +14,6 @@ router.post("/", (req,res) => {
             const emailToken = nanoid()
             const tokenExpires = new Date()
             tokenExpires.setDate(tokenExpires.getDate() + 1) //24 hours to register!
-
             user.emailToken = emailToken;
             user.tokenExpires = tokenExpires;
             user.save()

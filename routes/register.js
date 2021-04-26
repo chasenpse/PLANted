@@ -3,7 +3,7 @@ const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 const sgMail = require("@sendgrid/mail");
 const nanoid = require("nanoid").nanoid;
-const confirmEmail = require("../config/confirmEmail");
+const confirmEmail = require("../emailTemplates/confirmEmail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 

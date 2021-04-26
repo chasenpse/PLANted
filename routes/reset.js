@@ -3,7 +3,7 @@ const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 const sgMail = require("@sendgrid/mail");
 const nanoid = require("nanoid").nanoid;
-const resetPassEmail = require("../config/resetPassEmail");
+const resetPassEmail = require("../emailTemplates/resetPassEmail");
 
 
 // update user token and send email
@@ -38,7 +38,6 @@ router.post("/", async (req, res) => {
         const user = await db.users.findOne({
             where: {
                 emailToken: req.body.token,
-                active: 1,
             }
         })
         if (!user) {

@@ -100,6 +100,7 @@ const Login = ({setUser}) => {
                 setUser(res.data)
             })
             .catch(err=>{
+                setConfirm(false);
                 switch(err.response.status) {
                     case 401:
                         setError("Invalid password")
