@@ -141,6 +141,10 @@ textarea::-moz-selection {
     float: right;
 }
 
+.bold {
+    font-weight:700;
+}
+
 @media screen and (max-width: 1023px) {
     .container {
         padding:0;

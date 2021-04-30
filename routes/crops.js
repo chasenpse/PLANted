@@ -72,8 +72,10 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        const crop = await db.crops.findOne({ where: {id, userId: req.user.id} })
-        crop.destroy()
+        const crop = await db.crops.findOne({ where: {id, userId: req.user.id}})
+        crop.destroy({
+            cascade: true
+        })
         res.status(200).json(true)
     } catch (err) {
         console.log(err);

@@ -16,10 +16,6 @@
     vertical-align: middle;
 }
 
-.tableView  td {
-    text-transform: capitalize;
-}
-
 .tableView tbody tr {
     line-height:2.625rem;
     transition: all 150ms;

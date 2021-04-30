@@ -7,6 +7,7 @@ import Button from "../shared/Button";
 import TableView from "../shared/TableView/TableView";
 import axios from "axios";
 import Loading from "../shared/Loading/Loading";
+import Modal from "../shared/Modal";
 
 const conn = axios.create({
     withCredentials: true,
@@ -36,7 +37,9 @@ const CropLibrary = () => {
         order,
         setOrder,
     } = useContext(CropContext);
+
     const [tmp, setTmp] = useState(newCrop);
+    const [modal, setModal] = useState(false);
 
     // Load the user's instances
     useEffect(() => {
@@ -117,14 +120,26 @@ const CropLibrary = () => {
         try {
             const res = await conn.delete(`/${tmp.id}`);
             setSelected(res.data.length > 0 ? 0 : undefined);
+            setModal(false);
             await updateCrops();
         } catch(err) {
             console.log(err, e)
         }
     }
 
+    const modalBody = () => {
+        return (
+            <>
+                <p>Are you sure you want to delete the crop:</p>
+                <p className={"bold"}>{tmp.name}</p>
+                <p>Any scheduled instances of this crop will also be deleted. <span className={'bold'}>This action cannot be undone.</span></p>
+            </>
+        )
+    }
+
     return (
         <>
+            {modal?<Modal body={modalBody()} confirm={deleteHandler} cancel={()=>setModal(false)}/>:null}
             <Main>
                 <Button className={'main'} text={'add crop'} handler={addCrop} />
                 <TableView
@@ -192,7 +207,7 @@ const CropLibrary = () => {
                     </div>
                     <Button className={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
                     <Button className={'outline'} text={'cancel'} handler={cancelHandler} />
-                    <Button className={'red right'} text={'delete'} handler={deleteHandler} />
+                    <Button className={'red right'} text={'delete'} handler={()=>{setModal(true)}} />
                 </form>
             </Sidebar>
         </>

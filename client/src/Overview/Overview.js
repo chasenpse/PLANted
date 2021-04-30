@@ -75,7 +75,7 @@ const Overview = () => {
                     if (sel===undefined) {
                         data.push({
                             date: sprintStartDate.toISOString().split('T',1)[0],
-                            events: [{id, name, actions: [x === 0 ? "sow" : x === stages+1 ? "harvest" : "rotate"]}]
+                            events: [{id, name, quantity, actions: [x === 0 ? "sow" : x === stages+1 ? "harvest" : "rotate"]}]
                         })
                     } else {
                         let tmp = sel.events.find(o=>o.id===id)
@@ -117,7 +117,7 @@ const Overview = () => {
                                         700
                                         : 'normal' }}
                                     >
-                                    {e}
+                                    {`${e}`}
                                 </div>
                             )}
                             </div>

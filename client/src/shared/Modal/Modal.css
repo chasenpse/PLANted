@@ -1,0 +1,17 @@
+.modalContainer {
+    box-sizing: border-box;
+    width:400px;
+    background:#EEE;
+    padding:20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.modalBody {
+    text-align: center;
+    margin-bottom:2rem;
+}
+
+.modalBody p {
+    margin-bottom:1rem;
+}

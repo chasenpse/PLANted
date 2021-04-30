@@ -1,14 +1,15 @@
 import React from 'react';
 import './Header.css';
-import Backdrop from "../Backdrop/Backdrop";
+import Overlay from "../Overlay/Overlay";
 import Title from "../Title/Title";
 import Nav from "./Nav/Nav";
 import Logout from "./Logout/Logout";
 
 const Header = ({menu}) => {
+
     return (
         <>
-            {menu.navOpen ? <Backdrop /> : null}
+            {menu.navOpen ? <Overlay /> : null}
             <header className={menu.navOpen ? "open" : null}>
                 <Title />
                 <Nav close={()=>menu.setNavOpen(false)} />

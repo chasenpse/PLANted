@@ -19,28 +19,35 @@ db.crops = require('../models/Crop.js')(sequelize, Sequelize);
 db.instances = require('../models/Instance.js')(sequelize, Sequelize);
 
 // Associations (relationships)
+
+db.instances.hasOne(db.crops, {
+    sourceKey: 'cropId',
+    foreignKey: 'id',
+});
+
+db.users.hasMany(db.instances, {
+    foreignKey: 'id',
+})
+
+db.users.hasMany(db.crops, {
+    foreignKey: 'id',
+})
+
 db.instances.belongsTo(db.users, {
     sourceKey: 'userId',
-    foreignKey: 'id'
+    foreignKey: 'id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    hooks: true,
 })
 
 db.crops.belongsTo(db.users, {
     sourceKey: 'userId',
-    foreignKey: 'id'
+    foreignKey: 'id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    hooks: true,
+
 })
-
-db.instances.hasOne(db.crops, {
-    sourceKey: 'cropId',
-    foreignKey: 'id'
-});
-
-db.users.hasMany(db.instances, {
-    foreignKey: 'id'
-})
-
-db.users.hasMany(db.crops, {
-    foreignKey: 'id'
-})
-
 
 module.exports = db;
