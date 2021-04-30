@@ -8,6 +8,7 @@ import TableView from "../shared/TableView/TableView";
 import { dateToYYYYMMDD } from "../utils/formatDate";
 import axios from "axios";
 import Loading from "../shared/Loading/Loading";
+import Modal from "../shared/Modal";
 
 const conn = axios.create({
     withCredentials: true,
@@ -42,6 +43,7 @@ const Schedule = () => {
     } = useContext(ScheduleContext);
 
     const [tmp, setTmp] = useState(newInstance);
+    const [modal, setModal] = useState(false);
 
     // Load the user's instances
     useEffect(() => {
@@ -120,6 +122,7 @@ const Schedule = () => {
         try {
             const res = await conn.delete(`instances/${tmp.id}`);
             setSelected(res.data.length > 0 ? 0 : undefined);
+            setModal(false);
             await updateInstances();
         } catch(err) {
             console.log(err, e)
@@ -130,9 +133,20 @@ const Schedule = () => {
         return <Loading />;
     }
 
+    const modalBody = () => {
+        return (
+            <>
+                <p>Are you sure you want to delete the instance:</p>
+                <p className={"bold"}>{tmp['crop.name']}</p>
+                <p className={'bold'}>This action cannot be undone.</p>
+            </>
+        )
+    }
+
     return (
         <>
             <Main>
+                {modal?<Modal body={modalBody()} confirm={deleteHandler} cancel={()=>setModal(false)}/>:null}
                 <Button className={'main'} text={'add instance'} handler={addInstance} />
                 <TableView
                     Cols={[
@@ -224,7 +238,7 @@ const Schedule = () => {
                     </div>
                     <Button className={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
                     <Button className={'outline'} text={'cancel'} handler={cancelHandler} />
-                    <Button className={'red right'} text={'delete'} handler={deleteHandler} />
+                    <Button className={'red right'} text={'delete'} handler={()=>{setModal(true)}} />
                 </form>
             </Sidebar>
         </>
