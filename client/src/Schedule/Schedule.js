@@ -238,7 +238,7 @@ const Schedule = () => {
                     </div>
                     <Button className={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
                     <Button className={'outline'} text={'cancel'} handler={cancelHandler} />
-                    <Button className={'red right'} text={'delete'} handler={()=>{setModal(true)}} />
+                    {tmp.id?<Button className={'red right'} text={'delete'} handler={()=>{setModal(true)}} />:null}
                 </form>
             </Sidebar>
         </>
