@@ -29,7 +29,7 @@ const Login = ({setUser}) => {
                     token
                 },
                 withCredentials: true,
-                url: "http://localhost:5000/api/confirm",
+                url: `/api/confirm`,
             })
                 .then(res => {
                     setConfirm("Your account has been verified")
@@ -58,7 +58,7 @@ const Login = ({setUser}) => {
                 email: email.val
             },
             withCredentials: true,
-            url: "http://localhost:5000/api/register/resend",
+            url: `/api/resend`,
         }).then(res=>{
             setError(false)
             setConfirm("Please check your email for a confirmation")
@@ -92,7 +92,7 @@ const Login = ({setUser}) => {
                 pass: pass.val,
             },
             withCredentials: true,
-            url: "http://localhost:5000/api/login",
+            url: `/api/login`,
         })
             .then(res => {
                 setError(false);

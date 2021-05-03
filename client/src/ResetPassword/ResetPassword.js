@@ -32,7 +32,7 @@ const ResetPassword = () => {
                 email: email.val,
             },
             withCredentials: true,
-            url: "http://localhost:5000/api/reset",
+            url: `/api/reset`,
         })
             .then(res=>{
                 setError(false)
@@ -66,7 +66,7 @@ const ResetPassword = () => {
                 pass: pass.val,
             },
             withCredentials: true,
-            url: "http://localhost:5000/api/reset",
+            url: `/api/reset`,
         })
             .then(res=>setConfirm("Password successfully updated!"))
             .catch(err=>{

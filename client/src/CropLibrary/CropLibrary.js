@@ -11,7 +11,7 @@ import Modal from "../shared/Modal";
 
 const conn = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:5000/api/crops",
+    baseURL: `/api/crops`,
 })
 
 const CropLibrary = () => {

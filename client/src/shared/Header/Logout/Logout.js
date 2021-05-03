@@ -12,7 +12,7 @@ const Logout = () => {
         axios({
             method: "get",
             withCredentials: true,
-            url: "http://localhost:5000/api/logout",
+            url: `/api/logout`,
         })
             .then(res => res.data ? setUser(false):null)
             .catch(err=>console.log(err))

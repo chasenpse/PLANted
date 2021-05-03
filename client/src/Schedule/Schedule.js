@@ -12,7 +12,7 @@ import Modal from "../shared/Modal";
 
 const conn = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:5000/api",
+    baseURL: `/api`
 })
 
 const Schedule = () => {
@@ -50,8 +50,8 @@ const Schedule = () => {
         setLoading(true);
         (async () => {
             try {
-                const instanceRes = await conn.get(`instances`);
-                const cropRes = await conn.get(`crops/names`);
+                const instanceRes = await conn.get(`/instances`);
+                const cropRes = await conn.get(`/crops/names`);
                 setInstances(instanceRes.data);
                 setCrops(cropRes.data);
                 setLoading(false);
@@ -77,7 +77,7 @@ const Schedule = () => {
 
     const updateInstances = async () => {
         try {
-            const res = await conn.get(`instances`);
+            const res = await conn.get(`/instances`);
             setInstances(res.data);
         } catch (e) {
             console.log(e)
@@ -93,7 +93,7 @@ const Schedule = () => {
             return false;
         }
         try {
-            const res = await conn.post(`instances`, tmp);
+            const res = await conn.post(`/instances`, tmp);
             await updateInstances();
             setSelected(res.data.id)
         } catch (err) {
@@ -103,7 +103,7 @@ const Schedule = () => {
 
     const saveHandler = async (e) => {
         try {
-            await conn.put(`instances/${tmp.id}`, tmp)
+            await conn.put(`/instances/${tmp.id}`, tmp)
             await updateInstances();
         } catch(err) {
             console.log(err, e)
@@ -120,7 +120,7 @@ const Schedule = () => {
 
     const deleteHandler = async (e) => {
         try {
-            const res = await conn.delete(`instances/${tmp.id}`);
+            const res = await conn.delete(`/instances/${tmp.id}`);
             setSelected(res.data.length > 0 ? 0 : undefined);
             setModal(false);
             await updateInstances();

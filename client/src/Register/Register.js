@@ -48,7 +48,7 @@ const Register = () => {
                 pass: pass.val,
             },
             withCredentials: true,
-            url: "http://localhost:5000/api/register",
+            url: `/api/register`,
         })
             .then(res => setConfirm(res.data))
             .catch(err=>{

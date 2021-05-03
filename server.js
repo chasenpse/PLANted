@@ -17,7 +17,7 @@ const instanceRoute = require('./routes/instances');
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: '*',
     credentials: true,
 }));
 
@@ -61,6 +61,11 @@ app.use('/api/logout', requireLogin, logoutRoute);
 app.use('/api/users', requireLogin, userRoute);
 app.use('/api/crops', requireLogin, cropRoute);
 app.use('/api/instances', requireLogin, instanceRoute);
+
+if (process.env.NODE_ENV === 'production') {
+    // serve prod assets out of client/build
+    app.use(express.static('client/build'));
+}
 
 const PORT = process.env.PORT || 5000;
 

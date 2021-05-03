@@ -17,7 +17,7 @@ import Loading from "./shared/Loading/Loading";
 
 const conn = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:5000/api",
+    baseURL: '/api'
 })
 
 const App = () => {
