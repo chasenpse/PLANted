@@ -66,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
     // Serve js/css files
     app.use(express.static('client/build'));
 
-    // Serve index.html for unrecognized routes
+    // Let react handle routing if route is unknown to Express API
     const path = require('path');
     app.get('*', (req,res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));

@@ -7,6 +7,7 @@
 .loginForm {
     box-sizing: border-box;
     width:400px;
+    margin:0 20px;
     text-align: center;
     padding-bottom:2rem;
     background:rgba(255,255,255,0.33);

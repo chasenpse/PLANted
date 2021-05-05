@@ -93,6 +93,9 @@ const App = () => {
                         <Route exact path={"/schedule"} component={Schedule} />
                     </Switch>
                 </ScheduleProvider>
+                <Switch>
+                    <Redirect to="/" />
+                </Switch>
             </div>
         </UserContext.Provider>
     );
