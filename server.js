@@ -63,8 +63,14 @@ app.use('/api/crops', requireLogin, cropRoute);
 app.use('/api/instances', requireLogin, instanceRoute);
 
 if (process.env.NODE_ENV === 'production') {
-    // serve prod assets out of client/build
+    // Serve js/css files
     app.use(express.static('client/build'));
+
+    // Serve index.html for unrecognized routes
+    const path = require('path');
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
 }
 
 const PORT = process.env.PORT || 5000;

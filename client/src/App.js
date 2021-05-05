@@ -77,6 +77,7 @@ const App = () => {
             <div className={"container"}>
                 <OverviewProvider>
                     <Switch>
+                        <Route exact path={"/"} component={Overview} />
                         <Route exact path={"/calendar"} component={Overview} />
                     </Switch>
                 </OverviewProvider>
@@ -92,9 +93,6 @@ const App = () => {
                         <Route exact path={"/schedule"} component={Schedule} />
                     </Switch>
                 </ScheduleProvider>
-                <Switch>
-                    <Redirect to="/calendar" />
-                </Switch>
             </div>
         </UserContext.Provider>
     );
