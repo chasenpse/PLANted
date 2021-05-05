@@ -75,27 +75,24 @@ const App = () => {
             </span>
             <Header menu={{navOpen, setNavOpen}} />
             <div className={"container"}>
-                <OverviewProvider>
                     <Switch>
-                        <Route exact path={"/"} component={Overview} />
-                        <Route exact path={"/calendar"} component={Overview} />
+                        <Route exact path={"/calendar"}>
+                            <OverviewProvider>
+                                <Overview />
+                            </OverviewProvider>
+                        </Route>
+                        <Route exact path={"/library"}>
+                            <CropProvider>
+                                <CropLibrary />
+                            </CropProvider>
+                        </Route>
+                        <Route exact path={"/schedule"}>
+                            <ScheduleProvider>
+                                <Schedule />
+                            </ScheduleProvider>
+                        </Route>
+                        <Redirect to="/calendar" />
                     </Switch>
-                </OverviewProvider>
-
-                <CropProvider>
-                    <Switch>
-                        <Route exact path={"/library"} component={CropLibrary} />
-                    </Switch>
-                </CropProvider>
-
-                <ScheduleProvider>
-                    <Switch>
-                        <Route exact path={"/schedule"} component={Schedule} />
-                    </Switch>
-                </ScheduleProvider>
-                <Switch>
-                    <Redirect to="/" />
-                </Switch>
             </div>
         </UserContext.Provider>
     );
