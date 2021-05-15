@@ -1,14 +1,17 @@
 import React, {useContext, useState, useEffect, useMemo} from 'react';
 import './Schedule.css';
 import {ScheduleContext} from "./ScheduleContext";
+import ScheduleFields from "./ScheduleFields";
 import Main from "../shared/Main";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import Button from "../shared/Button";
 import TableView from "../shared/TableView/TableView";
-import { dateToYYYYMMDD } from "../utils/formatDate";
 import axios from "axios";
 import Loading from "../shared/Loading/Loading";
 import Modal from "../shared/Modal";
+import Form from "../shared/Sidebar/Form/Form";
+import {validateYYYYMMDD} from "../utils/validate";
+import {dateToYYYYMMDD} from "../utils/formatDate";
 
 const conn = axios.create({
     withCredentials: true,
@@ -18,11 +21,11 @@ const conn = axios.create({
 const Schedule = () => {
     const newInstance = useMemo(()=>(
         {
-            "cropId": "none",
+            "cropId": 0,
             "quantity": 1,
             "stages": 1,
-            "startDate": new Date().toISOString(),
-            "endDate": new Date().toISOString(),
+            "startDate": dateToYYYYMMDD(new Date().toISOString()),
+            "endDate": dateToYYYYMMDD(new Date().toISOString()),
             "notes": "",
         }
     ), [])
@@ -44,6 +47,7 @@ const Schedule = () => {
 
     const [tmp, setTmp] = useState(newInstance);
     const [modal, setModal] = useState(false);
+    const [errors, setErrors] = useState({});
 
     // Load the user's instances
     useEffect(() => {
@@ -63,16 +67,15 @@ const Schedule = () => {
 
     // update tmp object when selected is changed
     useEffect(()=>{
-        if (selected !== undefined && selected !== "new") {
+        if (selected != null && selected !== "new") {
             setTmp(instances.find(i=>i.id === selected))
-        }
-        else if (selected === "new") {
+        } else {
             setTmp(newInstance)
         }
     },[instances, selected, newInstance])
 
-    const updateField = (e, n) => {
-        return n ? setTmp({...tmp, [e.target.name]:+e.target.value}) : setTmp({...tmp, [e.target.name]:e.target.value})
+    const updateField = (e) => {
+        return setTmp({...tmp, [e.target.name]:e.target.value})
     }
 
     const updateInstances = async () => {
@@ -88,31 +91,55 @@ const Schedule = () => {
         setSelected("new");
     }
 
-    const addHandler = async (e) => {
-        if (tmp.cropId === "none") {
-            return false;
+    const validate = () => {
+        const errors = {};
+
+        if (!tmp.cropId) {
+            errors.cropId = "Please select a crop"
         }
-        try {
-            const res = await conn.post(`/instances`, tmp);
-            await updateInstances();
-            setSelected(res.data.id)
-        } catch (err) {
-            console.log(err, e)
+        if (!+tmp.quantity) {
+            errors.quantity = "Invalid input"
+        }
+        if (!+tmp.stages) {
+            errors.stages = "Invalid input"
+        }
+        if (!validateYYYYMMDD(tmp.startDate)) {
+            errors.startDate = "Invalid input"
+        }
+        if (!validateYYYYMMDD(tmp.endDate)) {
+            errors.endDate = "Invalid input"
+        }
+        setErrors(errors);
+        return errors;
+    }
+
+    const addHandler = async (e) => {
+        if (!Object.entries(validate()).length) {
+            try {
+                const res = await conn.post(`/instances`, tmp);
+                await updateInstances();
+                setSelected(res.data.id)
+            } catch (err) {
+                console.log(err, e)
+            }
         }
     }
 
     const saveHandler = async (e) => {
-        try {
-            await conn.put(`/instances/${tmp.id}`, tmp)
-            await updateInstances();
-        } catch(err) {
-            console.log(err, e)
+        if (!Object.entries(validate()).length) {
+            try {
+                await conn.put(`/instances/${tmp.id}`, tmp)
+                await updateInstances();
+            } catch(err) {
+                console.log(err, e)
+            }
         }
     }
 
     const cancelHandler = (e) => {
         try {
-            setSelected(undefined)
+            setSelected(null)
+            setErrors({})
         } catch (err) {
             console.log(err, e);
         }
@@ -121,7 +148,7 @@ const Schedule = () => {
     const deleteHandler = async (e) => {
         try {
             const res = await conn.delete(`/instances/${tmp.id}`);
-            setSelected(res.data.length > 0 ? 0 : undefined);
+            setSelected(res.data.length > 0 ? 0 : null);
             setModal(false);
             await updateInstances();
         } catch(err) {
@@ -165,81 +192,24 @@ const Schedule = () => {
                     setOrder={setOrder}
                 />
             </Main>
-            <Sidebar
-                display={selected}
-            >
-                <div className={'title'}>
-                    <h2>Instance Properties</h2>
-                </div>
-                <form className={'sidebar-form'}>
-                    <div>
-                        <label>Crop:</label>
-                        <select
-                            name={"cropId"}
-                            value={tmp.cropId}
-                            onChange={e=>updateField(e,true)}
+            <Sidebar>
+                { selected ?
+                    <>
+                        <div className={'title'}>
+                            <h2>Instance Properties</h2>
+                        </div>
+                        <Form
+                            fields={ScheduleFields}
+                            values={tmp}
+                            errors={errors}
+                            update={updateField}
+                            dataset={crops}
                         >
-                            <option disabled={'disabled'} value={"none"}>Select Crop</option>
-                            {
-                                crops.map(crop => <option key={`crop-${crop.id}`} value={crop.id}>{crop.name}</option>)
-                            }
-                        </select>
-                    </div>
-                    <div>
-                        <label>Quantity:</label>
-                        <input
-                            name={"quantity"}
-                            type={'number'}
-                            min={1}
-                            max={99}
-                            step={1}
-                            value={tmp.quantity}
-                            onChange={e=>updateField(e,true)}
-                        />
-                    </div>
-                    <div>
-                        <label>Stages:</label>
-                        <input
-                            name={"stages"}
-                            type={'number'}
-                            min={1}
-                            max={99}
-                            step={1}
-                            value={tmp.stages}
-                            onChange={e=>updateField(e,true)}
-                        />
-                    </div>
-                    <div>
-                        <label>Start Date:</label>
-                        <input
-                            name={"startDate"}
-                            type={'date'}
-                            value={dateToYYYYMMDD(tmp.startDate)}
-                            onChange={e=>updateField(e,false)}
-                        />
-                    </div>
-                    <div>
-                        <label>End Date:</label>
-                        <input
-                            name={"endDate"}
-                            type={'date'}
-                            value={dateToYYYYMMDD(tmp.endDate)}
-                            onChange={e=>updateField(e,false)}
-                        />
-                    </div>
-                    <div>
-                        <label>Notes:</label>
-                        <textarea
-                            name={"notes"}
-                            value={tmp.notes !== null ? tmp.notes : ""}
-                            onChange={e=>updateField(e,false)}
-
-                        />
-                    </div>
-                    <Button className={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
-                    <Button className={'outline'} text={'cancel'} handler={cancelHandler} />
-                    {tmp.id?<Button className={'red right'} text={'delete'} handler={()=>{setModal(true)}} />:null}
-                </form>
+                            <Button className={'save right'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
+                            <Button className={'outline cancel'} text={'cancel'} handler={cancelHandler} />
+                            {tmp.id?<Button className={'red'} text={'delete'} handler={()=>{setModal(true)}} />:null}
+                        </Form>
+                    </> : null }
             </Sidebar>
         </>
     )

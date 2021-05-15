@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 import './CropLibrary.css';
 import {CropContext} from "./CropContext";
+import CropLibraryFields from "./CropLibraryFields";
 import Main from "../shared/Main";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import Button from "../shared/Button";
@@ -8,6 +9,7 @@ import TableView from "../shared/TableView/TableView";
 import axios from "axios";
 import Loading from "../shared/Loading/Loading";
 import Modal from "../shared/Modal";
+import Form from "../shared/Sidebar/Form/Form";
 
 const conn = axios.create({
     withCredentials: true,
@@ -40,6 +42,7 @@ const CropLibrary = () => {
 
     const [tmp, setTmp] = useState(newCrop);
     const [modal, setModal] = useState(false);
+    const [errors, setErrors] = useState({});
 
     // Load the user's instances
     useEffect(() => {
@@ -57,20 +60,20 @@ const CropLibrary = () => {
 
     // reassign tmp object on select changes
     useEffect(()=>{
-        if (selected !== undefined && selected !== "new") {
+        if (selected != null && selected !== "new") {
             setTmp(crops.find(i=>i.id === selected))
-        }
-        else if (selected === "new") {
+        } else {
             setTmp(newCrop)
         }
+        setErrors({})
     },[crops, selected, newCrop])
 
     if (loading) {
         return <Loading />;
     }
 
-    const updateField = (e, n) => {
-        return n ? setTmp({...tmp, [e.target.name]:+e.target.value}) : setTmp({...tmp, [e.target.name]:e.target.value})
+    const updateField = (e) => {
+        setTmp({...tmp, [e.target.name]:e.target.value});
     }
 
     const updateCrops = async () => {
@@ -84,33 +87,57 @@ const CropLibrary = () => {
 
     const addCrop = () => {
         setSelected("new");
+        setErrors({})
+    }
+
+    const validate = () => {
+        const errors = {};
+        if (!tmp.name) {
+            errors.name = "Please provide a name"
+        }
+        if (+tmp.growTime < 1) {
+            errors.growTime = "Invalid input"
+        }
+        if (+tmp.sproutTime < 1) {
+            errors.sproutTime = "Invalid input"
+        }
+        if (+tmp.growTime === +tmp.sproutTime) {
+            errors.growTime = "Grow time cannot be less than or equal to sprout time"
+        }
+        if (+tmp.growTime < +tmp.sproutTime) {
+            errors.growTime = "Grow time cannot be less than or equal to sprout time"
+        }
+        setErrors(errors);
+        return errors;
     }
 
     const addHandler = async (e) => {
-        if (tmp.id === "none") {
-            return false;
-        }
-        try {
-            const res = await conn.post('/', tmp);
-            await updateCrops();
-            setSelected(res.data.id)
-        } catch (err) {
-            console.log(err, e)
+        if (!Object.entries(validate()).length) {
+            try {
+                const res = await conn.post('/', tmp);
+                await updateCrops();
+                setSelected(res.data.id)
+            } catch (err) {
+                console.log(err, e)
+            }
         }
     }
 
     const saveHandler = async (e) => {
-        try {
-            await conn.put(`/${tmp.id}`, tmp)
-            await updateCrops();
-        } catch(err) {
-            console.log(err, e)
+        if (!Object.entries(validate()).length) {
+            try {
+                await conn.put(`/${tmp.id}`, tmp)
+                await updateCrops();
+            } catch(err) {
+                console.log(err, e)
+            }
         }
     }
 
     const cancelHandler = (e) => {
         try {
-            setSelected(undefined)
+            setSelected(null)
+            setErrors({})
         } catch (err) {
             console.log(err, e);
         }
@@ -119,7 +146,7 @@ const CropLibrary = () => {
     const deleteHandler = async (e) => {
         try {
             const res = await conn.delete(`/${tmp.id}`);
-            setSelected(res.data.length > 0 ? 0 : undefined);
+            setSelected(res.data.length > 0 ? 0 : null);
             setModal(false);
             await updateCrops();
         } catch(err) {
@@ -127,15 +154,13 @@ const CropLibrary = () => {
         }
     }
 
-    const modalBody = () => {
-        return (
-            <>
-                <p>Are you sure you want to delete the crop:</p>
-                <p className={"bold"}>{tmp.name}</p>
-                <p>Any scheduled instances of this crop will also be deleted. <span className={'bold'}>This action cannot be undone.</span></p>
-            </>
-        )
-    }
+    const modalBody = () => (
+        <>
+            <p>Are you sure you want to delete the crop:</p>
+            <p className={"bold"}>{tmp.name}</p>
+            <p>Any scheduled instances of this crop will also be deleted. <span className={'bold'}>This action cannot be undone.</span></p>
+        </>
+    )
 
     return (
         <>
@@ -157,58 +182,24 @@ const CropLibrary = () => {
                     setOrder={setOrder}
                 />
             </Main>
-            <Sidebar
-                display={selected}
-            >
-                <div className={'title'}>
-                    <h2>Crop Properties</h2>
-                </div>
-                <form className={'sidebar-form'}>
-                    <div>
-                        <label>Name:</label>
-                        <input
-                            name={"name"}
-                            type={'text'}
-                            value={tmp.name}
-                            onChange={e=>updateField(e,false)}
-                        />
-                    </div>
-                    <div>
-                        <label>Grow Time:</label>
-                        <input
-                            name={"growTime"}
-                            type={'number'}
-                            min={1}
-                            max={180}
-                            step={1}
-                            value={tmp.growTime}
-                            onChange={e=>updateField(e,true)}
-                        />
-                    </div>
-                    <div>
-                        <label>Sprout Time:</label>
-                        <input
-                            name={"sproutTime"}
-                            type={'number'}
-                            min={1}
-                            max={180}
-                            step={1}
-                            value={tmp.sproutTime}
-                            onChange={e=>updateField(e,true)}
-                        />
-                    </div>
-                    <div>
-                        <label>Notes:</label>
-                        <textarea
-                            name={"notes"}
-                            value={tmp.notes}
-                            onChange={e=>updateField(e,false)}
-                        />
-                    </div>
-                    <Button className={'save'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
-                    <Button className={'outline'} text={'cancel'} handler={cancelHandler} />
-                    {tmp.id?<Button className={'red right'} text={'delete'} handler={()=>{setModal(true)}} />:null}
-                </form>
+            <Sidebar>
+                {selected ?
+                    <>
+                        <div className={'title'}>
+                            <h2>Crop Properties</h2>
+                        </div>
+                        <Form
+                            fields={CropLibraryFields}
+                            values={tmp}
+                            errors={errors}
+                            update={updateField}
+                        >
+                            <Button className={'save right'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
+                            <Button className={'outline cancel'} text={'cancel'} handler={cancelHandler} />
+                            {tmp.id?<Button className={'red'} text={'delete'} handler={()=>{setModal(true)}} />:null}
+                        </Form>
+                    </>
+                    : null}
             </Sidebar>
         </>
     )
