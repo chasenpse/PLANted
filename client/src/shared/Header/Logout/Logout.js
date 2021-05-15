@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "../../../UserContext";
 
-const Logout = () => {
+const Logout = ({close}) => {
     const {setUser} = useContext(UserContext)
 
     const logout = (e) => {
@@ -16,7 +16,7 @@ const Logout = () => {
         })
             .then(res => res.data ? setUser(false):null)
             .catch(err=>console.log(err))
-
+        close()
     }
 
     return (

@@ -13,7 +13,7 @@ const Header = ({menu}) => {
             <header className={menu.navOpen ? "open" : null}>
                 <Title />
                 <Nav close={()=>menu.setNavOpen(false)} />
-                <Logout />
+                <Logout close={()=>menu.setNavOpen(false)} />
             </header>
         </>
     )
