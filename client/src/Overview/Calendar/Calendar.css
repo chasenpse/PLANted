@@ -120,6 +120,14 @@ input[type='month']:first-of-type {
     bottom:4px;
 }
 
+.calError {
+    margin-left:20px;
+    font-weight:700;
+    text-align: center;
+    display:block;
+    color: rgba(184,69,69,1);
+}
+
 @media screen and (min-width:1280px) and (max-width: 1659px) {
     .calendarContainer {
         grid-template-columns: repeat(2, 1fr);

@@ -1,0 +1,3 @@
+.sidebar-field label:after {
+    content: ":";
+}

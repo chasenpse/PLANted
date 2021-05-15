@@ -1,10 +1,10 @@
 import './Sidebar.css';
 
-const Sidebar = ({children, display }) => {
+const Sidebar = ({children}) => {
 
     return (
         <section className={'section'}>
-            {display !== undefined ? children : null}
+            {children}
         </section>
     )
 };

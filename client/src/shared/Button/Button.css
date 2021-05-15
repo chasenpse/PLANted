@@ -29,7 +29,7 @@ button.main {
     margin:0 0 40px 40px;
 }
 
-button.save {
+button.cancel {
     margin-right:1rem;
 }
 
@@ -48,7 +48,6 @@ button.red {
     border: 1px solid rgba(184,69,69,0.5);
     line-height:2rem;
     font-size:1rem;
-    padding:0 1rem;
 }
 
 button.red:hover {
@@ -66,6 +65,9 @@ button.red:hover {
         width:100%;
         margin-bottom:1rem;
     }
+    button.cancel {
+        margin-right:0;
+    }
 }
 
 @media screen and (max-width: 1023px) {
@@ -80,5 +82,8 @@ button.red:hover {
         padding:0 24px;
         margin:0 auto 64px auto;
         display:block;
+    }
+    button.cancel {
+        margin-right:0;
     }
 }

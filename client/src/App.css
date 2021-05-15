@@ -110,7 +110,6 @@ label {
 }
 
 select {
-    text-transform: capitalize;
     padding: 2px 6px;
 }
 

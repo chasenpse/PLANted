@@ -74,6 +74,14 @@
     box-sizing: border-box;
 }
 
+.section .errorMsg {
+    color: rgba(184,69,69,1);
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+}
+
 .section .cropDetailsContainer {
     margin-bottom:1rem;
 }

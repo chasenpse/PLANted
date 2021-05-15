@@ -149,6 +149,7 @@ const Overview = () => {
                         name={'endDate'}
                         type={'month'}
                         min={startDate}
+                        max={"2030-01"}
                         value={endDate}
                         onChange={(e)=>setEndDate(e.target.value)}
                     />
