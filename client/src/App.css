@@ -155,7 +155,7 @@ textarea::-moz-selection {
         z-index: 50;
         color:#000;
         position: fixed;
-        top: 8px;
+        top: 12px;
         left: 12px;
         width:24px;
         height:32px;
