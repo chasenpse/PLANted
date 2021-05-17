@@ -56,7 +56,13 @@ const Schedule = () => {
             try {
                 const instanceRes = await conn.get(`/instances`);
                 const cropRes = await conn.get(`/crops/names`);
-                setInstances(instanceRes.data);
+
+                setInstances(instanceRes.data.map(i=> {
+                    i.startDate = dateToYYYYMMDD(i.startDate);
+                    i.endDate = dateToYYYYMMDD(i.endDate);
+                    return i;
+                }));
+
                 setCrops(cropRes.data);
                 setLoading(false);
             } catch (err) {
@@ -97,10 +103,10 @@ const Schedule = () => {
         if (!tmp.cropId) {
             errors.cropId = "Please select a crop"
         }
-        if (!+tmp.quantity) {
+        if (+tmp.quantity < 1) {
             errors.quantity = "Invalid input"
         }
-        if (!+tmp.stages) {
+        if (!+tmp.stages < 1) {
             errors.stages = "Invalid input"
         }
         if (!validateYYYYMMDD(tmp.startDate)) {
