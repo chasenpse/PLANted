@@ -159,6 +159,7 @@ textarea::-moz-selection {
         left: 12px;
         width:24px;
         height:32px;
+        cursor: pointer;
     }
     .drawerToggle span {
         box-sizing: border-box;

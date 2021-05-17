@@ -9,7 +9,7 @@ const Header = ({menu}) => {
 
     return (
         <>
-            {menu.navOpen ? <Overlay /> : null}
+            {menu.navOpen ? <Overlay close={()=>menu.setNavOpen(false)} /> : null}
             <header className={menu.navOpen ? "open" : null}>
                 <Title />
                 <Nav close={()=>menu.setNavOpen(false)} />
