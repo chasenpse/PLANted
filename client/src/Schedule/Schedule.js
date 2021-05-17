@@ -87,7 +87,11 @@ const Schedule = () => {
     const updateInstances = async () => {
         try {
             const res = await conn.get(`/instances`);
-            setInstances(res.data);
+            setInstances(res.data.map(i=> {
+                i.startDate = dateToYYYYMMDD(i.startDate);
+                i.endDate = dateToYYYYMMDD(i.endDate);
+                return i;
+            }));
         } catch (e) {
             console.log(e)
         }
@@ -106,7 +110,7 @@ const Schedule = () => {
         if (+tmp.quantity < 1) {
             errors.quantity = "Invalid input"
         }
-        if (!+tmp.stages < 1) {
+        if (+tmp.stages < 1) {
             errors.stages = "Invalid input"
         }
         if (!validateYYYYMMDD(tmp.startDate)) {
