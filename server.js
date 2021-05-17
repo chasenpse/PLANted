@@ -27,9 +27,10 @@ app.use(express.urlencoded({extended: true}))
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
+    rolling: true,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     }
 }))
 
