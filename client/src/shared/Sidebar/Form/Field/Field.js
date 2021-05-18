@@ -20,6 +20,7 @@ const Field = ({label, name, type, min, max, step, dataset, value, update, error
                     <input
                         name={name}
                         type={type}
+                        inputMode={"decimal"}
                         min={min}
                         max={max}
                         step={step}
