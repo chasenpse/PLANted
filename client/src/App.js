@@ -66,6 +66,10 @@ const App = () => {
         )
     }
 
+    // vh fix for safari
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     return (
         <UserContext.Provider value={{user, setUser}}>
             <span className={"drawerToggle"} onClick={(e)=>{e.preventDefault();setNavOpen(!navOpen)}}>
