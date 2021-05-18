@@ -58,7 +58,7 @@ const Login = ({setUser}) => {
                 email: email.val
             },
             withCredentials: true,
-            url: `/api/resend`,
+            url: `/api/register/resend`,
         }).then(res=>{
             setError(false)
             setConfirm("Please check your email for a confirmation")
