@@ -80,7 +80,7 @@ button.red:hover {
         font-size:1.25rem;
         height:2rem;
         padding:0 24px;
-        margin:0 auto 64px auto;
+        margin:0 auto 32px auto;
         display:block;
     }
     button.cancel {

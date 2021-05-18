@@ -1,3 +1,8 @@
+nav a {
+    display:inline-block;
+    text-decoration: none;
+}
+
 .navBtn {
     background:none;
     border:1px solid #eee;
@@ -38,17 +43,12 @@
 }
 
 @media screen and (max-width: 1023px) {
-    .navBtn {
-        margin-right:0;
-    }
-    .navBtn {
+    nav a {
         display:block;
-        text-decoration: none;
+        margin:0.5rem 0;
     }
-    .navBtn button {
-        margin: 16px 0;
-        height:3rem;
-        font-size:1.5rem;
-        cursor:pointer;
+    .navBtn {
+        font-size:1.25rem;
+        padding:0.25rem 0;
     }
 }
