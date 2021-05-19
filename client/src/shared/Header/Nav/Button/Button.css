@@ -1,6 +1,11 @@
 nav a {
     display:inline-block;
     text-decoration: none;
+    margin-right:20px;
+}
+
+nav a:last-of-type {
+    margin-right:0;
 }
 
 .navBtn {
@@ -9,18 +14,13 @@ nav a {
     width:180px;
     font-size:1.25rem;
     color:#000;
-    margin-right:20px;
-}
-
-.navBtn:last-of-type {
-    margin-right:0;
 }
 
 .navBtn button:hover {
     border:1px solid #000;
 }
 
-.navBtn.selected button {
+nav a.selected button {
     background: #000;
     color:#FFF;
     border:1px solid #000;
