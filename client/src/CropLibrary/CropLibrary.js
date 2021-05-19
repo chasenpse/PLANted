@@ -165,7 +165,7 @@ const CropLibrary = () => {
     return (
         <>
             {modal?<Modal body={modalBody()} confirm={deleteHandler} cancel={()=>setModal(false)}/>:null}
-            <Main>
+            <Main selected={selected}>
                 <Button className={'main'} text={'add crop'} handler={addCrop} />
                 <TableView
                     Cols={[

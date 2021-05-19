@@ -38,7 +38,7 @@
 
 .section .sidebar-form {
     position:relative;
-    margin:0 40px 60px 40px;
+    margin:0 40px;
 }
 
 .section .sidebar-form div {
@@ -167,7 +167,7 @@
         height:60vh;
         height: calc(var(--vh, 1vh) * 60);
         overflow:hidden;
-        padding:40px 0;
+        padding:20px 0 64px 0;
         position: fixed;
         top:unset;
         right:unset;

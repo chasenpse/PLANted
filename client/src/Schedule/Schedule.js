@@ -182,7 +182,7 @@ const Schedule = () => {
 
     return (
         <>
-            <Main>
+            <Main selected={selected}>
                 {modal?<Modal body={modalBody()} confirm={deleteHandler} cancel={()=>setModal(false)}/>:null}
                 <Button className={'main'} text={'add instance'} handler={addInstance} />
                 <TableView
