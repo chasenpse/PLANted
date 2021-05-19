@@ -1,9 +1,9 @@
 import './Sidebar.css';
 
-const Sidebar = ({children}) => {
+const Sidebar = ({children, selected}) => {
 
     return (
-        <section className={'section'}>
+        <section className={selected ? 'section open' : 'section'}>
             {children}
         </section>
     )

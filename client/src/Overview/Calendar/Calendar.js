@@ -54,7 +54,7 @@ const Calendar = ({startDate, endDate, selected, setSelected, markers}) => {
                                         if (markers.has(dateUtils.dateToYYYYMMDD(day))) {
                                             tmp.push("event")
                                         }
-                                        if (day.toISOString() === selected.toISOString()) {
+                                        if (selected && day.toISOString() === selected.toISOString()) {
                                             tmp.push("selected")
                                         }
                                         if (day.toISOString() === new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString()) {

@@ -14,7 +14,7 @@ export const OverviewProvider = ({children}) => {
     const tmpEndDate = new Date(currentDate).setMonth(currentDate.getMonth() + 5);
 
     const [instances, setInstances] = useState();
-    const [selected, setSelected] = useState(new Date());
+    const [selected, setSelected] = useState();
     const [loading, setLoading] = useState(true);
     const [startDate, setStartDate] = useState(dateUtils.fullDateToYYYYMM(currentDate));
     const [endDate, setEndDate] = useState(dateUtils.fullDateToYYYYMM(tmpEndDate));

@@ -1,9 +1,9 @@
 import React from 'react';
 import './Main.css';
 
-const Main = ({children}) => {
+const Main = ({children, selected}) => {
     return (
-        <main className={'main'}>
+        <main className={selected ? 'main open' : 'main'}>
             {children}
         </main>
     )

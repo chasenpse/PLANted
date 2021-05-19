@@ -1,13 +1,14 @@
 .section {
     width:30%;
     height:100vh;
-    background:rgba(255,255,255,0.33);
+    background:#82CF97;
     position:fixed;
     top:0;
     right:0;
     padding-top:120px;
     box-sizing: border-box;
     overflow-y: auto;
+    z-index: 15;
 }
 
 .section .title {
@@ -124,6 +125,36 @@
     border-bottom-left-radius: 4px;
 }
 
+.section .closeSidebar {
+    display:block;
+    flex-direction: column;
+    justify-content: space-around;
+    width:24px;
+    height:24px;
+    position:absolute;
+    right:0;
+    top:0;
+    cursor: pointer;
+}
+
+.section .closeSidebar:after {
+    content: '';
+    height: 24px;
+    border-left: 2px solid #000;
+    position: absolute;
+    transform: rotate(45deg);
+    left: 12px;
+}
+
+.section .closeSidebar:before {
+    content: '';
+    height: 24px;
+    border-left: 2px solid #000;
+    position: absolute;
+    transform: rotate(-45deg);
+    left: 12px;
+}
+
 @media screen and (min-width:1024px) and (max-width: 1279px) {
     .section {
         width:35%;
@@ -133,17 +164,22 @@
 @media screen and (max-width: 1023px) {
     .section {
         width: 100%;
-        height:40vh;
-        height: calc(var(--vh, 1vh) * 40);
+        height:60vh;
+        height: calc(var(--vh, 1vh) * 60);
         overflow:hidden;
         padding:40px 0;
         position: fixed;
         top:unset;
         right:unset;
-        bottom:0;
+        bottom:-100%;
         left:0;
+        transition: all linear 100ms;
         box-sizing: border-box;
         overflow-y:auto;
         box-shadow:0 0 1rem rgba(0,0,0,0.5)
+    }
+
+    .section.open {
+        bottom:0;
     }
 }
