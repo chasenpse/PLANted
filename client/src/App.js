@@ -66,9 +66,11 @@ const App = () => {
         )
     }
 
-    // vh fix for safari
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // Listen for window resize and set vh in relation to window.innerHeight px
+    window.addEventListener('resize', () => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
 
     return (
         <UserContext.Provider value={{user, setUser}}>
