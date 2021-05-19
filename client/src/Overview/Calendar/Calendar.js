@@ -21,8 +21,9 @@ const Calendar = ({startDate, endDate, selected, setSelected, markers}) => {
             <span className={"calError"}>End date cannot be before start date</span>
         )
     }
-
-    if (!validateYYYYMM(`${endDate.getFullYear()}-${endDate.getMonth()}`) || !validateYYYYMM(`${startDate.getFullYear()}-${startDate.getMonth()}`)) {
+    
+    if (!validateYYYYMM(`${startDate.getFullYear()}-${startDate.getMonth()+1}`)
+        || !validateYYYYMM(`${endDate.getFullYear()}-${endDate.getMonth()+1}`)) {
         return (
             <span className={"calError"}>Invalid date format</span>
         )
