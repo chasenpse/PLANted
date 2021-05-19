@@ -66,11 +66,13 @@ const App = () => {
         )
     }
 
-    // Listen for window resize and set vh in relation to window.innerHeight px
-    window.addEventListener('resize', () => {
-        let vh = window.innerHeight * 0.01;
+    const handleVh = () => {
+        const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
-    });
+    }
+    // Listen for window resize and set vh in relation to window.innerHeight px
+    window.addEventListener('resize', handleVh);
+    window.addEventListener('deviceorientation', handleVh);
 
     return (
         <UserContext.Provider value={{user, setUser}}>
