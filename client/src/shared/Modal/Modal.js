@@ -6,7 +6,7 @@ import Button from "../Button";
 const Modal = ({body, confirm, cancel}) => {
 
     return (
-        <Overlay>
+        <Overlay close={cancel}>
             <div className={"modalContainer"}>
                 <div className={"modalBody"}>{body}</div>
                 <Button className={'red right'} text={'confirm'} handler={confirm} />
