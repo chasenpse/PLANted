@@ -132,8 +132,8 @@
     width:24px;
     height:24px;
     position:absolute;
-    right:0;
-    top:0;
+    right:8px;
+    top:8px;
     cursor: pointer;
 }
 
@@ -164,8 +164,8 @@
 @media screen and (max-width: 1023px) {
     .section {
         width: 100%;
-        height:60vh;
-        height: calc(var(--vh, 1vh) * 60);
+        height:100%;
+        z-index: 50;
         overflow:hidden;
         padding:20px 0 64px 0;
         position: fixed;

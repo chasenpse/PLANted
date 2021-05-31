@@ -46,7 +46,6 @@ const Overview = () => {
         <div className={'title'}>
             <span>{date.toLocaleString("default", {weekday: "long"})}</span>
             <h2>{date.toLocaleString("default", {month: "long"})} {dateUtils.ordinal(date.getDate())}, {date.getFullYear()}</h2>
-            <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
         </div>
     )
 
@@ -136,7 +135,7 @@ const Overview = () => {
 
     return (
         <>
-            <Main selected={selected}>
+            <Main>
                 <div className={'calRange'}>
                     <input
                         name={'startDate'}
@@ -167,6 +166,7 @@ const Overview = () => {
             <Sidebar selected={selected}>
                 {selected ?
                     <>
+                        <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
                         {generateHeader(selected)}
                         {dayDetails()}
                     </>

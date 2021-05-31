@@ -185,9 +185,9 @@ const CropLibrary = () => {
             <Sidebar selected={selected}>
                 {selected ?
                     <>
+                        <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
                         <div className={'title'}>
                             <h2>Crop Properties</h2>
-                            <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
                         </div>
                         <Form
                             fields={CropLibraryFields}

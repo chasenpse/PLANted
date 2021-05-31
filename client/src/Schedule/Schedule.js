@@ -55,7 +55,7 @@ const Schedule = () => {
         (async () => {
             try {
                 const instanceRes = await conn.get(`/instances`);
-                const cropRes = await conn.get(`/crops/names`);
+                const cropRes = await conn.get(`/crops`);
 
                 setInstances(instanceRes.data.map(i=> {
                     i.startDate = dateToYYYYMMDD(i.startDate);
@@ -205,9 +205,9 @@ const Schedule = () => {
             <Sidebar selected={selected}>
                 { selected ?
                     <>
+                        <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
                         <div className={'title'}>
                             <h2>Instance Properties</h2>
-                            <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
                         </div>
                         <Form
                             fields={ScheduleFields}
