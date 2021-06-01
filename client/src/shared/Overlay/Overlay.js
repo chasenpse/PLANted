@@ -1,14 +1,12 @@
-import {createPortal} from 'react-dom';
 import './Overlay.css';
 
-const Overlay = ({children, close}) =>
-    createPortal(
-        <div
-            className={"overlay"}
-            onClick={close}>
-            {children}
-        </div>,
-        document.getElementById("portal")
-    )
+const Overlay = ({style, close, children}) =>
+    <div
+        className={"overlay"}
+        style={style}
+        onClick={close}
+    >
+        {children}
+    </div>
 
 export default Overlay;

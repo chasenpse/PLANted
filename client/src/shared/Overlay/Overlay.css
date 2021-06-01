@@ -6,7 +6,7 @@
     left:0;
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(2px);
-    z-index: 60;
+    z-index: 99;
     display:flex;
     justify-content: center;
     align-items: center;

@@ -14,7 +14,6 @@ import { ScheduleProvider } from "./Schedule/ScheduleContext";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import axios from "axios";
 import Loading from "./shared/Loading/Loading";
-import MobileNav from "./shared/MobileNav";
 
 const conn = axios.create({
     withCredentials: true,
@@ -69,7 +68,6 @@ const App = () => {
 
     return (
         <UserContext.Provider value={{user, setUser}}>
-            <MobileNav menu={{navOpen, setNavOpen}} />
             <Header menu={{navOpen, setNavOpen}} />
             <div className={"container"}>
                     <Switch>
