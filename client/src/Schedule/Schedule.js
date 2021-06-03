@@ -12,6 +12,7 @@ import Modal from "../shared/Modal";
 import Form from "../shared/Sidebar/Form/Form";
 import {validateYYYYMMDD} from "../utils/validate";
 import {dateToYYYYMMDD} from "../utils/formatDate";
+import compareObj from "../utils/compareObj";
 
 const conn = axios.create({
     withCredentials: true,
@@ -81,7 +82,11 @@ const Schedule = () => {
     },[instances, selected, newInstance])
 
     const updateField = (e) => {
-        return setTmp({...tmp, [e.target.name]:e.target.value})
+        if (e.target.type === "number" || e.target.type === "select-one") {
+            setTmp({...tmp, [e.target.name]: +e.target.value});
+        } else {
+            setTmp({...tmp, [e.target.name]: e.target.value});
+        }
     }
 
     const updateInstances = async () => {
@@ -216,7 +221,12 @@ const Schedule = () => {
                             update={updateField}
                             dataset={crops}
                         >
-                            <Button className={'save right'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
+                            <Button
+                                className={'save right'}
+                                text={'save'}
+                                handler={selected === "new" ? addHandler : saveHandler}
+                                disabled={compareObj(tmp, {...instances.filter(i=>i.id===selected)[0]})}
+                            />
                             <Button className={'outline cancel'} text={'cancel'} handler={cancelHandler} />
                             {tmp.id?<Button className={'red'} text={'delete'} handler={()=>{setModal(true)}} />:null}
                         </Form>

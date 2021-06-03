@@ -10,6 +10,7 @@ import axios from "axios";
 import Loading from "../shared/Loading/Loading";
 import Modal from "../shared/Modal";
 import Form from "../shared/Sidebar/Form/Form";
+import compareObj from "../utils/compareObj";
 
 const conn = axios.create({
     withCredentials: true,
@@ -73,7 +74,11 @@ const CropLibrary = () => {
     }
 
     const updateField = (e) => {
-        setTmp({...tmp, [e.target.name]:e.target.value});
+        if (e.target.type === "number" || e.target.type === "select-one") {
+            setTmp({...tmp, [e.target.name]: +e.target.value});
+        } else {
+            setTmp({...tmp, [e.target.name]: e.target.value});
+        }
     }
 
     const updateCrops = async () => {
@@ -195,8 +200,17 @@ const CropLibrary = () => {
                             errors={errors}
                             update={updateField}
                         >
-                            <Button className={'save right'} text={'save'} handler={selected === "new" ? addHandler : saveHandler} />
-                            <Button className={'outline cancel'} text={'cancel'} handler={cancelHandler} />
+                            <Button
+                                className={'save right'}
+                                text={'save'}
+                                handler={selected === "new" ? addHandler : saveHandler}
+                                disabled={compareObj(tmp, {...crops.filter(i=>i.id===selected)[0]})}
+                            />
+                            <Button
+                                className={'outline cancel'}
+                                text={'cancel'}
+                                handler={cancelHandler}
+                            />
                             {tmp.id?<Button className={'red'} text={'delete'} handler={()=>{setModal(true)}} />:null}
                         </Form>
                     </>
