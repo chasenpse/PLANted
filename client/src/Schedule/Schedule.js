@@ -180,7 +180,7 @@ const Schedule = () => {
             <>
                 <p>Are you sure you want to delete the instance:</p>
                 <p className={"bold"}>{tmp['crop.name']}</p>
-                <p className={'bold'}>This action cannot be undone.</p>
+                <p className={'red bold'}>This action cannot be undone.</p>
             </>
         )
     }

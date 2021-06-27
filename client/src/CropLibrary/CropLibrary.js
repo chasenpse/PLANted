@@ -163,7 +163,8 @@ const CropLibrary = () => {
         <>
             <p>Are you sure you want to delete the crop:</p>
             <p className={"bold"}>{tmp.name}</p>
-            <p>Any scheduled instances of this crop will also be deleted. <span className={'bold'}>This action cannot be undone.</span></p>
+            <p>Any scheduled instances of this crop will also be deleted.</p>
+            <p className={"red bold"}>This action cannot be undone.</p>
         </>
     )
 

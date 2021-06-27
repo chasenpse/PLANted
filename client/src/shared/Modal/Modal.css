@@ -1,9 +1,13 @@
 .modalContainer {
+    z-index: 99;
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
     box-sizing: border-box;
     width:400px;
     background:#EEE;
     padding:20px;
-    margin:0 10px;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
@@ -15,4 +19,8 @@
 
 .modalBody p {
     margin-bottom:1rem;
+}
+
+.modalBody .red {
+    color:rgba(184,69,69,1);
 }

@@ -25,11 +25,12 @@ const TableView = ({
     );
 
     const sortBy = (col) => {
+        console.log(col)
         if (col.prop === orderBy.prop) {
             setOrder(order==='asc'?'desc':'asc')
         } else {
             setOrder(col.type==='string'?'asc':'desc')
-            setOrderBy(col)
+            setOrderBy({prop:col.prop, type:col.type})
         }
     }
 
