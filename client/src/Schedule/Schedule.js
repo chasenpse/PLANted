@@ -25,8 +25,8 @@ const Schedule = () => {
             "cropId": 0,
             "quantity": 1,
             "stages": 1,
-            "startDate": dateToYYYYMMDD(new Date().toISOString()),
-            "endDate": dateToYYYYMMDD(new Date().toISOString()),
+            "startDate": dateToYYYYMMDD(new Date().toLocaleDateString()),
+            "endDate": dateToYYYYMMDD(new Date().toLocaleDateString()),
             "notes": "",
         }
     ), [])
