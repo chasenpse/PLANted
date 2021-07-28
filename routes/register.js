@@ -23,7 +23,7 @@ router.put("/resend", async (req, res) => {
         } else {
             const emailToken = nanoid()
             const tokenExpires = new Date()
-            tokenExpires.setDate(tokenExpires.getDate() + 1) //24 hours to register!
+            tokenExpires.setDate(tokenExpires.getDate() + 2) //token will be valid for 48 hours
             user.emailToken = emailToken;
             user.tokenExpires = tokenExpires;
             user.save()

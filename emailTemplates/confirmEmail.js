@@ -17,7 +17,7 @@ const confirmEmail = (email, emailToken) => {
             </tr>
             <tr>
                 <td align="center" valign="top" colspan="3" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; padding:10px;">
-                    This link will expire in 24 hours.
+                    Your link is active for 48 hours. After that, you will need to resend the verification email.
                 </td>
             </tr>
             <tr>
