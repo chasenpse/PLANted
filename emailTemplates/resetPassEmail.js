@@ -7,17 +7,17 @@ const resetPassEmail = (email, emailToken) => {
             name: "PLANted"
         },
         subject: "Password reset",
-        text: `Please use the following link to update your password - https://planted.scardino.dev/reset/${emailToken}`,
+        text: `To reset your password use the following link:\r\n\r\nhttps://planted.scardino.dev/reset/${emailToken}\r\n\r\nYour link is valid for 48 hours. After that, you'll need to resubmit a password reset request.`,
         html: wrapper(`
         <table border="0" cellpadding="0" cellspacing="0" width="100%" id="emailBody" bgcolor="#FFFFFF" style="border-radius:4px;">
             <tr>
                 <td align="center" valign="top" colspan="3" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; padding:10px;">
-                    Please use the following link to update your password.
+                    To reset your password, please click the button below.
                 </td>
             </tr>
             <tr>
                 <td align="center" valign="top" colspan="3" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; padding:10px;">
-                    Your link is active for 48 hours. After that, you will need to resend the verification email.
+                    Your link is valid for 48 hours. After that, you'll need to resubmit a password reset request.
                 </td>
             </tr>
             <tr>

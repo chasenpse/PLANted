@@ -6,18 +6,18 @@ const confirmEmail = (email, emailToken) => {
             email: process.env.SENDGRID_FROM_ADDRESS,
             name: "PLANted"
         },
-        subject: "Verify your email address",
-        text: `Please confirm your email to complete the registration process - https://planted.scardino.dev/confirm/${emailToken}`,
+        subject: "Please confirm your email address",
+        text: `To finish registering your account use the following link to confirm your email address:\r\n\r\nhttps://planted.scardino.dev/confirm/${emailToken}\r\n\r\nYour link is valid for 48 hours. After that, you'll need to resend the verification email.`,
         html: wrapper(`
         <table border="0" cellpadding="0" cellspacing="0" width="100%" id="emailBody" bgcolor="#FFFFFF" style="border-radius:4px;">
             <tr>
                 <td align="center" valign="top" colspan="3" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; padding:10px;">
-                    Please verify your address to finish creating your account.
+                    Please confirm your address to finish creating your account.
                 </td>
             </tr>
             <tr>
                 <td align="center" valign="top" colspan="3" style="font-family: 'Nunito', Arial, Helvetica, sans-serif; padding:10px;">
-                    Your link is active for 48 hours. After that, you will need to resend the verification email.
+                    Your link is valid for 48 hours. After that, you'll need to resend the verification email.
                 </td>
             </tr>
             <tr>

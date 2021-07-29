@@ -5,7 +5,8 @@ const emailWrapper = (body) => {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name=”x-apple-disable-message-reformatting”>
-        <title></title>
+        <meta name="color-scheme" content="only">
+        <title>PLANted</title>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
         </style>
