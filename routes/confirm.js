@@ -3,6 +3,7 @@ const db = require('../config/db');
 const sgMail = require("@sendgrid/mail");
 const nanoid = require("nanoid").nanoid;
 const confirmEmail = require("../emailTemplates/confirmEmail");
+const genTokenDate = require("../utils/generateTokenDate");
 
 router.post("/", (req,res) => {
     db.users.findOne({
@@ -12,10 +13,8 @@ router.post("/", (req,res) => {
     }).then(user=>{
         if (new Date(user.tokenExpires) < new Date() && !user.active) {
             const emailToken = nanoid()
-            const tokenExpires = new Date()
-            tokenExpires.setDate(tokenExpires.getDate() + 1) //24 hours to register!
             user.emailToken = emailToken;
-            user.tokenExpires = tokenExpires;
+            user.tokenExpires = genTokenDate(new Date());
             user.save()
             const mailSuccess = sgMail.send(confirmEmail(user.email, emailToken))
 

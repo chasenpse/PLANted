@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const sgMail = require("@sendgrid/mail");
 const nanoid = require("nanoid").nanoid;
 const confirmEmail = require("../emailTemplates/confirmEmail");
+const genTokenDate = require('../utils/generateTokenDate');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -22,10 +23,8 @@ router.put("/resend", async (req, res) => {
             return res.status(403).json(false)
         } else {
             const emailToken = nanoid()
-            const tokenExpires = new Date()
-            tokenExpires.setDate(tokenExpires.getDate() + 2) //token will be valid for 48 hours
             user.emailToken = emailToken;
-            user.tokenExpires = tokenExpires;
+            user.tokenExpires = genTokenDate(new Date());
             user.save()
             const mailSuccess = sgMail.send(confirmEmail(user.email, emailToken))
             res.status(200).json(true)
@@ -39,8 +38,7 @@ router.put("/resend", async (req, res) => {
 router.post("/", async (req, res) => {
     const {email, pass} = req.body;
     const emailToken = nanoid()
-    const tokenExpires = new Date()
-    tokenExpires.setDate(tokenExpires.getDate() + 1) //24 hours to register!
+    const tokenExpires = genTokenDate(new Date());
 
     try {
         const user = await db.users.findOne({
@@ -57,7 +55,8 @@ router.post("/", async (req, res) => {
                 tokenExpires,
             })
 
-            const mailSuccess = sgMail.send(confirmEmail(newUser.email, emailToken))
+            const mail = await sgMail.send(confirmEmail(newUser.email, emailToken))
+            console.log(mail)
             res.status(200).json(true)
         } else {
             res.status(409).json(false)

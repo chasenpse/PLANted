@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const sgMail = require("@sendgrid/mail");
 const nanoid = require("nanoid").nanoid;
 const resetPassEmail = require("../emailTemplates/resetPassEmail");
+const genTokenDate = require('../utils/generateTokenDate');
 
 
 // update user token and send email
@@ -18,10 +19,8 @@ router.put("/", async (req, res) => {
             res.status(401).json(false)
         } else {
             const emailToken = nanoid()
-            const tokenExpires = new Date()
-            tokenExpires.setDate(tokenExpires.getDate() + 1) //24 hours to register!
             user.emailToken = emailToken;
-            user.tokenExpires = tokenExpires;
+            user.tokenExpires = genTokenDate(new Date());
             user.save()
             const mailSuccess = sgMail.send(resetPassEmail(user.email, emailToken))
             res.status(200).json(true)
