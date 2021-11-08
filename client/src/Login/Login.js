@@ -19,8 +19,9 @@ const Login = ({setUser}) => {
     const [confirm, setConfirm] = useState();
     const [resend, setResend] = useState();
 
-    const {token} = useParams()
+    const {token} = useParams() //used for confirming accounts
 
+    // confirm account
     useEffect(()=> {
         if (token) {
             axios({
