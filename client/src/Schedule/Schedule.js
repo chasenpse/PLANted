@@ -221,17 +221,17 @@ const Schedule = () => {
                                     name="cropId"
                                     value={tmp.cropId}
                                     onChange={e => {
-                                        const crop = crops[e.target.value];
+                                        const crop = crops.filter(crop=>crop.id===+e.target.value);
                                         const endDate = new Date();
                                         setTmp({
                                             ...tmp,
-                                            cropId: crop.id,
-                                            endDate: dateToYYYYMMDD(endDate.setDate(endDate.getDate() + crop.growTime)),
+                                            cropId: crop[0].id,
+                                            endDate: dateToYYYYMMDD(endDate.setDate(endDate.getDate() + crop[0].growTime)),
                                         })
                                     }}
                                 >
                                     <option disabled value={"0"}>Select Crop</option>
-                                    {crops.map((crop,i) => <option key={`crop-${crop.id}`} value={i}>{crop.name}</option>)}
+                                    {crops.map(crop => <option key={`crop-${crop.id}`} value={crop.id}>{crop.name}</option>)}
                                 </select>
                             </div>
                             <div className={"sidebar-field"}>
