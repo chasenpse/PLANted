@@ -80,7 +80,7 @@ html {
 }
 
 body {
-    min-height:100%;
+    min-height:100vh;
     background:#45B864;
 }
 
@@ -106,10 +106,12 @@ label {
 }
 
 select {
+    color:#000;
     padding: 2px 6px;
 }
 
 input {
+    color:#000;
     line-height:1.5rem;
     padding:2px 6px;
 }

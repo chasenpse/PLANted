@@ -9,7 +9,6 @@ input[type='month'] {
     border-radius: 4px;
     border: 0;
     text-align: center;
-    padding: 2px 6px;
     font-size:1rem;
     width:200px;
 }
