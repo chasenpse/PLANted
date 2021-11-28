@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect, useMemo} from 'react';
 import './Schedule.css';
 import {ScheduleContext} from "./ScheduleContext";
-import ScheduleFields from "./ScheduleFields";
 import Main from "../shared/Main";
 import Sidebar from "../shared/Sidebar/Sidebar";
 import Button from "../shared/Button";
@@ -9,7 +8,6 @@ import TableView from "../shared/TableView/TableView";
 import axios from "axios";
 import Loading from "../shared/Loading/Loading";
 import Modal from "../shared/Modal";
-import Form from "../shared/Sidebar/Form/Form";
 import {validateYYYYMMDD} from "../utils/validate";
 import {dateToYYYYMMDD} from "../utils/formatDate";
 import compareObj from "../utils/compareObj";
@@ -79,7 +77,7 @@ const Schedule = () => {
         } else {
             setTmp(newInstance)
         }
-    },[instances, selected, newInstance])
+    },[instances, selected])
 
     const updateField = (e) => {
         if (e.target.type === "number" || e.target.type === "select-one") {
@@ -188,7 +186,9 @@ const Schedule = () => {
     return (
         <>
             <Main selected={selected}>
-                {modal?<Modal body={modalBody()} confirm={deleteHandler} cancel={()=>setModal(false)}/>:null}
+                {modal && (
+                    <Modal body={modalBody()} confirm={deleteHandler} cancel={()=>setModal(false)}/>
+                )}
                 <Button className={'main'} text={'add instance'} handler={addInstance} />
                 <TableView
                     Cols={[
@@ -208,19 +208,85 @@ const Schedule = () => {
                 />
             </Main>
             <Sidebar selected={selected}>
-                { selected ?
+                { selected && (
                     <>
                         <div className={"closeSidebar"} onClick={()=>setSelected(null)} />
                         <div className={'title'}>
                             <h2>Instance Properties</h2>
                         </div>
-                        <Form
-                            fields={ScheduleFields}
-                            values={tmp}
-                            errors={errors}
-                            update={updateField}
-                            dataset={crops}
-                        >
+                        <form className={'sidebar-form'}>
+                            <div className={"sidebar-field"}>
+                                <label>Crop</label>
+                                <select
+                                    name="cropId"
+                                    value={tmp.cropId}
+                                    onChange={e => {
+                                        const crop = crops[e.target.value];
+                                        const endDate = new Date();
+                                        setTmp({
+                                            ...tmp,
+                                            cropId: crop.id,
+                                            endDate: dateToYYYYMMDD(endDate.setDate(endDate.getDate() + crop.growTime)),
+                                        })
+                                    }}
+                                >
+                                    <option disabled value={"0"}>Select Crop</option>
+                                    {crops.map((crop,i) => <option key={`crop-${crop.id}`} value={i}>{crop.name}</option>)}
+                                </select>
+                            </div>
+                            <div className={"sidebar-field"}>
+                                <label>Quantity</label>
+                            <input
+                                name={'quantity'}
+                                type={'number'}
+                                inputMode={"decimal"}
+                                min={1}
+                                max={99}
+                                step={1}
+                                value={tmp.quantity}
+                                onChange={e => updateField(e)}
+                            />
+                            </div>
+                            <div className={"sidebar-field"}>
+                                <label>Stages</label>
+                            <input
+                                name={"stages"}
+                                type={"number"}
+                                inputMode={"decimal"}
+                                min={1}
+                                max={99}
+                                step={1}
+                                value={tmp.stages}
+                                onChange={e => updateField(e)}
+                            />
+                            </div>
+                            <div className={"sidebar-field"}>
+                                <label>Start Date</label>
+                            <input
+                                name={'startDate'}
+                                type={'date'}
+                                value={dateToYYYYMMDD(tmp.startDate)}
+                                onChange={e => updateField(e)}
+                            />
+                            </div>
+                            <div className={"sidebar-field"}>
+                                <label>End Date</label>
+                            <input
+                                name={'endDate'}
+                                type={'date'}
+                                min={dateToYYYYMMDD(tmp.endDate)}
+                                value={dateToYYYYMMDD(tmp.endDate)}
+                                onChange={e => updateField(e)}
+                            />
+                            </div>
+                            <div className={"sidebar-field"}>
+                                <label>Notes</label>
+                            <textarea
+                                name={'notes'}
+                                value={tmp.notes}
+                                onChange={e => updateField(e)}
+                            />
+                            </div>
                             <Button
                                 className={'save right'}
                                 text={'save'}
@@ -229,8 +295,9 @@ const Schedule = () => {
                             />
                             <Button className={'outline cancel'} text={'cancel'} handler={cancelHandler} />
                             {tmp.id?<Button className={'red'} text={'delete'} handler={()=>{setModal(true)}} />:null}
-                        </Form>
-                    </> : null }
+                        </form>
+                    </>
+                ) }
             </Sidebar>
         </>
     )
