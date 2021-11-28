@@ -33,7 +33,7 @@ router.get("/", (req,res) => {
             userId: req.user.id
         },
         order: [
-            ['updatedAt', 'DESC']
+            ['name', 'ASC']
         ],
     })
         .then(crops => res.json(crops))

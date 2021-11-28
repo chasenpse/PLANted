@@ -29,6 +29,16 @@ const Schedule = () => {
         }
     ), [])
 
+    const newCrop = useMemo(()=>(
+        {
+            "id": 0,
+            "name": "",
+            "growTime": 1,
+            "sproutTime": 1,
+            "notes": "",
+        }
+    ), [])
+
     const {
         instances,
         setInstances,
@@ -47,6 +57,7 @@ const Schedule = () => {
     const [tmp, setTmp] = useState(newInstance);
     const [modal, setModal] = useState(false);
     const [errors, setErrors] = useState({});
+    const [crop, setCrop] = useState(newCrop);
 
     // Load the user's instances
     useEffect(() => {
@@ -183,6 +194,12 @@ const Schedule = () => {
         )
     }
 
+    const adjustEndDate = () => {
+        const newEndDate = new Date(tmp.startDate);
+        newEndDate.setDate(newEndDate.getDate() + crop.growTime);
+        return dateToYYYYMMDD(newEndDate);
+    }
+
     return (
         <>
             <Main selected={selected}>
@@ -221,12 +238,13 @@ const Schedule = () => {
                                     name="cropId"
                                     value={tmp.cropId}
                                     onChange={e => {
-                                        const crop = crops.filter(crop=>crop.id===+e.target.value);
-                                        const endDate = new Date();
+                                        const crop = crops.filter(crop=>crop.id===+e.target.value)[0];
+                                        setCrop(crop);
+                                        const startDate = new Date(dateToYYYYMMDD(crop.startDate));
                                         setTmp({
                                             ...tmp,
-                                            cropId: crop[0].id,
-                                            endDate: dateToYYYYMMDD(endDate.setDate(endDate.getDate() + crop[0].growTime)),
+                                            cropId: crop.id,
+                                            endDate: dateToYYYYMMDD(startDate.setDate(startDate.getDate() + crop.growTime)),
                                         })
                                     }}
                                 >
@@ -265,7 +283,7 @@ const Schedule = () => {
                             <input
                                 name={'startDate'}
                                 type={'date'}
-                                value={dateToYYYYMMDD(tmp.startDate)}
+                                value={tmp.startDate}
                                 onChange={e => updateField(e)}
                             />
                             </div>
@@ -274,8 +292,8 @@ const Schedule = () => {
                             <input
                                 name={'endDate'}
                                 type={'date'}
-                                min={dateToYYYYMMDD(tmp.endDate)}
-                                value={dateToYYYYMMDD(tmp.endDate)}
+                                min={adjustEndDate()}
+                                value={tmp.endDate}
                                 onChange={e => updateField(e)}
                             />
                             </div>
